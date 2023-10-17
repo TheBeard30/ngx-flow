@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { XFlowPage } from './x-flow.page';
+import { FlowPage } from './flow.page';
 
 describe('XFlowPage', () => {
-  let component: XFlowPage;
-  let fixture: ComponentFixture<XFlowPage>;
+  let component: FlowPage;
+  let fixture: ComponentFixture<FlowPage>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [XFlowPage]
+      declarations: [FlowPage]
     });
-    fixture = TestBed.createComponent(XFlowPage);
+    fixture = TestBed.createComponent(FlowPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
