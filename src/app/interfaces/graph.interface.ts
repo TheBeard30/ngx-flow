@@ -1,5 +1,6 @@
 import type { Attr } from '@antv/x6/lib/registry/attr';
 import { PortManager } from '@antv/x6/es/model/port';
+import { EventArgs, Graph } from '@antv/x6';
 
 export interface IGraphMeta {
   /** 元数据，除了flowId之外，可能包括这些业务属性：画布名称/创建时间/更新时间/用户权限/画布 */
@@ -101,4 +102,9 @@ export enum AnchorGroup {
 export enum AnchorType {
   INPUT = 'input',
   OUTPUT = 'output'
+}
+
+export interface IEvent<K extends keyof EventArgs = any> {
+  eventName: K;
+  callback: (x6Event: EventArgs[K], commandService: any, modelService: any, graph: Graph) => void;
 }

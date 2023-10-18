@@ -1,3 +1,7 @@
 <div #XFlow class='relative'>
-  <ng-content></ng-content>
+
+  <ng-container *ngIf='!haveCanvasComponent'>
+    <app-x-flow-canvas></app-x-flow-canvas>
+  </ng-container>
+  <ng-content #content></ng-content>
 </div>

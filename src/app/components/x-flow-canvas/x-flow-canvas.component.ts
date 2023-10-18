@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { IPosition } from '@/app/interfaces';
 
 @Component({
   selector: 'app-x-flow-canvas',
@@ -10,4 +11,10 @@ export class XFlowCanvasComponent {
   @ViewChild('rootRef') rootRef: ElementRef | undefined;
 
   @ViewChild('canvasRef') canvasRef: ElementRef | undefined;
+
+  @Input() isXFlowCanvas = true;
+
+  @Input() config: any;
+
+  @Input() position?: IPosition;
 }
