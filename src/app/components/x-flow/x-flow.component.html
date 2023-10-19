@@ -1,7 +1,7 @@
 <div #XFlow class='relative'>
 
   <ng-container *ngIf='!haveCanvasComponent'>
-    <app-x-flow-canvas></app-x-flow-canvas>
+    <app-x-flow-canvas [position]='{top: 0, bottom: 0, left: 0, right: 0}'></app-x-flow-canvas>
   </ng-container>
   <ng-content #content></ng-content>
 </div>
