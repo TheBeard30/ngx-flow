@@ -9,6 +9,8 @@ import {
   ViewChild
 } from '@angular/core';
 import { IGraphData, IGraphMeta } from '@/app/interfaces';
+import { Application } from '@/app/models';
+import { initApp } from '@/app/utils/app.util';
 
 @Component({
   selector: 'app-x-flow',
@@ -29,8 +31,14 @@ export class XFlowComponent implements AfterViewInit {
 
   haveCanvasComponent = false;
 
+  app: Application;
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  constructor() {}
+
   ngAfterViewInit(): void {
     console.log(this.content);
     this.haveCanvasComponent = this.content.some(child => child && child.isXFlowCanvas);
+    this.app = initApp(null, null, null);
   }
 }
