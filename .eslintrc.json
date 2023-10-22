@@ -30,7 +30,9 @@
             "prefix": "app",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "@typescript-eslint/no-namespace": "warn",
+        "@typescript-eslint/ban-ts-comment": "off"
       }
     },
     {

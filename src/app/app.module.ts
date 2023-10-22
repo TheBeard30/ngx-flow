@@ -5,13 +5,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FlowPage } from '@/app/pages/flow/flow.page';
 import { XFlowCanvasComponent, XFlowComponent } from '@/app/components';
+import { CommandInjectionToken } from '@/app/interfaces';
+import { CommandService } from '@/app/services';
 
 const COMPONENTS = [XFlowComponent, XFlowCanvasComponent];
 
 @NgModule({
   declarations: [AppComponent, FlowPage, ...COMPONENTS],
   imports: [BrowserModule, AppRoutingModule],
-  providers: [],
+  providers: [{ provide: CommandInjectionToken, useClass: CommandService }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -4,13 +4,15 @@ import {
   Component,
   ContentChildren,
   ElementRef,
+  Inject,
   Input,
   QueryList,
   ViewChild
 } from '@angular/core';
-import { IGraphData, IGraphMeta } from '@/app/interfaces';
+import { CommandInjectionToken, IGraphCommandService, IGraphData, IGraphMeta } from '@/app/interfaces';
 import { Application } from '@/app/models';
 import { initApp } from '@/app/utils/app.util';
+import { XFlowGraphCommands } from '@/app/constants';
 
 @Component({
   selector: 'app-x-flow',
@@ -34,11 +36,16 @@ export class XFlowComponent implements AfterViewInit {
   app: Application;
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor() {}
+  constructor(@Inject(CommandInjectionToken) private commandService: IGraphCommandService) {}
 
   ngAfterViewInit(): void {
     console.log(this.content);
     this.haveCanvasComponent = this.content.some(child => child && child.isXFlowCanvas);
     this.app = initApp(null, null, null);
+    setTimeout(async () => {
+      console.log('commandService>>>', this.commandService);
+      await this.app.commandService.executeCommand(XFlowGraphCommands.GRAPH_LAYOUT.id, { graphData: this.graphData });
+      await this.app.commandService.executeCommand(XFlowGraphCommands.GRAPH_RENDER.id, { graphData: this.graphData });
+    });
   }
 }
