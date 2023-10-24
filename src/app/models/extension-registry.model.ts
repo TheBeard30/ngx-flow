@@ -12,3 +12,8 @@ export class ExtensionRegistry {
     this.instanceId = uuidv4();
   }
 }
+
+/** 获取Xflow extension，用于收集组件的配置 */
+export const createExtensionRegistry = () => {
+  return new ExtensionRegistry();
+};
