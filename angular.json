@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-xflow": {
+    "ngx-flow": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ngx-xflow",
+            "outputPath": "dist/ngx-flow",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -65,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ngx-xflow:build:production"
+              "browserTarget": "ngx-flow:build:production"
             },
             "development": {
-              "browserTarget": "ngx-xflow:build:development"
+              "browserTarget": "ngx-flow:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +76,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-xflow:build"
+            "browserTarget": "ngx-flow:build"
           }
         },
         "test": {
@@ -111,6 +111,9 @@
     }
   },
   "cli": {
+    "cache": {
+      "enabled": false
+    },
     "analytics": "2382f06c-8379-4aa4-8787-15afb8159b3b",
     "schematicCollections": [
       "@angular-eslint/schematics"
