@@ -1,7 +1,7 @@
-import { IGraphCommandService } from '@/app/interfaces';
+import { IGraphCommandService, IGraphProvider } from '@/app/interfaces';
 
 export class Application {
-  public graphProvider;
+  public graphProvider: IGraphProvider;
 
   public commandService: IGraphCommandService;
 

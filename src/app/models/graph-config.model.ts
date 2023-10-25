@@ -53,7 +53,6 @@ export class GraphConfig {
       // 节点连线规则配置（详细文档：https://X6.antv.vision/zh/docs/api/graph/interaction#connecting）
       connecting: {
         snap: true,
-        // @ts-ignore
         dangling: false,
         highlight: false,
         connectionPoint: 'rect',
@@ -130,7 +129,7 @@ export class GraphConfig {
         edgeLabelMovable: false
       },
       async: false
-    };
+    } as any;
     return defaultOptions;
   };
 }

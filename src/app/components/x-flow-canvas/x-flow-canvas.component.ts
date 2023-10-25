@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { IPosition } from '@/app/interfaces';
+import { IGraphConfig, IPosition } from '@/app/interfaces';
 import { Application, GraphConfig } from '@/app/models';
 
 @Component({
@@ -26,5 +26,10 @@ export class XFlowCanvasComponent implements AfterViewInit {
     config.setX6Config();
     config.setRootContainer(this.rootRef.nativeElement);
     config.setGraphContainer(this.rootRef.nativeElement);
+    this.app.graphProvider.getGraphOptions = () => {
+      return new Promise<IGraphConfig>(resolve => {
+        resolve(config as unknown as IGraphConfig);
+      });
+    };
   }
 }
