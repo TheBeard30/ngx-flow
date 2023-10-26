@@ -13,6 +13,7 @@ import { CommandInjectionToken, IGraphCommandService, IGraphData, IGraphMeta } f
 import { Application } from '@/app/models';
 import { initApp } from '@/app/utils/app.util';
 import { XFlowGraphCommands } from '@/app/constants';
+import { GraphProviderService, ModelService } from '@/app/services';
 
 @Component({
   selector: 'app-x-flow',
@@ -36,12 +37,16 @@ export class XFlowComponent implements AfterViewInit {
   app: Application;
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(@Inject(CommandInjectionToken) private commandService: IGraphCommandService) {}
+  constructor(
+    @Inject(CommandInjectionToken) private commandService: IGraphCommandService,
+    private graphProvider: GraphProviderService,
+    private modelService: ModelService
+  ) {}
 
   ngAfterViewInit(): void {
     console.log(this.content);
     this.haveCanvasComponent = this.content.some(child => child && child.isXFlowCanvas);
-    this.app = initApp(null, null, null);
+    this.app = initApp(this.graphProvider, this.commandService, this.modelService);
     setTimeout(async () => {
       console.log('commandService>>>', this.commandService);
       await this.app.commandService.executeCommand(XFlowGraphCommands.GRAPH_LAYOUT.id, { graphData: this.graphData });

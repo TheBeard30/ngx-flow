@@ -6,4 +6,8 @@ export interface IGraphProvider {
   getGraphInstance: () => Promise<X6Graph>;
   /** 获取画布配置项 */
   getGraphOptions: () => Promise<IGraphConfig>;
+
+  setGraphInstance: (graph: X6Graph) => void;
+
+  setGraphOptions: (config: IGraphConfig) => void;
 }

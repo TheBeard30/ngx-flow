@@ -26,10 +26,7 @@ export class XFlowCanvasComponent implements AfterViewInit {
     config.setX6Config();
     config.setRootContainer(this.rootRef.nativeElement);
     config.setGraphContainer(this.rootRef.nativeElement);
-    this.app.graphProvider.getGraphOptions = () => {
-      return new Promise<IGraphConfig>(resolve => {
-        resolve(config as unknown as IGraphConfig);
-      });
-    };
+    this.app.graphProvider.setGraphOptions(config as unknown as IGraphConfig);
+    // TODO 设置Graph实例
   }
 }
