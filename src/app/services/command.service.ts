@@ -5,7 +5,8 @@ import { IGraphCommandService } from '@/app/interfaces/graph-command.interface';
   providedIn: 'root'
 })
 export class CommandService implements IGraphCommandService {
-  // constructor() { }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  constructor() { }
 
   executeCommand<Args, Result>(commandId: string, args: Args, hooks: any): Promise<void> {
     return Promise.resolve(undefined);
