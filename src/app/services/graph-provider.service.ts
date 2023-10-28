@@ -2,6 +2,7 @@ import { IGraphConfig, IGraphProvider } from '@/app/interfaces';
 import { Injectable } from '@angular/core';
 
 import { Graph } from '@antv/x6';
+import { GraphManager } from '@/app/models';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,12 @@ export class GraphProviderService implements IGraphProvider {
   private graphInstance: Graph;
 
   private graphConfig: IGraphConfig;
+
+  private groupManager: GraphManager;
+
+  constructor() {
+    this.groupManager = new GraphManager();
+  }
 
   getGraphInstance(): Promise<Graph> {
     return Promise.resolve(this.graphInstance);
