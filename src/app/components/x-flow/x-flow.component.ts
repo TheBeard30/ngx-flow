@@ -6,6 +6,7 @@ import {
   ElementRef,
   Inject,
   Input,
+  OnInit,
   QueryList,
   ViewChild
 } from '@angular/core';
@@ -21,7 +22,7 @@ import { GraphProviderService, ModelService } from '@/app/services';
   styleUrls: ['./x-flow.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class XFlowComponent implements AfterViewInit {
+export class XFlowComponent implements OnInit {
   @ViewChild('XFlow') XFlow!: ElementRef;
 
   @ContentChildren('content') content!: QueryList<any>;
@@ -43,14 +44,14 @@ export class XFlowComponent implements AfterViewInit {
     private modelService: ModelService
   ) {}
 
-  ngAfterViewInit(): void {
-    console.log(this.content);
-    this.haveCanvasComponent = this.content.some(child => child && child.isXFlowCanvas);
+  ngOnInit(): void {
+    // this.haveCanvasComponent = this.content.some(child => child && child.isXFlowCanvas);
     this.app = initApp(this.graphProvider, this.commandService, this.modelService);
     setTimeout(async () => {
       console.log('commandService>>>', this.commandService);
-      await this.app.commandService.executeCommand(XFlowGraphCommands.GRAPH_LAYOUT.id, { graphData: this.graphData });
+      // await this.app.commandService.executeCommand(XFlowGraphCommands.GRAPH_LAYOUT.id, { graphData: this.graphData });
       await this.app.commandService.executeCommand(XFlowGraphCommands.GRAPH_RENDER.id, { graphData: this.graphData });
-    });
+      this.graphProvider.getGraphInstance().then(g => g.centerContent());
+    }, 1000);
   }
 }

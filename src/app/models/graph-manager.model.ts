@@ -19,11 +19,18 @@ export class GraphManager implements IGraphManger {
       graph = new Graph({
         container: graphContainer,
         width: clientWidth,
-        height: clientHeight
+        height: clientHeight,
+        grid: true,
+        background: { color: '#f5f5f5' }
       });
       this.graphMap.set(graphId, graph);
     }
 
     return Promise.resolve(graph);
+  }
+
+  // TODO TEST
+  setConfig(config) {
+    this.config = config;
   }
 }

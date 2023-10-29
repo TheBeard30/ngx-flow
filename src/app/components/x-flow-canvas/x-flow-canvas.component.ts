@@ -22,11 +22,13 @@ export class XFlowCanvasComponent implements AfterViewInit {
   @Input() app: Application;
 
   ngAfterViewInit(): void {
-    const config = this.config ? this.config : new GraphConfig();
-    config.setX6Config();
-    config.setRootContainer(this.rootRef.nativeElement);
-    config.setGraphContainer(this.rootRef.nativeElement);
-    this.app.graphProvider.setGraphOptions(config as unknown as IGraphConfig);
-    // TODO 设置Graph实例
+    setTimeout(() => {
+      const config = this.config ? this.config : new GraphConfig();
+      config.setX6Config();
+      config.setRootContainer(this.rootRef.nativeElement);
+      config.setGraphContainer(this.rootRef.nativeElement);
+      this.app.graphProvider.setGraphOptions(config as unknown as IGraphConfig);
+      // TODO 设置Graph实例
+    });
   }
 }

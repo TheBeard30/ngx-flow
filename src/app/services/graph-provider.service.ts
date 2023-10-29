@@ -34,5 +34,6 @@ export class GraphProviderService implements IGraphProvider {
 
   setGraphOptions(graphConfig: IGraphConfig) {
     this.graphConfig = graphConfig;
+    this.groupManager.setConfig(this.graphConfig);
   }
 }
