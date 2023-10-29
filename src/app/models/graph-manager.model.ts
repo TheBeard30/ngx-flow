@@ -1,5 +1,4 @@
 import { Graph } from '@antv/x6';
-import { GraphConfig } from '@/app/models/graph-config.model';
 import { IGraphConfig } from '@/app/interfaces';
 
 export interface IGraphManger {

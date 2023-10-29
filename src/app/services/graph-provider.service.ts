@@ -18,7 +18,9 @@ export class GraphProviderService implements IGraphProvider {
     this.groupManager = new GraphManager();
   }
 
-  getGraphInstance(): Promise<Graph> {
+  async getGraphInstance(): Promise<Graph> {
+    const graph = await this.groupManager.getGraph(this.graphConfig.graphId);
+    this.graphInstance = graph;
     return Promise.resolve(this.graphInstance);
   }
 
