@@ -1,5 +1,4 @@
 import { XFlowGraphCommands } from '@/app/constants';
-import { IContext } from '@/app/commands/interface';
 import { Graph } from '@antv/x6';
 
 export class GraphRenderCommand {
@@ -9,7 +8,7 @@ export class GraphRenderCommand {
   args;
   graph: Graph;
   async execute() {
-    const graph = await this.graph;
+    const graph = this.graph;
     const args = this.args;
     const { graphData } = args;
     const { nodes, edges } = graphData;
