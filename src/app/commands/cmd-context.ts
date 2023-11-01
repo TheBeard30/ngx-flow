@@ -1,18 +1,14 @@
-import { Inject, Injectable } from '@angular/core';
-import { CommandInjectionToken, IGraphCommandService } from '@/app/interfaces';
 import { GraphProviderService, ModelService } from '@/app/services';
 import { Graph } from '@antv/x6';
+import { IGraphCommandService } from '@/app/interfaces';
 
-@Injectable({
-  providedIn: 'root'
-})
 export class CmdContext<Args = any> {
   /** x6 实例的缓存 */
   private graph: Graph;
   /** command 的参数 */
   private args: Args;
   constructor(
-    // @Inject(CommandInjectionToken) private commandService: IGraphCommandService,
+    // private commandService: IGraphCommandService,
     private graphProvider: GraphProviderService,
     private modelService: ModelService
   ) {}

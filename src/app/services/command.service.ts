@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { IGraphCommandService } from '@/app/interfaces';
 import { CmdContext, GraphLoadDataCommand, GraphRenderCommand } from '@/app/commands';
 
@@ -10,14 +10,13 @@ export class CommandService implements IGraphCommandService {
 
   commandMap: Map<string, any> = new Map<string, any>();
 
-  constructor(private ctx: CmdContext) {
+  constructor(private injector: Injector) {
     this.registerXFlowCommand();
   }
 
   async executeCommand<Args, Result>(commandId: string, args: Args, hooks: any): Promise<void> {
     const command = this.commandMap.get(commandId);
     command.args = args;
-    command.graph = await this.ctx.getX6Graph();
     command.execute();
     return Promise.resolve(undefined);
   }
@@ -36,9 +35,9 @@ export class CommandService implements IGraphCommandService {
   watchChange: any;
 
   registerXFlowCommand() {
-    const graphLoadDataCommand = new GraphLoadDataCommand();
+    const graphLoadDataCommand = this.injector.get(GraphLoadDataCommand);
     this.commandMap.set(graphLoadDataCommand.token, graphLoadDataCommand);
-    const graphRenderCommand = new GraphRenderCommand();
+    const graphRenderCommand = this.injector.get(GraphRenderCommand);
     this.commandMap.set(graphRenderCommand.token, graphRenderCommand);
   }
 }
