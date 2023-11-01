@@ -14,10 +14,10 @@ export class CommandService implements IGraphCommandService {
     this.registerXFlowCommand();
   }
 
-  executeCommand<Args, Result>(commandId: string, args: Args, hooks: any): Promise<void> {
+  async executeCommand<Args, Result>(commandId: string, args: Args, hooks: any): Promise<void> {
     const command = this.commandMap.get(commandId);
     command.args = args;
-    command.graph = this.ctx.getX6Graph();
+    command.graph = await this.ctx.getX6Graph();
     command.execute();
     return Promise.resolve(undefined);
   }
