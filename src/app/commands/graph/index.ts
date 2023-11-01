@@ -1,4 +1,4 @@
-import { NsGraphRender } from '@/app/commands';
+import { NsGraphRender } from './graph-render';
 
 export * from './graph-render';
 export * from './graph-load-data';
