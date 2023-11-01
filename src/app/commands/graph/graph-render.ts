@@ -3,7 +3,6 @@ import { Graph } from '@antv/x6';
 import { CmdContext } from '@/app/commands';
 import { Inject, Injectable, Injector } from '@angular/core';
 import { GraphProviderService, ModelService } from '@/app/services';
-import { CommandInjectionToken } from '@/app/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -32,4 +31,9 @@ export class GraphRenderCommand {
     graph.addNodes(nodes);
     graph.addEdges(edges);
   }
+}
+
+export namespace NsGraphRender {
+  /** Command: 用于注册named factory */
+  export const command = XFlowGraphCommands.GRAPH_RENDER;
 }

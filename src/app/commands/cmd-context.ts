@@ -1,6 +1,5 @@
 import { GraphProviderService, ModelService } from '@/app/services';
 import { Graph } from '@antv/x6';
-import { IGraphCommandService } from '@/app/interfaces';
 
 export class CmdContext<Args = any> {
   /** x6 实例的缓存 */
