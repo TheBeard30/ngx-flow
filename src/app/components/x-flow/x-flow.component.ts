@@ -5,6 +5,7 @@ import {
   ContentChildren,
   ElementRef,
   Inject,
+  Injector,
   Input,
   OnInit,
   QueryList,
@@ -14,7 +15,7 @@ import { CommandInjectionToken, IGraphCommandService, IGraphData, IGraphMeta } f
 import { Application } from '@/app/models';
 import { initApp } from '@/app/utils/app.util';
 import { XFlowGraphCommands } from '@/app/constants';
-import { GraphProviderService, ModelService } from '@/app/services';
+import { CommandService, GraphProviderService, ModelService } from '@/app/services';
 
 @Component({
   selector: 'app-x-flow',
@@ -39,18 +40,23 @@ export class XFlowComponent implements OnInit {
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(
-    @Inject(CommandInjectionToken) private commandService: IGraphCommandService,
+    private commandService: CommandService,
     private graphProvider: GraphProviderService,
-    private modelService: ModelService
+    private injector: Injector
   ) {}
 
   ngOnInit(): void {
     // this.haveCanvasComponent = this.content.some(child => child && child.isXFlowCanvas);
-    this.app = initApp(this.graphProvider, this.commandService, this.modelService);
+    this.app = initApp(this.injector);
+    this.app.start();
     setTimeout(async () => {
       console.log('commandService>>>', this.commandService);
       // await this.app.commandService.executeCommand(XFlowGraphCommands.GRAPH_LAYOUT.id, { graphData: this.graphData });
-      await this.app.commandService.executeCommand(XFlowGraphCommands.GRAPH_RENDER.id, { graphData: this.graphData });
+      await this.app.commandService.executeCommand(
+        XFlowGraphCommands.GRAPH_RENDER.id,
+        { graphData: this.graphData },
+        null
+      );
       this.graphProvider.getGraphInstance().then(g => g.centerContent());
     }, 1000);
   }

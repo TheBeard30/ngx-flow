@@ -13,18 +13,9 @@ export class GraphRenderCommand {
   // 需要一个上下文
   ctx: CmdContext;
 
-  constructor(private injector: Injector) {
-    // const commandService = injector.get(CommandInjectionToken);
-    const graphProvider = injector.get(GraphProviderService);
-    const modelService = injector.get(ModelService);
-    this.ctx = new CmdContext<any>(graphProvider, modelService);
-  }
-  // TODO 进行测试
-  args;
-  graph: Graph;
   async execute() {
     const graph = await this.ctx.getX6Graph();
-    const args = this.args;
+    const { args } = this.ctx.getArgs();
     const { graphData } = args;
     const { nodes, edges } = graphData;
 

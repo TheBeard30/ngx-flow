@@ -1,19 +1,19 @@
-import { IGraphCommandService, IGraphProvider } from '@/app/interfaces';
+import { CommandInjectionToken, IGraphCommandService, IGraphProvider } from '@/app/interfaces';
+import { Inject, Injectable } from '@angular/core';
+import { CommandService, GraphProviderService, ModelService } from '@/app/services';
+import { CommandContributionService } from '@/app/services/command-contribution.service';
 
+@Injectable({ providedIn: 'root' })
 export class Application {
-  public graphProvider: IGraphProvider;
-
-  public commandService: IGraphCommandService;
-
-  public modelService;
-
-  constructor(graphProvider, commandService, modelService) {
-    this.graphProvider = graphProvider;
-    this.commandService = commandService;
-    this.modelService = modelService;
-  }
+  constructor(
+    public graphProvider: GraphProviderService,
+    public commandService: CommandService,
+    public modelService: ModelService,
+    public commandContributionService: CommandContributionService
+  ) {}
 
   start() {
     // TODO 启动配置
+    this.commandContributionService.start();
   }
 }
