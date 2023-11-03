@@ -9,7 +9,7 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
-import { IGraphConfig, IPosition } from '@/app/interfaces';
+import { getPositionStyle, IGraphConfig, IPosition } from '@/app/interfaces';
 import { Application, GraphConfig } from '@/app/models';
 
 @Component({
@@ -28,6 +28,8 @@ export class XFlowCanvasComponent implements OnChanges {
   @Input() config: GraphConfig;
 
   @Input() position?: IPosition;
+
+  style = {};
   /** 暂时先传一下，后面改为service全局 */
   @Input() app: Application;
 
@@ -40,6 +42,10 @@ export class XFlowCanvasComponent implements OnChanges {
         config.setGraphContainer(this.rootRef.nativeElement);
         this.app.graphProvider.setGraphOptions(config as unknown as IGraphConfig);
       });
+    }
+    if (changes.position && changes.position.currentValue) {
+      this.style = getPositionStyle(this.position);
+      console.log(this.style);
     }
   }
 }
