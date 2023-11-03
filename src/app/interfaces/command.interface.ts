@@ -16,3 +16,7 @@ export interface IGraphCommand {
    */
   category?: string;
 }
+
+export interface ICommandFactory<Args = any> {
+  createCommand: (commandId: string, args: Args, hooks?) => any;
+}

@@ -1,7 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
-import { IGraphCommand, IGraphCommandService } from '@/app/interfaces';
-import { CmdContext, GraphLoadDataCommand, GraphRenderCommand, NsGraphRender } from '@/app/commands';
-import command = NsGraphRender.command;
+import { ICommandFactory, IGraphCommand, IGraphCommandService } from '@/app/interfaces';
+import { GraphLoadDataCommand, GraphRenderCommand } from '@/app/commands';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +46,7 @@ export class CommandService implements IGraphCommandService {
     this.commandMap.set(graphRenderCommand.token, graphRenderCommand);
   }
 
-  registerCommand(command: IGraphCommand, factory: { createCommand: any }) {
+  registerCommand(command: IGraphCommand, factory: ICommandFactory) {
     if (this.factories.has(command.id)) {
       console.warn(`A command ${command.id} is already register`);
       return;
@@ -56,7 +55,7 @@ export class CommandService implements IGraphCommandService {
     this.registerFactory(command.id, factory);
   }
 
-  registerFactory(commandId: string, factory: any) {
+  registerFactory(commandId: string, factory: ICommandFactory) {
     if (this.hasFactory(commandId)) {
       console.error('cannot register command:', commandId);
     }
@@ -79,7 +78,6 @@ export class CommandService implements IGraphCommandService {
    * Get a visible handler for the given command or `undefined`.
    */
   getFactory(commandId: string) {
-    const factory = this.factories.get(commandId);
-    return factory;
+    return this.factories.get(commandId);
   }
 }
