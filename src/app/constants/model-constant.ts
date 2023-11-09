@@ -23,3 +23,13 @@ export namespace GRAPH_META {
   export const getModel = getModelUtil<IState>(id);
   export const useValue = useModelValueUtil<IState>(id);
 }
+
+/** 画布是否已开启多选 */
+export namespace GRAPH_ENABLE_MULTI_SELECT {
+  export const id = 'GRAPH_ENABLE_MULTI_SELECT';
+  export type IState = {
+    isEnable: boolean;
+  };
+  export const getModel = getModelUtil<IState>(id);
+  export const useValue = useModelValueUtil<IState>(id);
+}

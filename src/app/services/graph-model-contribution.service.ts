@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GraphProviderService } from '@/app/services/graph-provider.service';
 import { IModelService } from '@/app/interfaces/model.interface';
-import { GRAPH_META } from '@/app/constants/model-constant';
+import { GRAPH_ENABLE_MULTI_SELECT, GRAPH_META } from '@/app/constants/model-constant';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +24,16 @@ export class GraphModelContribution {
       }),
       watchChange: async self => {
         self.setValue({ flowId: '-1' });
+      }
+    });
+    /** Graph 多选状态 */
+    registry.registerModel<GRAPH_ENABLE_MULTI_SELECT.IState>({
+      id: GRAPH_ENABLE_MULTI_SELECT.id,
+      getInitialValue: () => ({
+        isEnable: false
+      }),
+      watchChange: async self => {
+        self.setValue({ isEnable: false });
       }
     });
   }
