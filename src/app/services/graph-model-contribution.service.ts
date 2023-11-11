@@ -24,7 +24,9 @@ export class GraphModelContribution {
         flowId: '-1'
       }),
       watchChange: async self => {
-        self.setValue({ flowId: '-1' });
+        return () => {
+          self.setValue({ flowId: '-1' });
+        };
       }
     });
     /** Graph 多选状态 */
@@ -34,7 +36,9 @@ export class GraphModelContribution {
         isEnable: false
       }),
       watchChange: async self => {
-        self.setValue({ isEnable: false });
+        return () => {
+          self.setValue({ isEnable: false });
+        };
       }
     });
     /** Graph 全屏 */
