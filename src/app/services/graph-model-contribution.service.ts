@@ -73,5 +73,15 @@ export class GraphModelContribution {
         return () => graph.off('selection:changed', onChange);
       }
     });
+    /** 选中Cell状态 */
+    registry.registerModel<MODELS.SELECTED_CELL.IState>({
+      id: MODELS.SELECTED_CELL.id,
+      watchChange: async (self, modelService) => {
+        const cellsModel = await MODELS.SELECTED_CELLS.getModel(modelService);
+        return cellsModel.watch((cells = []) => {
+          self.setValue([...cells].pop() || null);
+        });
+      }
+    });
   }
 }
