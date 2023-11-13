@@ -21,7 +21,7 @@ export class CommandService implements IGraphCommandService {
   }
 
   onStart() {
-    this.commandContributionService.onStart();
+    this.commandContributionService.registerGraphCommands(this);
   }
 
   async executeCommand<Args, Result>(commandId: string, args: Args, hooks: any): Promise<void> {

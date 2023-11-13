@@ -11,24 +11,17 @@ const list = [...graphHooks];
   providedIn: 'root'
 })
 export class CommandContributionService {
-  constructor(
-    private commandService: CommandService,
-    private injector: Injector
-  ) {}
+  constructor(private injector: Injector) {}
 
-  onStart() {
-    this.registerGraphCommands();
-  }
-
-  registerGraphCommands() {
+  registerGraphCommands(registry: CommandService) {
     list.forEach(({ command }) => {
-      this.commandService.registerCommand(command, {
+      registry.registerCommand(command, {
         createCommand: (commandId: string, args: any) => {
           const graphProvider = this.injector.get(GraphProviderService);
           const modelService = this.injector.get(ModelService);
           const cmdContext = new CmdContext(graphProvider, modelService);
           cmdContext.setArgs(args);
-          const instance = this.commandService.commandMap.get(commandId);
+          const instance = registry.commandMap.get(commandId);
           instance.ctx = cmdContext;
           return instance;
         }
