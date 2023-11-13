@@ -1,6 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { ICommandFactory, IGraphCommand, IGraphCommandService } from '@/app/interfaces';
 import { GraphLoadDataCommand, GraphRenderCommand } from '@/app/commands';
+import { CommandContributionService } from '@/app/services/command-contribution.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,15 @@ export class CommandService implements IGraphCommandService {
 
   protected readonly commands = new Map<string, IGraphCommand>();
 
-  constructor(private injector: Injector) {
+  constructor(
+    private injector: Injector,
+    public commandContributionService: CommandContributionService
+  ) {
     this.registerXFlowCommand();
+  }
+
+  onStart() {
+    this.commandContributionService.onStart();
   }
 
   async executeCommand<Args, Result>(commandId: string, args: Args, hooks: any): Promise<void> {

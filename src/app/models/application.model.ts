@@ -8,8 +8,7 @@ export class Application {
   constructor(
     public graphProvider: GraphProviderService,
     public commandService: CommandService,
-    public modelService: ModelService,
-    public commandContributionService: CommandContributionService
+    public modelService: ModelService
   ) {}
 
   /**
@@ -17,7 +16,8 @@ export class Application {
    */
   start() {
     // TODO 启动配置
-    this.commandContributionService.start();
+    this.commandService.onStart();
+    this.modelService.onStart();
   }
 
   /**

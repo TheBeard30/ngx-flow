@@ -16,7 +16,7 @@ export class CommandContributionService {
     private injector: Injector
   ) {}
 
-  start() {
+  onStart() {
     this.registerGraphCommands();
   }
 
