@@ -23,7 +23,7 @@ import { CommandService, GraphProviderService, ModelService } from '@/app/flow-c
   styleUrls: ['./x-flow.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class XFlowComponent implements OnInit {
+export class XFlowComponent implements OnInit, AfterViewInit {
   @ViewChild('XFlow') XFlow!: ElementRef;
 
   @ContentChildren('content') content!: QueryList<any>;
@@ -44,7 +44,6 @@ export class XFlowComponent implements OnInit {
   constructor(private injector: Injector) {}
 
   ngOnInit(): void {
-    // this.haveCanvasComponent = this.content.some(child => child && child.isXFlowCanvas);
     this.app = initApp(this.injector);
     this.app.start();
     if (this.onload) {
@@ -59,5 +58,9 @@ export class XFlowComponent implements OnInit {
       );
       this.app.getGraphInstance().then(g => g.centerContent());
     }, 1000);
+  }
+
+  ngAfterViewInit(): void {
+    this.haveCanvasComponent = this.content.some(child => child && child.isXFlowCanvas);
   }
 }
