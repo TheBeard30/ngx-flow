@@ -4,9 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FlowPage } from '@/app/pages/flow/flow.page';
-import { XFlowCanvasComponent, XFlowComponent } from '@/app/components';
-import { CommandInjectionToken } from '@/app/interfaces';
-import { CommandService } from '@/app/services';
+import { XFlowCanvasComponent, XFlowComponent } from 'src/app/flow-core/components';
+import { CommandInjectionToken } from 'src/app/flow-core/interfaces';
+import { CommandService } from 'src/app/flow-core/services';
 
 const COMPONENTS = [XFlowComponent, XFlowCanvasComponent];
 
