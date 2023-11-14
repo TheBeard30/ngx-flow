@@ -19,6 +19,7 @@ export class ModelService implements IModelService {
     this.graphModelContribution.registerModel(this);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   registerModel<T>(options: IModelOptions<T>): void {}
 
   awaitModel<T>(token: Token<T>): Promise<NsModel.IModel<T>> {

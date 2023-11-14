@@ -8,5 +8,6 @@ import { IModelService } from '@/app/flow-core/interfaces/model.interface';
 export class CommandModelContributionService {
   constructor(private command: CommandService) {}
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   registerModel(registry: IModelService) {}
 }
