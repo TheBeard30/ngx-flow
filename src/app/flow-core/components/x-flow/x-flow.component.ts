@@ -32,6 +32,8 @@ export class XFlowComponent implements OnInit {
 
   @Input() graphConfig: any;
 
+  @Input() onload?: (app: Application) => void;
+
   @Input() graphData!: IGraphData;
 
   haveCanvasComponent = false;
@@ -39,25 +41,23 @@ export class XFlowComponent implements OnInit {
   app: Application;
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(
-    private commandService: CommandService,
-    private graphProvider: GraphProviderService,
-    private injector: Injector
-  ) {}
+  constructor(private injector: Injector) {}
 
   ngOnInit(): void {
     // this.haveCanvasComponent = this.content.some(child => child && child.isXFlowCanvas);
     this.app = initApp(this.injector);
     this.app.start();
+    if (this.onload) {
+      this.onload(this.app);
+    }
     setTimeout(async () => {
-      console.log('commandService>>>', this.commandService);
       // await this.app.commandService.executeCommand(XFlowGraphCommands.GRAPH_LAYOUT.id, { graphData: this.graphData });
       await this.app.commandService.executeCommand(
         XFlowGraphCommands.GRAPH_RENDER.id,
         { graphData: this.graphData },
         null
       );
-      this.graphProvider.getGraphInstance().then(g => g.centerContent());
+      this.app.getGraphInstance().then(g => g.centerContent());
     }, 1000);
   }
 }

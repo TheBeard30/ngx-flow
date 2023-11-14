@@ -35,4 +35,8 @@ export class FlowPage {
       }
     ]
   } as any;
+
+  onload = app => {
+    console.log('flow app>>>', app);
+  };
 }
