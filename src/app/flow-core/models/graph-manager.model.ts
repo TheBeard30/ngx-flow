@@ -20,8 +20,7 @@ export class GraphManager implements IGraphManger {
         container: graphContainer,
         width: clientWidth,
         height: clientHeight,
-        grid: true,
-        background: { color: '#f5f5f5' }
+        ...this.config.x6Options
       });
       this.graphMap.set(graphId, graph);
     }

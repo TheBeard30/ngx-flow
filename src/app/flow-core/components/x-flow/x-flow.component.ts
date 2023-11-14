@@ -11,7 +11,13 @@ import {
   QueryList,
   ViewChild
 } from '@angular/core';
-import { CommandInjectionToken, IGraphCommandService, IGraphData, IGraphMeta } from '@/app/flow-core/interfaces';
+import {
+  CommandInjectionToken,
+  IGraphCommandService,
+  IGraphConfig,
+  IGraphData,
+  IGraphMeta
+} from '@/app/flow-core/interfaces';
 import { Application } from '@/app/flow-core/models';
 import { initApp } from '@/app/flow-core/utils/app.util';
 import { XFlowGraphCommands } from '@/app/flow-core/constants';
@@ -30,7 +36,7 @@ export class XFlowComponent implements OnInit, AfterViewInit {
 
   @Input() meta!: IGraphMeta;
 
-  @Input() graphConfig: any;
+  @Input() graphConfig: IGraphConfig;
 
   @Input() onload?: (app: Application) => void;
 
