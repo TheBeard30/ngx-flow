@@ -23,13 +23,31 @@ export class GraphManager implements IGraphManger {
         ...this.config.x6Options
       });
       this.graphMap.set(graphId, graph);
+      graph.on('node:moved', ({ node }) => {
+        const nodeData = node.getData();
+        const position = node.position();
+        node.setData({
+          ...nodeData,
+          x: position?.x,
+          y: position?.y
+        });
+      });
+      graph.on('node:resized', ({ node }) => {
+        const nodeData = node.getData();
+        const size = node.size();
+        node.setData({
+          ...nodeData,
+          width: size?.width,
+          height: size?.height
+        });
+      });
     }
 
     return Promise.resolve(graph);
   }
 
   // TODO TEST
-  setConfig(config) {
+  setConfig(config: IGraphConfig) {
     this.config = config;
   }
 }
