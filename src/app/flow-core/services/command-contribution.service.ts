@@ -16,11 +16,11 @@ export class CommandContributionService {
   registerGraphCommands(registry: CommandService) {
     list.forEach(({ command }) => {
       registry.registerCommand(command, {
-        createCommand: (commandId: string, args: any) => {
+        createCommand: (commandId: string, args: any, hooks) => {
           const graphProvider = this.injector.get(GraphProviderService);
           const modelService = this.injector.get(ModelService);
           const cmdContext = new CmdContext(graphProvider, modelService);
-          cmdContext.setArgs(args);
+          cmdContext.setArgs(args, hooks);
           const instance = registry.commandMap.get(commandId);
           instance.ctx = cmdContext;
           return instance;

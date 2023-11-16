@@ -27,7 +27,7 @@ export class CommandService implements IGraphCommandService {
   async executeCommand<Args, Result>(commandId: string, args: Args, hooks: any): Promise<void> {
     const factory = this.getFactory(commandId);
     if (factory) {
-      const cmdHandle = factory.createCommand(commandId, args);
+      const cmdHandle = factory.createCommand(commandId, args, hooks);
       cmdHandle.execute();
     }
 

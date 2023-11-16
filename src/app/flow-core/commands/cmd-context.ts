@@ -6,6 +6,8 @@ export class CmdContext<Args = any> {
   private graph: Graph;
   /** command 的参数 */
   private args: Args;
+  /** hook */
+  private runtimeHooks = [];
   constructor(
     // private commandService: IGraphCommandService,
     private graphProvider: GraphProviderService,
@@ -34,8 +36,14 @@ export class CmdContext<Args = any> {
     return instance;
   };
 
-  setArgs(args: Args) {
+  /**
+   * 设置参数  hook的用法还要研究
+   * @param args
+   * @param runtimeHooks
+   */
+  setArgs(args: Args, runtimeHooks = []) {
     this.args = args;
+    this.runtimeHooks = runtimeHooks;
   }
 
   getArgs() {
