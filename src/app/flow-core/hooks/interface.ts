@@ -26,6 +26,20 @@ export interface IHookHub<Args, Result> {
   call: (args: Args, handler: IMainHandler<Args, Result>, hookMetas: IRuntimeHook<Args>) => Promise<Result | undefined>;
 }
 
+/** hooks 执行的策略 */
+export enum ScheduleTypeEnum {
+  /** pipeline串行执行：所有async任务完成后再执行回调 */
+  'ASYNC_SRRIES' = 'ASYNC_SRRIES',
+  /** async并行执行：等待Promise.all所有async任务后再执行回调 */
+  'ASYNC_PARALLEL' = 'ASYNC_PARALLEL'
+}
+
+/** 执行的策略  */
+export interface ScheduleOptions {
+  type: ScheduleTypeEnum;
+  options: any;
+}
+
 /** 内置的Hooks */
 export type IEvent<Key extends keyof EventArgs> = NsGraph.IEvent<Key>;
 export type IEventCollection = NsGraph.IEvent[];
@@ -59,4 +73,20 @@ export interface IRegisterHookFn<T = IHooks> {
 
 export interface IRegisterHookHubFn<T = IHooks> {
   (registry: IHookService<T>): any;
+}
+
+/**
+ * 扩展hook
+ */
+export interface IHookContribution<T extends IHooks> {
+  /**
+   * 注册hook
+   * @param registry the HookRegistry.
+   */
+  registerHook: (hooks: T) => Promise<any>;
+  /**
+   * 注册hookhub
+   * @param registry the HookRegistry.
+   */
+  registerHookHub: (registry: IHookService<T>) => Promise<any>;
 }

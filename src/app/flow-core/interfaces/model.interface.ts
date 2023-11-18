@@ -1,4 +1,5 @@
 import { asyncScheduler, distinctUntilChanged, filter, Observable, throttleTime } from 'rxjs';
+import { Token } from '@/app/flow-core/common/types';
 
 export namespace NsModel {
   /** model的类型 */
@@ -52,12 +53,6 @@ export namespace NsModel {
     ) as Observable<T>;
   }
 }
-
-export type Abstract<T> = {
-  prototype: T;
-};
-export type Newable<T> = new (...args: any[]) => T;
-export type Token<T> = string | symbol | Newable<T> | Abstract<T>;
 
 /**
  * register Model 需要的Options
