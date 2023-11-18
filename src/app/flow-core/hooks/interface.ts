@@ -29,7 +29,7 @@ export interface IHookHub<Args, Result> {
 /** 内置的Hooks */
 export type IEvent<Key extends keyof EventArgs> = NsGraph.IEvent<Key>;
 export type IEventCollection = NsGraph.IEvent[];
-export type IEventSubscription = Disposable[];
+export type IEventSubscription = any[];
 
 export interface IGeneralAppService {
   graph: Graph;
@@ -48,8 +48,8 @@ export const initHooks = () => ({
 export type IHooks = ReturnType<typeof initHooks>;
 
 export interface IHookService<T = IHooks> {
-  registerHookHub: (hookName: string, hook: HookHub) => Disposable;
-  registerHook: (registerHookFunc: IRegisterHookFn<T>) => Disposable;
+  registerHookHub: (hookName: string, hook: HookHub) => any;
+  registerHook: (registerHookFunc: IRegisterHookFn<T>) => any;
   hookProvider: () => T;
 }
 

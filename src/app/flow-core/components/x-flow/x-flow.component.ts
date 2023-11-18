@@ -10,11 +10,11 @@ import {
   QueryList,
   ViewChild
 } from '@angular/core';
-import { IGraphConfig, IGraphData, IGraphMeta } from '@/app/flow-core/interfaces';
 import { Application } from '@/app/flow-core/models';
 import { initApp } from '@/app/flow-core/utils/app.util';
 import { XFlowGraphCommands } from '@/app/flow-core/constants';
 import { HookConfig } from '@/app/flow-core/hooks/hook-config';
+import { IGraphConfig, NsGraph } from '@/app/flow-core/interfaces';
 
 @Component({
   selector: 'app-x-flow',
@@ -27,13 +27,13 @@ export class XFlowComponent implements OnInit, AfterViewInit {
 
   @ContentChildren('content') content!: QueryList<any>;
 
-  @Input() meta!: IGraphMeta;
+  @Input() meta!: NsGraph.IGraphMeta;
 
   @Input() graphConfig: IGraphConfig;
 
   @Input() onload?: (app: Application) => void;
 
-  @Input() graphData!: IGraphData;
+  @Input() graphData!: NsGraph.IGraphData;
 
   @Input() hookConfig?: HookConfig;
 

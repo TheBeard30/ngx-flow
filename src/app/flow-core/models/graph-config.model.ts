@@ -1,5 +1,5 @@
 import type { Graph as X6Graph } from '@antv/x6';
-import { IEvent } from '@/app/flow-core/interfaces';
+import { NsGraph } from '@/app/flow-core/interfaces';
 import { MAX_ZOOM, MIN_ZOOM } from '@/app/flow-core/constants';
 
 export class GraphConfig {
@@ -21,7 +21,7 @@ export class GraphConfig {
 
   private edgeRender = new Map();
 
-  private events: IEvent[] = [];
+  private events: NsGraph.IEvent[] = [];
 
   constructor() {
     this.graphId = uuidv4();

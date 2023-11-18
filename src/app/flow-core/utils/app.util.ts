@@ -1,7 +1,7 @@
 import { Application } from '@/app/flow-core/models';
 import { Injector } from '@angular/core';
 import { Cell, Edge, Node } from '@antv/x6';
-import { IEdgeConfig, INodeConfig } from '@/app/flow-core/interfaces';
+import { NsGraph } from '@/app/flow-core/interfaces';
 
 export const initApp = (injector: Injector) => {
   return injector.get(Application);
@@ -10,7 +10,7 @@ export const initApp = (injector: Injector) => {
 export const node2Json = (cell: Node) => {
   const children = cell.getChildren();
   const size = cell.getSize();
-  const data = cell.getData<INodeConfig>() || ({} as INodeConfig);
+  const data = cell.getData<NsGraph.INodeConfig>() || ({} as NsGraph.INodeConfig);
   const position = cell.getPosition();
   const groupId = cell.getParentId();
   const { isCollapsed } = data;
@@ -43,8 +43,8 @@ export const edge2Json = (cell: Edge) => {
 };
 
 export const cellsToJson = (cells: Cell<Cell.Properties>[]) => {
-  const nodes: INodeConfig[] = [];
-  const edges: IEdgeConfig[] = [];
+  const nodes: NsGraph.INodeConfig[] = [];
+  const edges: NsGraph.IEdgeConfig[] = [];
 
   const cell2Json = (cell: Cell) => {
     if (cell.isNode()) {

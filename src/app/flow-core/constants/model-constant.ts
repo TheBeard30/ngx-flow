@@ -1,4 +1,4 @@
-import { IGraphMeta } from '@/app/flow-core/interfaces';
+import { NsGraph } from '@/app/flow-core/interfaces';
 import { IModelService, Token } from '@/app/flow-core/interfaces/model.interface';
 import { Node, Edge, CellView, Cell } from '@antv/x6';
 
@@ -20,7 +20,7 @@ export const useModelValueUtil =
 /** 画布元数据状态 */
 export namespace GRAPH_META {
   export const id = 'GRAPH_META';
-  export type IState = IGraphMeta;
+  export type IState = NsGraph.IGraphMeta;
   export const getModel = getModelUtil<IState>(id);
   export const useValue = useModelValueUtil<IState>(id);
 }
