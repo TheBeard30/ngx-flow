@@ -13,13 +13,17 @@ import { HookConfig } from '@/app/flow-core/hooks/hook-config';
 export class HookService<T extends IHooks> implements IHookService<T> {
   hooks: T;
 
+  hookConfig: HookConfig;
+
   constructor(
     private runtimeHookContribution: RuntimeHookContribution,
     private graphEventHookContribution: GraphEventHookContribution,
     private commandContributionService: CommandContributionService
   ) {
     this.hooks = initHooks() as T;
-    this.runtimeHookContribution.hookConfig = new HookConfig();
+    const hookConfig = new HookConfig();
+    this.hookConfig = hookConfig;
+    this.runtimeHookContribution.hookConfig = hookConfig;
   }
 
   hookProvider = () => this.hooks;
@@ -42,7 +46,7 @@ export class HookService<T extends IHooks> implements IHookService<T> {
   /** app启动时，收集hook扩展点的注册项 */
   onStart() {
     this.runtimeHookContribution.registerHookHub(this);
-    this.graphEventHookContribution.registerHookHub(this);
+    this.graphEventHookContribution.registerHookHub();
     this.commandContributionService.registerHookHub(this as any);
     this.runtimeHookContribution.registerHook(this.hooks);
     this.graphEventHookContribution.registerHook(this.hooks);
@@ -50,6 +54,7 @@ export class HookService<T extends IHooks> implements IHookService<T> {
   }
 
   setHookConfig(hookConfig: HookConfig) {
+    this.hookConfig = hookConfig;
     this.runtimeHookContribution.hookConfig = hookConfig;
   }
 }

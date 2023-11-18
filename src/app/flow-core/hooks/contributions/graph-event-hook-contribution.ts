@@ -6,10 +6,10 @@ import { Injectable } from '@angular/core';
 })
 export class GraphEventHookContribution implements IHookContribution<IHooks> {
   registerHook(hooks: IHooks): Promise<any> {
-    return Promise.resolve(undefined);
+    return Promise.resolve({});
   }
 
-  registerHookHub(registry: IHookService<IHooks>): Promise<any> {
+  registerHookHub(): Promise<any> {
     return Promise.resolve(undefined);
   }
 }
