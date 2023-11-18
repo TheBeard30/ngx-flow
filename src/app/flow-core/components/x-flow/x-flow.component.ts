@@ -4,24 +4,17 @@ import {
   Component,
   ContentChildren,
   ElementRef,
-  Inject,
   Injector,
   Input,
   OnInit,
   QueryList,
   ViewChild
 } from '@angular/core';
-import {
-  CommandInjectionToken,
-  IGraphCommandService,
-  IGraphConfig,
-  IGraphData,
-  IGraphMeta
-} from '@/app/flow-core/interfaces';
+import { IGraphConfig, IGraphData, IGraphMeta } from '@/app/flow-core/interfaces';
 import { Application } from '@/app/flow-core/models';
 import { initApp } from '@/app/flow-core/utils/app.util';
 import { XFlowGraphCommands } from '@/app/flow-core/constants';
-import { CommandService, GraphProviderService, ModelService } from '@/app/flow-core/services';
+import { HookConfig } from '@/app/flow-core/hooks/hook-config';
 
 @Component({
   selector: 'app-x-flow',
@@ -41,6 +34,8 @@ export class XFlowComponent implements OnInit, AfterViewInit {
   @Input() onload?: (app: Application) => void;
 
   @Input() graphData!: IGraphData;
+
+  @Input() hookConfig?: HookConfig;
 
   haveCanvasComponent = false;
 
