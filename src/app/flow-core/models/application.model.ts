@@ -10,7 +10,7 @@ export class Application {
     public graphProvider: GraphProviderService,
     public commandService: CommandService,
     public modelService: ModelService,
-    public hookService: HookService
+    public hookService: HookService<any>
   ) {}
 
   /**

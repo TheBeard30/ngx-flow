@@ -5,11 +5,12 @@ import { RuntimeHookContribution } from '@/app/flow-core/hooks/contributions/run
 import { GraphEventHookContribution } from '@/app/flow-core/hooks/contributions/graph-event-hook-contribution';
 import { CommandContributionService } from '@/app/flow-core/services/command-contribution.service';
 import { Graph } from '@antv/x6';
+import { HookConfig } from '@/app/flow-core/hooks/hook-config';
 
 @Injectable({
   providedIn: 'root'
 })
-export class HookService<T extends IHooks = any> implements IHookService<T> {
+export class HookService<T extends IHooks> implements IHookService<T> {
   hooks: T;
 
   constructor(
@@ -18,6 +19,7 @@ export class HookService<T extends IHooks = any> implements IHookService<T> {
     private commandContributionService: CommandContributionService
   ) {
     this.hooks = initHooks() as T;
+    this.runtimeHookContribution.hookConfig = new HookConfig();
   }
 
   hookProvider = () => this.hooks;
@@ -41,9 +43,13 @@ export class HookService<T extends IHooks = any> implements IHookService<T> {
   onStart() {
     this.runtimeHookContribution.registerHookHub(this);
     this.graphEventHookContribution.registerHookHub(this);
-    this.commandContributionService.registerHookHub(this);
+    this.commandContributionService.registerHookHub(this as any);
     this.runtimeHookContribution.registerHook(this.hooks);
     this.graphEventHookContribution.registerHook(this.hooks);
-    this.commandContributionService.registerHook(this.hooks);
+    this.commandContributionService.registerHook(this.hooks as any);
+  }
+
+  setHookConfig(hookConfig: HookConfig) {
+    this.runtimeHookContribution.hookConfig = hookConfig;
   }
 }

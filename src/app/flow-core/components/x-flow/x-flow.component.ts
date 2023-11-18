@@ -6,8 +6,10 @@ import {
   ElementRef,
   Injector,
   Input,
+  OnChanges,
   OnInit,
   QueryList,
+  SimpleChanges,
   ViewChild
 } from '@angular/core';
 import { Application } from '@/app/flow-core/models';
@@ -15,6 +17,7 @@ import { initApp } from '@/app/flow-core/utils/app.util';
 import { XFlowGraphCommands } from '@/app/flow-core/constants';
 import { HookConfig } from '@/app/flow-core/hooks/hook-config';
 import { IGraphConfig, NsGraph } from '@/app/flow-core/interfaces';
+import { HookService } from '@/app/flow-core/services/hook.service';
 
 @Component({
   selector: 'app-x-flow',
@@ -22,7 +25,7 @@ import { IGraphConfig, NsGraph } from '@/app/flow-core/interfaces';
   styleUrls: ['./x-flow.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class XFlowComponent implements OnInit, AfterViewInit {
+export class XFlowComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('XFlow') XFlow!: ElementRef;
 
   @ContentChildren('content') content!: QueryList<any>;
@@ -41,8 +44,16 @@ export class XFlowComponent implements OnInit, AfterViewInit {
 
   app: Application;
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private injector: Injector) {}
+  constructor(
+    private injector: Injector,
+    private hookService: HookService<any>
+  ) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.hookConfig && changes.hookConfig.currentValue) {
+      this.hookService.setHookConfig(this.hookConfig);
+    }
+  }
 
   ngOnInit(): void {
     this.app = initApp(this.injector);

@@ -1,6 +1,7 @@
 import { NsGraph } from '@/app/flow-core/interfaces';
-import { IModelService, Token } from '@/app/flow-core/interfaces/model.interface';
+import { IModelService } from '@/app/flow-core/interfaces/model.interface';
 import { Node, Edge, CellView, Cell } from '@antv/x6';
+import { Token } from '@/app/flow-core/common/types';
 
 /** useModel的Utils */
 export const getModelUtil =

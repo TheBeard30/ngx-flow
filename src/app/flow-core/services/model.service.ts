@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { IModelOptions, IModelService, NsModel, Token } from '@/app/flow-core/interfaces/model.interface';
+import { IModelOptions, IModelService, NsModel } from '@/app/flow-core/interfaces/model.interface';
 import { CommandModelContributionService } from '@/app/flow-core/services/command-model-contribution.service';
 import { GraphModelContribution } from '@/app/flow-core/services/graph-model-contribution.service';
 import { GraphProviderService } from '@/app/flow-core/services/graph-provider.service';
+import { Token } from '@/app/flow-core/common/types';
 
 @Injectable({
   providedIn: 'root'
