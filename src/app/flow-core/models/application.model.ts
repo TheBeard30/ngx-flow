@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { CommandService, GraphProviderService, ModelService } from '@/app/flow-core/services';
 import { CommandContributionService } from '@/app/flow-core/services/command-contribution.service';
 import { cellsToJson } from '@/app/flow-core/utils/app.util';
+import { HookService } from '@/app/flow-core/services/hook.service';
 
 @Injectable({ providedIn: 'root' })
 export class Application {
   constructor(
     public graphProvider: GraphProviderService,
     public commandService: CommandService,
-    public modelService: ModelService
+    public modelService: ModelService,
+    public hookService: HookService
   ) {}
 
   /**
@@ -18,6 +20,7 @@ export class Application {
     // TODO 启动配置
     this.commandService.onStart();
     this.modelService.onStart();
+    this.hookService.onStart();
   }
 
   /**
