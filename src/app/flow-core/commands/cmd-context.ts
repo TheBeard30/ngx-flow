@@ -1,9 +1,9 @@
-import { GraphProviderService, ModelService } from '@/app/flow-core/services';
+import { CommandService, GraphProviderService, ModelService } from '@/app/flow-core/services';
 import { Graph } from '@antv/x6';
 import { HookService } from '@/app/flow-core/services/hook.service';
-import { IRuntimeHook } from '@/app/flow-core/hooks/interface';
+import { IHooks, IRuntimeHook } from '@/app/flow-core/hooks/interface';
 
-export class CmdContext<Args = any> {
+export class CmdContext<Args = any, Result = any, Hooks extends IHooks = IHooks> {
   /** x6 实例的缓存 */
   private graph: Graph;
   /** command 的参数 */
@@ -11,10 +11,10 @@ export class CmdContext<Args = any> {
   /** hook */
   private runtimeHooks: IRuntimeHook = [];
   constructor(
-    // private commandService: IGraphCommandService,
+    private commandService: CommandService,
     private graphProvider: GraphProviderService,
     private modelService: ModelService,
-    private hookService: HookService<any>
+    private hookService: HookService<Hooks>
   ) {}
 
   /** 获取Context Service */
@@ -24,7 +24,7 @@ export class CmdContext<Args = any> {
 
   /** 获取Command Service */
   getCommands = () => {
-    // return this.commandService;
+    return this.commandService;
   };
 
   /** 获取 graph */

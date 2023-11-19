@@ -6,7 +6,7 @@ import { IGraphCommand } from '@/app/flow-core/interfaces';
 export * from './graph-render';
 export * from './graph-load-data';
 
-export const hookHubList: {
+export const graphHookHubList: {
   command: IGraphCommand;
   hookKey: string;
   createHook?: () => HookHub;

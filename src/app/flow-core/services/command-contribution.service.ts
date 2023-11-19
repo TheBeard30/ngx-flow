@@ -1,4 +1,5 @@
-import { hookHubList as graphHooks } from '@/app/flow-core/commands/graph';
+import { graphHookHubList } from '@/app/flow-core/commands/graph';
+import { nodeHookHubList } from '@/app/flow-core/commands/node';
 import { CommandService } from '@/app/flow-core/services/command.service';
 import { Injectable, Injector } from '@angular/core';
 import { CmdContext } from '@/app/flow-core/commands';
@@ -9,7 +10,7 @@ import { ICmdHooks } from '@/app/flow-core/commands/interface';
 import { HookHub } from '@/app/flow-core/hooks/hookhub';
 import { HookService } from '@/app/flow-core/services/hook.service';
 
-const hookHubList = [...graphHooks];
+const hookHubList = [...graphHookHubList, ...nodeHookHubList];
 
 const defaultHookFactory = () => new HookHub();
 
@@ -26,7 +27,8 @@ export class CommandContributionService implements IHookContribution<ICmdHooks> 
           const graphProvider = this.injector.get(GraphProviderService);
           const modelService = this.injector.get(ModelService);
           const hookService = this.injector.get(HookService);
-          const cmdContext = new CmdContext(graphProvider, modelService, hookService);
+          const commandService = this.injector.get(CommandService);
+          const cmdContext = new CmdContext(commandService, graphProvider, modelService, hookService);
           cmdContext.setArgs(args, hooks);
           const instance = registry.commandMap.get(commandId);
           instance.ctx = cmdContext;

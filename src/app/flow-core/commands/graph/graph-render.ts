@@ -1,11 +1,12 @@
 import { XFlowGraphCommands } from '@/app/flow-core/constants';
-import { CmdContext } from '@/app/flow-core/commands';
+import { CmdContext, XFlowNodeCommands } from '@/app/flow-core/commands';
 import { Injectable } from '@angular/core';
 import { NsGraph } from '@/app/flow-core/interfaces';
 import { HookHub } from '@/app/flow-core/hooks/hookhub';
 import { IHooks } from '@/app/flow-core/hooks/interface';
 import { Graph, Node, Edge } from '@antv/x6';
 import { isEqual } from 'lodash';
+import { IArgsBase } from '@/app/flow-core/commands/interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +15,15 @@ export class GraphRenderCommand {
   token: string = XFlowGraphCommands.GRAPH_RENDER.id;
 
   // 需要一个上下文
-  ctx: CmdContext;
+  ctx: CmdContext<NsGraphRender.IArgs, NsGraphRender.IResult, NsGraphRender.ICmdHooks>;
 
   async execute() {
     const graph = await this.ctx.getX6Graph();
     const { args, hooks: runtimeHook } = this.ctx.getArgs();
     const { graphData } = args;
     const { nodes, edges } = graphData;
-    graph.addNodes(nodes);
-    graph.addEdges(edges);
+    // graph.addNodes(nodes);
+
     const hooks = this.ctx.getHooks();
     await hooks.graphRender.call(
       args,
@@ -43,9 +44,10 @@ export class GraphRenderCommand {
       },
       runtimeHook
     );
+    graph.addEdges(edges);
   }
 
-  doLoadGraph(
+  async doLoadGraph(
     graph: Graph,
     graphData: NsGraph.IGraphData,
     isNodeEqual?: (curNode: NsGraph.INodeConfig, nextNode: NsGraph.INodeConfig) => boolean,
@@ -58,6 +60,24 @@ export class GraphRenderCommand {
       isNodeEqual,
       isEdgeEqual
     );
+    /** 新增节点/边 */
+    for (const nodeConfig of addNodeConfigs) {
+      await commandService.executeCommand(
+        XFlowNodeCommands.ADD_NODE.id,
+        {
+          nodeConfig,
+          options: {
+            isRenderGraph: true
+          }
+        },
+        {
+          name: 'remove servcie',
+          handler: async args => {
+            delete args.createNodeService;
+          }
+        }
+      );
+    }
   }
 
   private graphDataDiff(
@@ -72,7 +92,7 @@ export class GraphRenderCommand {
     for (const nodeConfig of nodeConfigs) {
       const node = graph.getCellById(nodeConfig?.id);
       if (!node) {
-        addNodeConfigs.push(node);
+        addNodeConfigs.push(nodeConfig);
       }
     }
     const retainNodes: Node[] = [];
@@ -159,7 +179,7 @@ export namespace NsGraphRender {
   /** hookName */
   export const hookKey = 'graphRender';
 
-  export interface IArgs {
+  export interface IArgs extends IArgsBase {
     /** 画布渲染之前的钩子(比如从服务端获取数据、对数据做布局处理等) */
     beforeRender?: (graphMeta?: NsGraph.IGraphMeta) => Promise<NsGraph.IGraphData>;
     /** 画布渲染完成之后的钩子 */

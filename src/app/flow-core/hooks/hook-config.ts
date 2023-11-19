@@ -25,9 +25,16 @@ export class HookConfig {
   getConfig = async () => {
     const options = {
       CONFIG_TYPE: this.CONFIG_TYPE,
-      hookRegisterFn: this.hookRegisterFunc,
-      hookhubRegisterFn: this.hookhubRegisterFn
+      hookRegisterFn: this.hookRegisterFunc || noop,
+      hookhubRegisterFn: this.hookhubRegisterFn || noop
     };
     return options;
   };
 }
+
+export const noop = () => {
+  return {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    dispose: () => {}
+  };
+};
