@@ -59,7 +59,7 @@ export class CmdContext<Args = any> {
       getX6Graph: this.getX6Graph,
       getGraphConfig: this.getGraphConfig
     };
-    return { args: args, hook: this.runtimeHooks };
+    return { args: args, hooks: this.runtimeHooks };
   }
 
   getHooks = () => {

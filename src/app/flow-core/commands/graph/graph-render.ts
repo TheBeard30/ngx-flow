@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
 import { NsGraph } from '@/app/flow-core/interfaces';
 import { HookHub } from '@/app/flow-core/hooks/hookhub';
 import { IHooks } from '@/app/flow-core/hooks/interface';
+import { Graph, Node, Edge } from '@antv/x6';
+import { isEqual } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +18,137 @@ export class GraphRenderCommand {
 
   async execute() {
     const graph = await this.ctx.getX6Graph();
-    const { args } = this.ctx.getArgs();
+    const { args, hooks: runtimeHook } = this.ctx.getArgs();
     const { graphData } = args;
     const { nodes, edges } = graphData;
-
     graph.addNodes(nodes);
     graph.addEdges(edges);
+    const hooks = this.ctx.getHooks();
+    await hooks.graphRender.call(
+      args,
+      async handlerArgs => {
+        const x6Graph = await this.ctx.getX6Graph();
+        // const graphMeta = await this.ctx.getGraphMeta()
+        const { beforeRender, graphData, isNodeEqual, isEdgeEqual, afterRender } = handlerArgs;
+
+        /** 如果用户自定义beforeRender方法 */
+        // beforeRender && beforeRender(graphMeta)
+
+        await this.doLoadGraph(x6Graph, graphData, isNodeEqual, isEdgeEqual);
+
+        /** 如果用户自定义afterRender方法 */
+        // afterRender && afterRender(graphData, graphMeta)
+
+        return {};
+      },
+      runtimeHook
+    );
+  }
+
+  doLoadGraph(
+    graph: Graph,
+    graphData: NsGraph.IGraphData,
+    isNodeEqual?: (curNode: NsGraph.INodeConfig, nextNode: NsGraph.INodeConfig) => boolean,
+    isEdgeEqual?: (curEdge: NsGraph.IEdgeConfig, nextEdge: NsGraph.IEdgeConfig) => boolean
+  ) {
+    const commandService = this.ctx.getCommands();
+    const { addNodeConfigs, addEdgeConfigs, removeNodes, removeEdges, updateNodes, updateEdges } = this.graphDataDiff(
+      graph,
+      graphData,
+      isNodeEqual,
+      isEdgeEqual
+    );
+  }
+
+  private graphDataDiff(
+    graph: Graph,
+    graphData: NsGraph.IGraphData,
+    isNodeEqual?: (curNode: NsGraph.INodeConfig, nextNode: NsGraph.INodeConfig) => boolean,
+    isEdgeEqual?: (curEdge: NsGraph.IEdgeConfig, nextNode: NsGraph.IEdgeConfig) => boolean
+  ) {
+    const { nodes: nodeConfigs, edges: edgeConfigs } = graphData;
+    /** 新增节点 */
+    const addNodeConfigs = [];
+    for (const nodeConfig of nodeConfigs) {
+      const node = graph.getCellById(nodeConfig?.id);
+      if (!node) {
+        addNodeConfigs.push(node);
+      }
+    }
+    const retainNodes: Node[] = [];
+    const updateNodes: Node[] = [];
+    const removeNodes: Node[] = [];
+    const allNodes = graph.getNodes();
+    for (const node of allNodes) {
+      const findNodeConfig = nodeConfigs.find(n => n?.id === node?.id);
+      if (!findNodeConfig) {
+        removeNodes.push(node);
+      } else {
+        let judgeResult = true;
+        if (isEdgeEqual) {
+          /** 用户自定义节点是否相等的方法 */
+          judgeResult = isNodeEqual(node?.data, findNodeConfig);
+        } else {
+          /** 默认的判断节点是否相等的逻辑 */
+          if (node?.data && findNodeConfig) {
+            judgeResult = NsGraphUtils.isNodeEqual(node?.data, findNodeConfig);
+          }
+        }
+        if (!judgeResult) {
+          node.setData(findNodeConfig, {
+            deep: false
+          });
+        }
+        judgeResult ? retainNodes.push(node) : updateNodes.push(node);
+      }
+    }
+
+    /** 新增边数据 */
+    const addEdgeConfigs: NsGraph.IEdgeConfig[] = [];
+    for (const edgeConfig of edgeConfigs) {
+      const edge = graph.getCellById(edgeConfig?.id);
+      if (!edge) {
+        addNodeConfigs.push(edgeConfig);
+      }
+    }
+    /** 保持、更新、移除节点 */
+    const retainEdges: Edge[] = [];
+    const updateEdges: Edge[] = [];
+    const removeEdges: Edge[] = [];
+    const allEdges = graph.getEdges();
+    for (const edge of allEdges) {
+      const findEdgeConfig = edgeConfigs.find(e => e?.id === edge?.id);
+      if (!findEdgeConfig) {
+        removeEdges.push(edge);
+      } else {
+        let judgeResult = true;
+        if (isEdgeEqual) {
+          /** 用户自定义边是否相等的方法 */
+          judgeResult = isEdgeEqual(edge?.data, findEdgeConfig);
+        } else {
+          /** 默认的判断边是否相等的逻辑 */
+          if (edge?.data && findEdgeConfig) {
+            judgeResult = NsGraphUtils.isEdgeEqual(edge?.data, findEdgeConfig);
+          }
+        }
+        if (!judgeResult) {
+          edge.setData(findEdgeConfig, {
+            deep: false
+          });
+        }
+        judgeResult ? retainEdges.push(edge) : updateEdges.push(edge);
+      }
+    }
+    return {
+      addNodeConfigs,
+      addEdgeConfigs,
+      retainNodes,
+      retainEdges,
+      removeNodes,
+      removeEdges,
+      updateNodes,
+      updateEdges
+    };
   }
 }
 
@@ -53,5 +180,17 @@ export namespace NsGraphRender {
   /** hooks 类型 */
   export interface ICmdHooks extends IHooks {
     graphRender: HookHub<IArgs, IResult>;
+  }
+}
+
+export namespace NsGraphUtils {
+  export function isNodeEqual(curNodeConfig: NsGraph.INodeConfig, nextNodeConfig: NsGraph.INodeConfig) {
+    /** XFlow默认的判断节点是否相等的逻辑 */
+    return isEqual(curNodeConfig, nextNodeConfig);
+  }
+
+  export function isEdgeEqual(curEdgeConfig: NsGraph.IEdgeConfig, nextEdgeConfig: NsGraph.IEdgeConfig) {
+    /** XFlow默认的判断边是否相等的逻辑 */
+    return isEqual(curEdgeConfig, nextEdgeConfig);
   }
 }
