@@ -1,5 +1,5 @@
 import { XFlowGraphCommands } from '@/app/flow-core/constants';
-import { CmdContext, XFlowNodeCommands } from '@/app/flow-core/commands';
+import { CmdContext, XFlowEdgeCommands, XFlowNodeCommands } from '@/app/flow-core/commands';
 import { Injectable } from '@angular/core';
 import { NsGraph } from '@/app/flow-core/interfaces';
 import { HookHub } from '@/app/flow-core/hooks/hookhub';
@@ -18,12 +18,7 @@ export class GraphRenderCommand {
   ctx: CmdContext<NsGraphRender.IArgs, NsGraphRender.IResult, NsGraphRender.ICmdHooks>;
 
   async execute() {
-    const graph = await this.ctx.getX6Graph();
     const { args, hooks: runtimeHook } = this.ctx.getArgs();
-    const { graphData } = args;
-    const { nodes, edges } = graphData;
-    // graph.addNodes(nodes);
-
     const hooks = this.ctx.getHooks();
     await hooks.graphRender.call(
       args,
@@ -44,7 +39,6 @@ export class GraphRenderCommand {
       },
       runtimeHook
     );
-    graph.addEdges(edges);
   }
 
   async doLoadGraph(
@@ -74,6 +68,24 @@ export class GraphRenderCommand {
           name: 'remove servcie',
           handler: async args => {
             delete args.createNodeService;
+          }
+        }
+      );
+    }
+    console.log('addEdgeConfigs>>>', addEdgeConfigs);
+    for (const edgeConfig of addEdgeConfigs) {
+      await commandService.executeCommand(
+        XFlowEdgeCommands.ADD_EDGE.id,
+        {
+          edgeConfig,
+          options: {
+            isRenderGraph: true
+          }
+        },
+        {
+          name: 'remove servcie',
+          handler: async args => {
+            delete args.createEdgeService;
           }
         }
       );
@@ -125,10 +137,11 @@ export class GraphRenderCommand {
 
     /** 新增边数据 */
     const addEdgeConfigs: NsGraph.IEdgeConfig[] = [];
+    console.log('edgeConfigs>>>', edgeConfigs);
     for (const edgeConfig of edgeConfigs) {
       const edge = graph.getCellById(edgeConfig?.id);
       if (!edge) {
-        addNodeConfigs.push(edgeConfig);
+        addEdgeConfigs.push(edgeConfig);
       }
     }
     /** 保持、更新、移除节点 */

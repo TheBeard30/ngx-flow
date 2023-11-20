@@ -2,6 +2,7 @@ import { Injectable, Injector } from '@angular/core';
 import { ICommandFactory, IGraphCommand, IGraphCommandService } from '@/app/flow-core/interfaces';
 import { AddNodeCommand, GraphLoadDataCommand, GraphRenderCommand } from '@/app/flow-core/commands';
 import { CommandContributionService } from '@/app/flow-core/services/command-contribution.service';
+import { AddEdgeCommand } from '@/app/flow-core/commands/edge/edge-add';
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +49,7 @@ export class CommandService implements IGraphCommandService {
   watchChange: any;
 
   registerXFlowCommand() {
-    const commandList = [GraphLoadDataCommand, GraphRenderCommand, AddNodeCommand];
+    const commandList = [GraphLoadDataCommand, GraphRenderCommand, AddNodeCommand, AddEdgeCommand];
     for (const cls of commandList) {
       const command = this.injector.get(cls);
       this.commandMap.set(command.token, command);
