@@ -32,7 +32,8 @@
           }
         ],
         "@typescript-eslint/no-namespace": "warn",
-        "@typescript-eslint/ban-ts-comment": "off"
+        "@typescript-eslint/ban-ts-comment": "off",
+        "no-extra-boolean-cast": "off"
       }
     },
     {
