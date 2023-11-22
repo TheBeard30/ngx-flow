@@ -3,6 +3,7 @@ import { ICommandFactory, IGraphCommand, IGraphCommandService } from '@/app/flow
 import { AddNodeCommand, GraphLoadDataCommand, GraphRenderCommand, UpdateNodeCommand } from '@/app/flow-core/commands';
 import { CommandContributionService } from '@/app/flow-core/services/command-contribution.service';
 import { AddEdgeCommand } from '@/app/flow-core/commands/edge/edge-add';
+import { UpdateEdgeCommand } from '@/app/flow-core/commands/edge/edge-update';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class CommandService implements IGraphCommandService {
     this.commandContributionService.registerGraphCommands(this);
   }
 
-  async executeCommand<Args, Result>(commandId: string, args: Args, hooks: any): Promise<void> {
+  async executeCommand<Args, Result>(commandId: string, args: Args, hooks?: any): Promise<void> {
     const factory = this.getFactory(commandId);
     if (factory) {
       const cmdHandle = factory.createCommand(commandId, args, hooks);
@@ -49,7 +50,14 @@ export class CommandService implements IGraphCommandService {
   watchChange: any;
 
   registerXFlowCommand() {
-    const commandList = [GraphLoadDataCommand, GraphRenderCommand, AddNodeCommand, UpdateNodeCommand, AddEdgeCommand];
+    const commandList = [
+      GraphLoadDataCommand,
+      GraphRenderCommand,
+      AddNodeCommand,
+      UpdateNodeCommand,
+      AddEdgeCommand,
+      UpdateEdgeCommand
+    ];
     for (const cls of commandList) {
       const command = this.injector.get(cls);
       this.commandMap.set(command.token, command);
