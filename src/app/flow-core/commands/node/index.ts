@@ -1,5 +1,6 @@
 import { NsAddNode } from './node-add';
 import { NsUpdateNode } from './node-update';
+import { NsDelNode } from './node-delete';
 import { HookHub } from '@/app/flow-core/hooks/hookhub';
 import { IGraphCommand } from '@/app/flow-core/interfaces';
 
@@ -10,4 +11,4 @@ export const nodeHookHubList: {
   command: IGraphCommand;
   hookKey: string;
   createHook?: () => HookHub;
-}[] = [NsAddNode, NsUpdateNode];
+}[] = [NsAddNode, NsUpdateNode, NsDelNode];

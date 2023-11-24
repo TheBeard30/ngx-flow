@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { CmdContext, XFlowEdgeCommands, XFlowNodeCommands } from '@/app/flow-core/commands';
+import { CmdContext, XFlowEdgeCommands } from '@/app/flow-core/commands';
 import { IArgsBase } from '@/app/flow-core/commands/interface';
 import { NsGraph } from '@/app/flow-core/interfaces';
 import { Model } from '@antv/x6';
 import { IHooks } from '@/app/flow-core/hooks/interface';
 import { HookHub } from '@/app/flow-core/hooks/hookhub';
+import { XFlowNodeCommands } from '@/app/flow-core/constants';
 
 @Injectable({
   providedIn: 'root'

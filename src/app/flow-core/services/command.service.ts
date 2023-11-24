@@ -1,6 +1,12 @@
 import { Injectable, Injector } from '@angular/core';
 import { ICommandFactory, IGraphCommand, IGraphCommandService } from '@/app/flow-core/interfaces';
-import { AddNodeCommand, GraphLoadDataCommand, GraphRenderCommand, UpdateNodeCommand } from '@/app/flow-core/commands';
+import {
+  AddNodeCommand,
+  DeleteEdgeCommand,
+  GraphLoadDataCommand,
+  GraphRenderCommand,
+  UpdateNodeCommand
+} from '@/app/flow-core/commands';
 import { CommandContributionService } from '@/app/flow-core/services/command-contribution.service';
 import { AddEdgeCommand } from '@/app/flow-core/commands/edge/edge-add';
 import { UpdateEdgeCommand } from '@/app/flow-core/commands/edge/edge-update';
@@ -56,7 +62,9 @@ export class CommandService implements IGraphCommandService {
       AddNodeCommand,
       UpdateNodeCommand,
       AddEdgeCommand,
-      UpdateEdgeCommand
+      UpdateEdgeCommand,
+      DeleteEdgeCommand,
+      DeleteEdgeCommand
     ];
     for (const cls of commandList) {
       const command = this.injector.get(cls);
