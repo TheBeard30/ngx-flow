@@ -1,4 +1,4 @@
-import { XFlowGraphCommands } from '@/app/flow-core/constants';
+import { XFlowGraphCommands, XFlowGroupCommands } from '@/app/flow-core/constants';
 import { CmdContext, XFlowEdgeCommands, XFlowNodeCommands } from '@/app/flow-core/commands';
 import { Injectable } from '@angular/core';
 import { NsGraph } from '@/app/flow-core/interfaces';
@@ -104,6 +104,23 @@ export class GraphRenderCommand {
           }
         }
       );
+    }
+
+    /** 删除节点/边/群组 */
+    for (const removeNode of removeNodes) {
+      const nodeData = removeNode?.getData<NsGraph.INodeConfig>();
+
+      if (nodeData.isGroup) {
+        // await commandService.executeCommand(XFlowGroupCommands.DEL_GROUP.id, {
+        //   nodeConfig: nodeData
+        // });
+      } else {
+        await commandService.executeCommand(XFlowNodeCommands.DEL_NODE.id, { nodeConfig: nodeData });
+      }
+    }
+    for (const removeEdge of removeEdges) {
+      const edgeData = removeEdge?.getData();
+      await commandService.executeCommand(XFlowEdgeCommands.DEL_EDGE.id, { edgeConfig: edgeData });
     }
   }
 
