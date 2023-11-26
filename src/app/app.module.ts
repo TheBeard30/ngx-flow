@@ -7,9 +7,9 @@ import { FlowPage } from '@/app/pages/flow/flow.page';
 import { XFlowCanvasComponent, XFlowComponent } from 'src/app/flow-core/components';
 import { CommandInjectionToken } from 'src/app/flow-core/interfaces';
 import { CommandService } from 'src/app/flow-core/services';
-import { FlowChartCanvasComponent } from './flow-extension/flow-chart/flow-chart-canvas/flow-chart-canvas.component';
+import { FlowChartCanvasComponent, FlowNodePanelComponent } from '@/app/flow-extension';
 
-const COMPONENTS = [XFlowComponent, XFlowCanvasComponent, FlowChartCanvasComponent];
+const COMPONENTS = [XFlowComponent, XFlowCanvasComponent, FlowChartCanvasComponent, FlowNodePanelComponent];
 
 @NgModule({
   declarations: [AppComponent, FlowPage, ...COMPONENTS],
