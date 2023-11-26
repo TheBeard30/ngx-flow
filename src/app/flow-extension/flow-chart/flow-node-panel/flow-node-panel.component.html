@@ -1,9 +1,18 @@
-
 <app-base-panel
   [className]="CONTAINER_CLASS"
   [position]="position"
 >
   <div>
     <p>flow-node-panel works!</p>
+  </div>
+
+  <div class="{{CONTAINER_CLASS}}-icon" [ngStyle]="{
+            top: '21px',
+            right: !collapse ? '-10px' : '-20px',
+            borderRadius: !collapse ? '50%' : '0 50% 50% 0',
+            borderLeft: !collapse ? '' : 'none',
+          }" (click)="setCollapse()">
+    <span *ngIf="collapse" nz-icon nzType="double-right" nzTheme="outline"></span>
+    <span *ngIf="!collapse" nz-icon nzType="double-left" nzTheme="outline"></span>
   </div>
 </app-base-panel>

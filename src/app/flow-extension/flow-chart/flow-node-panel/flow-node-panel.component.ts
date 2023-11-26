@@ -14,7 +14,19 @@ export class FlowNodePanelComponent implements OnInit {
 
   CONTAINER_CLASS = 'xflow-node-panel-collpase';
 
+  collapse = false;
+
+  private width = 240;
+
+  private left = 0;
+
   ngOnInit(): void {
     this.style = getPositionStyle(this.position);
+  }
+
+  setCollapse() {
+    this.collapse = !this.collapse;
+    this.collapse ? (this.position.left = -this.width) : (this.position.left = this.left);
+    this.position = { ...this.position };
   }
 }

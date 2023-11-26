@@ -2,9 +2,6 @@
 @dnd-panel-prefix-container: ~'xflow-node-panel-collpase';
 
 .@{dnd-panel-prefix-container} {
-  color: rgba(0, 0, 0, 0.85);
-  font-size: 12px;
-  transition: left 0.5s;
 
   &-wrapper {
     position: relative;
@@ -26,6 +23,9 @@
     border: 1px solid #ccc;
     transform: translate(0, -50%);
     cursor: pointer;
+    span{
+      vertical-align: 1px;
+    }
 
     &:hover {
       color: rgb(43, 132, 192);
