@@ -8,11 +8,12 @@ import { XFlowCanvasComponent, XFlowComponent } from 'src/app/flow-core/componen
 import { CommandInjectionToken } from 'src/app/flow-core/interfaces';
 import { CommandService } from 'src/app/flow-core/services';
 import { FlowChartCanvasComponent, FlowNodePanelComponent } from '@/app/flow-extension';
+import { BasePanelComponent } from './flow-extension/base-panel/base-panel.component';
 
 const COMPONENTS = [XFlowComponent, XFlowCanvasComponent, FlowChartCanvasComponent, FlowNodePanelComponent];
 
 @NgModule({
-  declarations: [AppComponent, FlowPage, ...COMPONENTS],
+  declarations: [AppComponent, FlowPage, ...COMPONENTS, BasePanelComponent],
   imports: [BrowserModule, AppRoutingModule],
   providers: [{ provide: CommandInjectionToken, useClass: CommandService }],
   bootstrap: [AppComponent]
