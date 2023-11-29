@@ -7,7 +7,12 @@ import { FlowPage } from '@/app/pages/flow/flow.page';
 import { XFlowCanvasComponent, XFlowComponent } from 'src/app/flow-core/components';
 import { CommandInjectionToken } from 'src/app/flow-core/interfaces';
 import { CommandService } from 'src/app/flow-core/services';
-import { FlowChartCanvasComponent, FlowNodePanelComponent, BasePanelComponent } from '@/app/flow-extension';
+import {
+  FlowChartCanvasComponent,
+  FlowNodePanelComponent,
+  BasePanelComponent,
+  FlowNodeComponent
+} from '@/app/flow-extension';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
 const COMPONENTS = [
@@ -15,7 +20,8 @@ const COMPONENTS = [
   XFlowCanvasComponent,
   FlowChartCanvasComponent,
   FlowNodePanelComponent,
-  BasePanelComponent
+  BasePanelComponent,
+  FlowNodeComponent
 ];
 
 @NgModule({
