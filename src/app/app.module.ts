@@ -14,6 +14,7 @@ import {
   FlowNodeComponent
 } from '@/app/flow-extension';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TerminalNode } from '@/app/flow-extension/flow-chart/flow-node-panel/nodes';
 
 const COMPONENTS = [
   XFlowComponent,
@@ -24,8 +25,10 @@ const COMPONENTS = [
   FlowNodeComponent
 ];
 
+const Nodes = [TerminalNode];
+
 @NgModule({
-  declarations: [AppComponent, FlowPage, ...COMPONENTS, BasePanelComponent],
+  declarations: [AppComponent, FlowPage, ...COMPONENTS, ...Nodes, BasePanelComponent],
   imports: [BrowserModule, AppRoutingModule, NzIconModule],
   providers: [{ provide: CommandInjectionToken, useClass: CommandService }],
   bootstrap: [AppComponent]
