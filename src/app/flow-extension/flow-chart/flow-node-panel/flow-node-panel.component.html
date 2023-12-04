@@ -3,8 +3,13 @@
   [position]="position"
 >
   <div>
-    <p>flow-node-panel works!</p>
-    <app-terminal></app-terminal>
+    <nz-collapse nzBordered="false">
+      <nz-collapse-panel nzHeader="通用节点" nzActive>
+        <div class="xflow-node-panel-official">
+          <app-terminal></app-terminal>
+        </div>
+      </nz-collapse-panel>
+    </nz-collapse>
   </div>
 
   <div class="{{CONTAINER_CLASS}}-icon" [ngStyle]="{
