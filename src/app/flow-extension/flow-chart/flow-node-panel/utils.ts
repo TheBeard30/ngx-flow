@@ -59,6 +59,7 @@ const getPorts = (position = ['top', 'right', 'bottom', 'left']) => {
 
 export const getNodes = async nodes => {
   return [
+    // @ts-ignore
     ...NODE_POOL.map(({ name, ports, width = NODE_WIDTH, height = NODE_HEIGHT, label = '' }) => {
       return {
         id: uuidv4(), // 不会被使用

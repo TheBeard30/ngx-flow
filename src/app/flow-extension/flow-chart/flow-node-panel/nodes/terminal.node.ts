@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import {
   DefaultNodeConfig,
   NODE_HEIGHT,
@@ -35,6 +35,8 @@ export class TerminalNode implements OnChanges, OnInit {
   path: (string | number)[][];
 
   viewBox: string;
+
+  constructor(private elementRef: ElementRef) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.data && changes.data.currentValue) {
