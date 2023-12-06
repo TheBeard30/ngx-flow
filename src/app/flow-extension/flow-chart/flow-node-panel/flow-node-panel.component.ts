@@ -26,7 +26,7 @@ import { Graph } from '@antv/x6';
 export class FlowNodePanelComponent implements OnInit, AfterViewInit {
   @Input() position: IPosition = { width: 240, top: 40, bottom: 0, left: 0 };
 
-  @ViewChild('templateRef', { read: ViewContainerRef }) viewRef;
+  @ViewChild('templateRef', { read: ViewContainerRef }) viewRef: ViewContainerRef;
 
   @ViewChild('dndContainer') dndContainer: ElementRef;
 
@@ -82,7 +82,7 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
           injector: this.injector
         });
         const componentRef = this.viewRef.createComponent(className);
-        console.log(componentRef);
+        // @ts-ignore
         const element = componentRef.instance.elementRef.nativeElement;
         element.onmousedown = (ev: MouseEvent) => {
           this.dnd.start(this.graph.createNode({ shape: n.name }), ev);
