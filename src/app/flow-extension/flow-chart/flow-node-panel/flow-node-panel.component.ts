@@ -70,10 +70,10 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.style = getPositionStyle(this.position);
-    const componentMap = { 
+    const componentMap = {
       Terminal: TerminalNode,
-      Process: ProcessNode, 
-      Decision: DecisionNode, 
+      Process: ProcessNode,
+      Decision: DecisionNode,
       MultiDocument: MultiDocumentNode,
       Connector:ConnectorNode,
       DataIO:DataIONode,

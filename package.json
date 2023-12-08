@@ -24,6 +24,7 @@
     "@antv/x6": "^2.15.2",
     "@antv/x6-angular-shape": "^2.0.2",
     "@antv/x6-plugin-dnd": "^2.1.1",
+    "@antv/x6-plugin-selection": "^2.2.1",
     "ng-zorro-antd": "^16.2.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
