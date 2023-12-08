@@ -21,85 +21,80 @@ export const NODE_POOL = [
     name: 'Terminal'
   },
   {
-    name: 'Terminal'
+    name: 'Process'
+  },
+  {
+    name: 'Decision'
+  },
+  {
+    name: 'MultiDocument'
+  },
+  {
+    name: 'Connector',
+  },
+  {
+    name: 'DataIO',
+    //ports: ['top', 'bottom']
+  },
+  {
+    name: 'Database'
+  },
+  {
+    name: 'HardDisk'
+  },
+  {
+    name: 'StroedData'
+  },
+  {
+    name: 'Document'
+  },
+  {
+    name: 'PredefinedProcess'
+  },
+  {
+    name: 'Extract'
+  },
+  {
+    name: 'Merge'
+  },
+  {
+    name: 'Or',
+    width: NODE_HEIGHT,
+    height: NODE_HEIGHT
+  },
+  {
+    name: 'ManualInput'
+  },
+  {
+    name: 'Preparation'
+  },
+  {
+    name: 'Delay'
+  },
+  {
+    name: 'ManualOperation'
+  },
+  {
+    name: 'Display'
+  },
+  {
+    name: 'OffPageLink'
+  },
+  {
+    name: 'NoteLeft',
+    label: '≣'
+  },
+  {
+    name: 'NoteRight',
+    label: '≣'
+  },
+  {
+    name: 'InternalStorage'
+  },
+  {
+    name: 'Text',
+    label: 'text'
   }
-  // {
-  //   name: 'Process'
-  // },
-  // {
-  //   name: 'Decision'
-  // },
-  // {
-  //   name: 'Multi Document'
-  // },
-  // {
-  //   name: 'Connector',
-  //   width: NODE_HEIGHT,
-  //   height: NODE_HEIGHT
-  // },
-  // {
-  //   name: 'DataIO',
-  //   ports: ['top', 'bottom']
-  // },
-  // {
-  //   name: 'Database'
-  // },
-  // {
-  //   name: 'Hard Disk'
-  // },
-  // {
-  //   name: 'Stroed Data'
-  // },
-  // {
-  //   name: 'Document'
-  // },
-  // {
-  //   name: 'Predefined Process'
-  // },
-  // {
-  //   name: 'Extract'
-  // },
-  // {
-  //   name: 'Merge'
-  // },
-  // {
-  //   name: 'Or',
-  //   width: NODE_HEIGHT,
-  //   height: NODE_HEIGHT
-  // },
-  // {
-  //   name: 'Manual Input'
-  // },
-  // {
-  //   name: 'Preparation'
-  // },
-  // {
-  //   name: 'Delay'
-  // },
-  // {
-  //   name: 'Manual Operation'
-  // },
-  // {
-  //   name: 'Display'
-  // },
-  // {
-  //   name: 'Off Page Link'
-  // },
-  // {
-  //   name: 'Note Left',
-  //   label: '≣'
-  // },
-  // {
-  //   name: 'Note Right',
-  //   label: '≣'
-  // },
-  // {
-  //   name: 'Internal Storage'
-  // },
-  // {
-  //   name: 'Text',
-  //   label: 'text'
-  // }
 ];
 // 缩放时保存同比例
 export const ASPECTRATIONODE = ['Connector', 'Or'];

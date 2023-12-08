@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 import { IHook } from '@/app/flow-core/hooks/interface';
 
 export namespace HookUtils {

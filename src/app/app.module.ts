@@ -14,7 +14,7 @@ import {
   FlowNodeComponent
 } from '@/app/flow-extension';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { TerminalNode } from '@/app/flow-extension/flow-chart/flow-node-panel/nodes';
+import { TerminalNode ,ProcessNode, DecisionNode, MultiDocumentNode, ConnectorNode, DataIONode, DatabaseNode, HardDiskNode, StroedDataNode, DocumentNode, PredefinedProcessNode, ExtractNode, MergeNode, OrNode, ManualInputNode, PreparationNode,DelayNode, ManualOperationNode, DisplayNode, OffPageLinkNode, NoteLeftNode, NoteRightNode, InternalStorageNode, TextNode} from '@/app/flow-extension/flow-chart/flow-node-panel/nodes';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -27,7 +27,7 @@ const COMPONENTS = [
   FlowNodeComponent
 ];
 
-const Nodes = [TerminalNode];
+const Nodes = [TerminalNode , ProcessNode, DecisionNode, MultiDocumentNode,ConnectorNode,DataIONode,DatabaseNode,HardDiskNode,StroedDataNode,DocumentNode,PredefinedProcessNode,ExtractNode,MergeNode,OrNode,ManualInputNode,PreparationNode,DelayNode,ManualOperationNode,DisplayNode,OffPageLinkNode,NoteLeftNode,NoteRightNode,InternalStorageNode,TextNode];
 
 @NgModule({
   declarations: [AppComponent, FlowPage, ...COMPONENTS, ...Nodes, BasePanelComponent],
