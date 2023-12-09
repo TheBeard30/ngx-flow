@@ -8,7 +8,7 @@ import { CmdContext } from '@/app/flow-core/commands';
 @Injectable({
   providedIn: 'root'
 })
-export class SelectNode {
+export class SelectNodeCommand {
   token: string = XFlowNodeCommands.SELECT_NODE.id;
 
   ctx: CmdContext<NsSelectNode.IArgs, NsSelectNode.IResult, NsSelectNode.ICmdHooks>;
