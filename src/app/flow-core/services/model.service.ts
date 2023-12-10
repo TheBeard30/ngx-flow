@@ -4,11 +4,19 @@ import { CommandModelContributionService } from '@/app/flow-core/services/comman
 import { GraphModelContribution } from '@/app/flow-core/services/graph-model-contribution.service';
 import { GraphProviderService } from '@/app/flow-core/services/graph-provider.service';
 import { Token } from '@/app/flow-core/common/types';
+import { RxModel } from '@/app/flow-core/common/rx-model';
+import { Disposable, DisposableCollection } from '@/app/flow-core/common/disposable';
+import { Deferred } from '@/app/flow-core/common/deferred';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModelService implements IModelService {
+  private deferredModelMap = new Map<Token<any>, Deferred<NsModel.IModel<any>>>();
+
+  /** disposables */
+  private toDispose = new DisposableCollection();
+
   constructor(
     private commandModelContribution: CommandModelContributionService,
     private graphModelContribution: GraphModelContribution,
@@ -20,10 +28,53 @@ export class ModelService implements IModelService {
     this.graphModelContribution.registerModel(this);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  registerModel<T>(options: IModelOptions<T>): void {}
+  onStop() {
+    this.toDispose.dispose();
+  }
+
+  registerModel<T>(options: IModelOptions<T>) {
+    const { id, getInitialValue, modelFactory } = options;
+    const toDispose = new DisposableCollection();
+
+    const defer = this.ensureModel(id);
+    if (defer.isResolved) {
+      console.error(options, 'model has been registerd');
+      return null;
+    }
+    const initialValue = getInitialValue ? getInitialValue() : NsModel.EMPTY_VALUE;
+    const model = modelFactory ? modelFactory() : new RxModel<T>(initialValue);
+    if (NsModel.isValidValue<T>(initialValue)) {
+      defer.resolve(model);
+    }
+    if (options.watchChange) {
+      options.watchChange(model, this).then(d => {
+        if (!defer.isResolved) {
+          defer.resolve(model);
+        }
+        this.toDispose.pushAll([d, toDispose]);
+        toDispose.push(d);
+      });
+    }
+    return toDispose;
+  }
+
+  findDeferredModel = <T = any>(token: Token<T>) => {
+    return this.deferredModelMap.get(token);
+  };
 
   awaitModel<T>(token: Token<T>): Promise<NsModel.IModel<T>> {
-    return Promise.resolve(undefined);
+    const defer = this.ensureModel(token);
+    return defer.promise as Promise<RxModel<T>>;
   }
+
+  ensureModel = <T>(token: Token<T>) => {
+    const existDeferred = this.deferredModelMap.get(token);
+    if (existDeferred) {
+      return existDeferred;
+    }
+    const deferred = new Deferred<RxModel>();
+    this.deferredModelMap.set(token, deferred);
+    this.toDispose.push(Disposable.create(() => this.deferredModelMap.delete(token)));
+    return deferred;
+  };
 }
