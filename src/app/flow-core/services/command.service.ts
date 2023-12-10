@@ -12,17 +12,28 @@ import { AddEdgeCommand } from '@/app/flow-core/commands/edge/edge-add';
 import { UpdateEdgeCommand } from '@/app/flow-core/commands/edge/edge-update';
 import { SelectNodeCommand } from '@/app/flow-core/commands/node/node-select';
 import { MoveNodeCommand } from '@/app/flow-core/commands/node/node-move';
+import { RxModel } from '@/app/flow-core/common/rx-model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommandService implements IGraphCommandService {
+  /**
+   * undo cmd后将命令存储在队列中给redo调用
+   */
+  protected readonly redoStack = [];
+  /**
+   * executeCommand后将命令存储在队列中给undo调用
+   */
+  protected readonly undoStack = [];
+
   protected readonly factories = new Map<string, any>();
 
   commandMap: Map<string, any> = new Map<string, any>();
 
   protected readonly commands = new Map<string, IGraphCommand>();
 
+  private readonly cmdChangeEvent = new RxModel<null>(null);
   constructor(
     private injector: Injector,
     public commandContributionService: CommandContributionService
@@ -48,14 +59,26 @@ export class CommandService implements IGraphCommandService {
     return Promise.resolve(undefined);
   }
 
-  redoable: boolean;
-
   undoCommand(): Promise<void> {
     return Promise.resolve(undefined);
   }
 
-  undoable: boolean;
-  watchChange: any;
+  get watchChange() {
+    return this.cmdChangeEvent.watch;
+  }
+
+  readonly Globals = new RxModel(new Map());
+  /** 设置command间的共享变量 */
+  setGlobal = (key: string, value: any) => {
+    this.Globals.setValue(map => {
+      map.set(key, value);
+    });
+  };
+  /** 获取共享变量 */
+  getGlobal = (key: string) => {
+    const map = this.Globals.getValue() as Map<string, any>;
+    return map.get(key);
+  };
 
   registerXFlowCommand() {
     const commandList = [
@@ -109,5 +132,13 @@ export class CommandService implements IGraphCommandService {
    */
   getFactory(commandId: string) {
     return this.factories.get(commandId);
+  }
+
+  get isRedoable() {
+    return this.redoStack.length > 0;
+  }
+
+  get isUndoable() {
+    return this.undoStack.length > 0;
   }
 }

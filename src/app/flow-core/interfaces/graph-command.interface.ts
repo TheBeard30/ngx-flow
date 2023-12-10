@@ -7,9 +7,9 @@ export interface IGraphCommandService {
 
   redoCommand: () => Promise<void>;
 
-  redoable: boolean;
+  isRedoable: boolean;
 
-  undoable: boolean;
+  isUndoable: boolean;
 
   executeCommand: <Args = any, Result = any>(commandId: string, args: Args, hooks?: any) => Promise<void>;
 }

@@ -77,6 +77,7 @@ export class ModelService implements IModelService {
     const graphInstance = await this.graphProvider.getGraphInstance();
 
     if (modelRegisterFunc) {
+      // @ts-ignore
       modelRegisterFunc(this, graphInstance);
     }
   };

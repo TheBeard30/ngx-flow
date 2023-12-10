@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CommandService } from '@/app/flow-core/services/command.service';
-import { IModelService } from '@/app/flow-core/interfaces/model.interface';
+import { ModelService } from '@/app/flow-core/services/model.service';
+import { COMMAND_GLOBALS, COMMAND_REDOABLE, COMMAND_UNDOABLE } from '@/app/flow-core/constants/model-constant';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,31 @@ import { IModelService } from '@/app/flow-core/interfaces/model.interface';
 export class CommandModelContributionService {
   constructor(private command: CommandService) {}
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  registerModel(registry: IModelService) {}
+  registerModel(registry: ModelService) {
+    registry.registerModel<COMMAND_REDOABLE.IState>({
+      id: COMMAND_REDOABLE.id,
+      getInitialValue: () => this.command.isRedoable,
+      watchChange: async model => {
+        return this.command.watchChange(() => {
+          model.setValue(this.command.isRedoable);
+        });
+      }
+    });
+
+    registry.registerModel<COMMAND_UNDOABLE.IState>({
+      id: COMMAND_UNDOABLE.id,
+      getInitialValue: () => this.command.isUndoable,
+      watchChange: async model => {
+        return this.command.watchChange(() => {
+          model.setValue(this.command.isUndoable);
+        });
+      }
+    });
+    registry.registerModel<COMMAND_GLOBALS.IState>({
+      id: COMMAND_GLOBALS.id,
+      modelFactory: () => {
+        return this.command.Globals;
+      }
+    });
+  }
 }
