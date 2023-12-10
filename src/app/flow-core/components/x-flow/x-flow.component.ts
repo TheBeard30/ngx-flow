@@ -18,6 +18,8 @@ import { XFlowGraphCommands } from '@/app/flow-core/constants';
 import { HookConfig } from '@/app/flow-core/hooks/hook-config';
 import { IGraphConfig, NsGraph } from '@/app/flow-core/interfaces';
 import { HookService } from '@/app/flow-core/services/hook.service';
+import { ModelServiceConfig } from '@/app/flow-core/models/model-config.model';
+import { ModelService } from '@/app/flow-core/services';
 
 @Component({
   selector: 'app-x-flow',
@@ -40,18 +42,25 @@ export class XFlowComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() hookConfig?: HookConfig;
 
+  @Input() modelConfig?: ModelServiceConfig;
+
   haveCanvasComponent = false;
 
   app: Application;
 
   constructor(
     private injector: Injector,
-    private hookService: HookService<any>
+    private hookService: HookService<any>,
+    private modelService: ModelService
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.hookConfig && changes.hookConfig.currentValue) {
       this.hookService.setHookConfig(this.hookConfig);
+    }
+
+    if (changes.modelConfig && changes.modelConfig.currentValue) {
+      this.modelService.setModelConfig(this.modelConfig);
     }
   }
 

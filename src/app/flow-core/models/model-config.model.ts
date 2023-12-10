@@ -9,7 +9,7 @@ export interface IModuleConfig<T = any> {
 export class ModelServiceConfig implements IModuleConfig {
   readonly CONFIG_TYPE = 'MODEL_SERVICE_CONFIG';
 
-  private registerModelFn?: any;
+  public registerModelFn?: any;
 
   registerModel = registerModel => {
     this.registerModelFn = registerModel;

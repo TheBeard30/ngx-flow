@@ -7,6 +7,7 @@ import { Token } from '@/app/flow-core/common/types';
 import { RxModel } from '@/app/flow-core/common/rx-model';
 import { Disposable, DisposableCollection } from '@/app/flow-core/common/disposable';
 import { Deferred } from '@/app/flow-core/common/deferred';
+import { ModelServiceConfig } from '@/app/flow-core/models/model-config.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +18,15 @@ export class ModelService implements IModelService {
   /** disposables */
   private toDispose = new DisposableCollection();
 
+  modelConfig: ModelServiceConfig;
+
   constructor(
     private commandModelContribution: CommandModelContributionService,
     private graphModelContribution: GraphModelContribution,
     private graphProvider: GraphProviderService
-  ) {}
+  ) {
+    this.modelConfig = new ModelServiceConfig();
+  }
 
   onStart() {
     this.commandModelContribution.registerModel(this);
@@ -67,6 +72,15 @@ export class ModelService implements IModelService {
     return defer.promise as Promise<RxModel<T>>;
   }
 
+  registerRuntimeModel = async () => {
+    const { modelRegisterFunc } = await this.modelConfig.getConfig();
+    const graphInstance = await this.graphProvider.getGraphInstance();
+
+    if (modelRegisterFunc) {
+      modelRegisterFunc(this, graphInstance);
+    }
+  };
+
   ensureModel = <T>(token: Token<T>) => {
     const existDeferred = this.deferredModelMap.get(token);
     if (existDeferred) {
@@ -77,4 +91,8 @@ export class ModelService implements IModelService {
     this.toDispose.push(Disposable.create(() => this.deferredModelMap.delete(token)));
     return deferred;
   };
+
+  setModelConfig(modelConfig: ModelServiceConfig) {
+    this.modelConfig = modelConfig;
+  }
 }
