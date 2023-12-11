@@ -138,14 +138,20 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
         const element = componentRef.instance.elementRef.nativeElement;
         element.onmousedown = (ev: MouseEvent) => {
           const node = this.graph.createNode({ shape: n.name });
+          const options = {} as any;
+          if (n.label) {
+            options.label = n.label;
+            options.fill = 'transparent';
+          }
           node.setData({
             ngArguments: {
               data: {
                 stroke: DefaultNodeConfig.stroke,
-                label: n.label,
-                fill: 'transparent',
+                label: DefaultNodeConfig.label,
+                fill: DefaultNodeConfig.fill,
                 fontFill: DefaultNodeConfig.fontFill,
-                fontSize: DefaultNodeConfig.fontSize
+                fontSize: DefaultNodeConfig.fontSize,
+                ...options
               }
             }
           });
