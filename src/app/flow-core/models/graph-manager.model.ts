@@ -1,5 +1,7 @@
 import { Graph } from '@antv/x6';
 import { IGraphConfig } from '@/app/flow-core/interfaces';
+import { Transform } from '@antv/x6-plugin-transform';
+import { Snapline } from '@antv/x6-plugin-snapline';
 
 export interface IGraphManger {
   getGraph: (graphId: string) => Promise<Graph>;
@@ -41,6 +43,26 @@ export class GraphManager implements IGraphManger {
           height: size?.height
         });
       });
+      //改变节点大小
+      graph.use(new Transform({
+        resizing: {
+          enabled: true,
+          minWidth: 1,
+          maxWidth: 200,
+          minHeight: 1,
+          maxHeight: 150,
+          orthogonal: false,
+          restrict: false,
+          preserveAspectRatio: false
+        }
+      }));
+      //对齐辅助线
+      graph.use(new Snapline(
+        {
+          enabled: true,
+          clean: false
+        }
+      ))
     }
 
     return Promise.resolve(graph);
