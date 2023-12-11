@@ -31,6 +31,7 @@ export class ModelService implements IModelService {
   onStart() {
     this.commandModelContribution.registerModel(this);
     this.graphModelContribution.registerModel(this);
+    // this.registerRuntimeModel();
   }
 
   onStop() {

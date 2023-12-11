@@ -12,7 +12,14 @@ import { createPath } from '@/app/flow-extension/flow-chart/flow-node-panel/util
   template: `
     <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="viewBox" width="100%" height="100%">
       <path [attr.d]="createCustomPath()" [attr.fill]="data.fill" [attr.stroke]="data.stroke" />
-      <text>
+      <text
+        [attr.x]="size.width / 2"
+        [attr.y]="size.height / 2"
+        [attr.fill]="data.fontFill"
+        text-anchor="middle"
+        alignment-baseline="middle"
+        [attr.font-size]="data.fontSize"
+      >
         {{ data.label }}
       </text>
       Sorry, your browser does not support inline SVG.
@@ -25,7 +32,7 @@ export class NoteRightNode implements OnChanges, OnInit {
   @Input() data = {
     stroke: DefaultNodeConfig.stroke,
     label: DefaultNodeConfig.label,
-    fill: DefaultNodeConfig.fill,
+    fill: 'transparent',
     fontFill: DefaultNodeConfig.fontFill,
     fontSize: DefaultNodeConfig.fontSize
   };
@@ -54,14 +61,14 @@ export class NoteRightNode implements OnChanges, OnInit {
   create() {
     const dx = 6;
     this.path = [
-        ['M', NODE_PADDING, NODE_PADDING],
-        ['C', dx, NODE_PADDING, dx, dx],
-        ['', dx, (this.size.height - dx) / 2],
-        ['L', 2 * dx, this.size.height / 2],
-        ['L', dx, (this.size.height + dx) / 2],
-        ['L', dx, this.size.height - 2 * NODE_PADDING - dx],
-        ['C', dx, this.size.height - 2 * NODE_PADDING, NODE_PADDING, this.size.height - 2 * NODE_PADDING],
-        ['', NODE_PADDING, this.size.height - 2 * NODE_PADDING],
+      ['M', NODE_PADDING, NODE_PADDING],
+      ['C', dx, NODE_PADDING, dx, dx],
+      ['', dx, (this.size.height - dx) / 2],
+      ['L', 2 * dx, this.size.height / 2],
+      ['L', dx, (this.size.height + dx) / 2],
+      ['L', dx, this.size.height - 2 * NODE_PADDING - dx],
+      ['C', dx, this.size.height - 2 * NODE_PADDING, NODE_PADDING, this.size.height - 2 * NODE_PADDING],
+      ['', NODE_PADDING, this.size.height - 2 * NODE_PADDING]
     ];
     this.viewBox = `0 0  ${this.size.width} ${this.size.height}`;
   }

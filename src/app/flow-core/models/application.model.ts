@@ -19,8 +19,9 @@ export class Application {
   start() {
     // TODO 启动配置
     this.commandService.onStart();
-    this.modelService.onStart();
     this.hookService.onStart();
+    // TODO 整体流程需要修改
+    setTimeout(() => this.modelService.onStart(), 1000);
   }
 
   /**

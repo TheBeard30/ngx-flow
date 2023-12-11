@@ -11,11 +11,37 @@ import {
 } from '@angular/core';
 import { getPositionStyle, IPosition } from '@/app/flow-core/interfaces';
 import { getNodes } from '@/app/flow-extension/flow-chart/flow-node-panel/utils';
-import { TerminalNode, ProcessNode, DecisionNode, MultiDocumentNode, ConnectorNode, DataIONode, DatabaseNode, HardDiskNode, StroedDataNode, DocumentNode, PredefinedProcessNode, ExtractNode, MergeNode, OrNode, ManualInputNode, PreparationNode,DelayNode, ManualOperationNode, DisplayNode, OffPageLinkNode, NoteLeftNode, NoteRightNode, InternalStorageNode, TextNode } from '@/app/flow-extension/flow-chart/flow-node-panel/nodes';
+import {
+  TerminalNode,
+  ProcessNode,
+  DecisionNode,
+  MultiDocumentNode,
+  ConnectorNode,
+  DataIONode,
+  DatabaseNode,
+  HardDiskNode,
+  StroedDataNode,
+  DocumentNode,
+  PredefinedProcessNode,
+  ExtractNode,
+  MergeNode,
+  OrNode,
+  ManualInputNode,
+  PreparationNode,
+  DelayNode,
+  ManualOperationNode,
+  DisplayNode,
+  OffPageLinkNode,
+  NoteLeftNode,
+  NoteRightNode,
+  InternalStorageNode,
+  TextNode
+} from '@/app/flow-extension/flow-chart/flow-node-panel/nodes';
 import { Dnd } from '@antv/x6-plugin-dnd';
 import { GraphProviderService } from '@/app/flow-core/services';
 import { register } from '@antv/x6-angular-shape';
 import { Graph } from '@antv/x6';
+import { DefaultNodeConfig } from '@/app/flow-extension/flow-chart/flow-node-panel/constant';
 
 @Component({
   selector: 'app-flow-node-panel',
@@ -75,26 +101,26 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
       Process: ProcessNode,
       Decision: DecisionNode,
       MultiDocument: MultiDocumentNode,
-      Connector:ConnectorNode,
-      DataIO:DataIONode,
-      Database:DatabaseNode,
-      HardDisk:HardDiskNode,
-      StroedData:StroedDataNode,
-      Document:DocumentNode,
-      PredefinedProcess:PredefinedProcessNode,
-      Extract:ExtractNode,
-      Merge:MergeNode,
-      Or:OrNode,
-      ManualInput:ManualInputNode,
-      Preparation:PreparationNode,
-      Delay:DelayNode,
-      ManualOperation:ManualOperationNode,
-      Display:DisplayNode,
-      OffPageLink:OffPageLinkNode,
-      NoteLeft:NoteLeftNode,
-      NoteRight:NoteRightNode,
-      InternalStorage:InternalStorageNode,
-      Text:TextNode
+      Connector: ConnectorNode,
+      DataIO: DataIONode,
+      Database: DatabaseNode,
+      HardDisk: HardDiskNode,
+      StroedData: StroedDataNode,
+      Document: DocumentNode,
+      PredefinedProcess: PredefinedProcessNode,
+      Extract: ExtractNode,
+      Merge: MergeNode,
+      Or: OrNode,
+      ManualInput: ManualInputNode,
+      Preparation: PreparationNode,
+      Delay: DelayNode,
+      ManualOperation: ManualOperationNode,
+      Display: DisplayNode,
+      OffPageLink: OffPageLinkNode,
+      NoteLeft: NoteLeftNode,
+      NoteRight: NoteRightNode,
+      InternalStorage: InternalStorageNode,
+      Text: TextNode
     };
     getNodes([]).then(nodes => {
       this.officialNodeList = nodes.map(n => {
@@ -106,11 +132,25 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
           content: className,
           injector: this.injector
         });
-        const componentRef = this.viewRef.createComponent(className);
+        const componentRef = this.viewRef.createComponent<any>(className);
+        componentRef.instance.data.label = n.label;
         // @ts-ignore
         const element = componentRef.instance.elementRef.nativeElement;
         element.onmousedown = (ev: MouseEvent) => {
-          this.dnd.start(this.graph.createNode({ shape: n.name }), ev);
+          const node = this.graph.createNode({ shape: n.name });
+          node.setData({
+            ngArguments: {
+              data: {
+                stroke: DefaultNodeConfig.stroke,
+                label: n.label,
+                fill: 'transparent',
+                fontFill: DefaultNodeConfig.fontFill,
+                fontSize: DefaultNodeConfig.fontSize
+              }
+            }
+          });
+          node.getData().ngArguments.data.label = n.label;
+          this.dnd.start(node, ev);
         };
         return {
           ...n,
