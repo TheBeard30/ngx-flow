@@ -2,14 +2,18 @@ import { CommandService, GraphProviderService, ModelService } from '@/app/flow-c
 import { Graph } from '@antv/x6';
 import { HookService } from '@/app/flow-core/services/hook.service';
 import { IHooks, IRuntimeHook } from '@/app/flow-core/hooks/interface';
+import { Disposable, DisposableCollection } from '@/app/flow-core/common/disposable';
 
 export class CmdContext<Args = any, Result = any, Hooks extends IHooks = IHooks> {
+  protected toDispose = new DisposableCollection();
   /** x6 实例的缓存 */
   private graph: Graph;
   /** command 的参数 */
   private args: Args;
   /** hook */
   private runtimeHooks: IRuntimeHook = [];
+
+  private result: Result;
   constructor(
     private commandService: CommandService,
     private graphProvider: GraphProviderService,
@@ -64,5 +68,40 @@ export class CmdContext<Args = any, Result = any, Hooks extends IHooks = IHooks>
 
   getHooks = () => {
     return this.hookService.hookProvider();
+  };
+
+  setResult = (result: Result) => {
+    this.result = result;
+    return this.result;
+  };
+
+  getResult = () => {
+    return this.result;
+  };
+
+  addUndo = (disposeable: Disposable | Disposable[]) => {
+    if (!Array.isArray(disposeable)) {
+      return this.addUndo([disposeable]);
+    }
+    this.toDispose.pushAll(disposeable);
+  };
+
+  undo = () => {
+    this.toDispose.dispose();
+  };
+
+  isUndoable = () => {
+    return !this.toDispose.disposed;
+  };
+
+  getDisposables = () => this.toDispose;
+
+  /** 设置的共享变量 可以在command间共享 */
+  setGlobal = <T = any>(key: string, value: T) => {
+    this.commandService.setGlobal(key, value);
+  };
+  /** 获取共享变量 */
+  getGlobal = <T = any>(key: string) => {
+    return this.commandService.getGlobal(key) as T;
   };
 }
