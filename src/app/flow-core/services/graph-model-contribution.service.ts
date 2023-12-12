@@ -3,6 +3,7 @@ import { GraphProviderService } from '@/app/flow-core/services/graph-provider.se
 import { IModelService } from '@/app/flow-core/interfaces/model.interface';
 import * as MODELS from '@/app/flow-core/constants/model-constant';
 import type { EventArgs } from '@antv/x6/lib/graph/events';
+import { Disposable } from '@/app/flow-core/common/disposable';
 
 @Injectable({
   providedIn: 'root'
@@ -24,9 +25,9 @@ export class GraphModelContribution {
         flowId: '-1'
       }),
       watchChange: async self => {
-        return () => {
+        return Disposable.create(() => {
           self.setValue({ flowId: '-1' });
-        };
+        });
       }
     });
     /** Graph 多选状态 */
@@ -36,9 +37,9 @@ export class GraphModelContribution {
         isEnable: false
       }),
       watchChange: async self => {
-        return () => {
+        return Disposable.create(() => {
           self.setValue({ isEnable: false });
-        };
+        });
       }
     });
     /** Graph 全屏 */
@@ -52,10 +53,10 @@ export class GraphModelContribution {
           fullscreenModel.setValue(fullscreen);
         };
         document.addEventListener('fullscreenchange', handleFullScreenChange, false);
-        return () => {
+        return Disposable.create(() => {
           document.removeEventListener('fullscreenchange', handleFullScreenChange);
           self.setValue(false);
-        };
+        });
       }
     });
     /** 选中Cells状态 */
@@ -70,7 +71,7 @@ export class GraphModelContribution {
           self.setValue(selected);
         };
         graph.on('selection:changed', onChange);
-        return () => graph.off('selection:changed', onChange);
+        return Disposable.create(() => graph.off('selection:changed', onChange));
       }
     });
     /** 选中Cell状态 */
