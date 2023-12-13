@@ -14,6 +14,7 @@ import { SelectNodeCommand } from '@/app/flow-core/commands/node/node-select';
 import { MoveNodeCommand } from '@/app/flow-core/commands/node/node-move';
 import { RxModel } from '@/app/flow-core/common/rx-model';
 import { BackNodeCommand } from '@/app/flow-core/commands/node/node-back';
+import { FrontNodeCommand } from '@/app/flow-core/commands/node/node-front';
 
 @Injectable({
   providedIn: 'root'
@@ -90,6 +91,7 @@ export class CommandService implements IGraphCommandService {
       SelectNodeCommand,
       MoveNodeCommand,
       BackNodeCommand,
+      FrontNodeCommand,
       AddEdgeCommand,
       UpdateEdgeCommand,
       DeleteEdgeCommand,
