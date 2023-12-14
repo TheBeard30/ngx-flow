@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { IPosition } from '@/app/flow-core/interfaces';
-import { Application } from '@/app/flow-core/models';
+import { Application, GraphConfig } from '@/app/flow-core/models';
 
 @Component({
   selector: 'app-flow-chart-canvas',
@@ -11,7 +11,9 @@ import { Application } from '@/app/flow-core/models';
 export class FlowChartCanvasComponent {
   @Input() position: IPosition = { top: 40, left: 240, right: 240, bottom: 0 };
 
-  @Inject(Application) app: Application;
-
   readonly isXFlowCanvas = true;
+
+  config = new GraphConfig();
+
+  constructor(public app: Application) {}
 }

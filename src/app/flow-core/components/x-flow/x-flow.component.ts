@@ -1,4 +1,5 @@
 import {
+  AfterContentInit,
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
@@ -20,17 +21,18 @@ import { IGraphConfig, NsGraph } from '@/app/flow-core/interfaces';
 import { HookService } from '@/app/flow-core/services/hook.service';
 import { ModelServiceConfig } from '@/app/flow-core/models/model-config.model';
 import { ModelService } from '@/app/flow-core/services';
+import { XFlowCanvasComponent } from '@/app/flow-core/components';
 
 @Component({
   selector: 'app-x-flow',
   templateUrl: './x-flow.component.html',
   styleUrls: ['./x-flow.component.less'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class XFlowComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('XFlow') XFlow!: ElementRef;
 
-  @ContentChildren('content') content!: QueryList<any>;
+  @ContentChildren('canvas') content!: QueryList<XFlowCanvasComponent>;
 
   @Input() meta!: NsGraph.IGraphMeta;
 
