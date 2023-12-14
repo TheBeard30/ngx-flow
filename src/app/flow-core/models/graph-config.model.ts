@@ -134,6 +134,25 @@ export class GraphConfig {
   };
 }
 
+export interface IValueProxy<T> {
+  getValue: () => T;
+}
+
+/**
+ * 创建图配置对象
+ * @param {Function} addOptions  添加配置的回调方法
+ */
+export const createGraphConfig = <T = any>(addOptions: (config: GraphConfig, proxy: IValueProxy<T>) => void) => {
+  return (props?: T) => {
+    const graphConfig = new GraphConfig();
+    const propsContainer = {
+      getValue: () => props
+    };
+    addOptions(graphConfig, propsContainer);
+    return graphConfig;
+  };
+};
+
 export function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     const r = (Math.random() * 16) | 0,
