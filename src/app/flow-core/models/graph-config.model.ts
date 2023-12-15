@@ -36,6 +36,10 @@ export class GraphConfig {
     this.appContainer = element;
   }
 
+  setEvents = (events: NsGraph.IEvent[]) => {
+    this.events = events;
+  };
+
   setRootContainer(element: HTMLElement) {
     this.rootContainer = element;
   }
