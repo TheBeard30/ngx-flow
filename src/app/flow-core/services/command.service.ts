@@ -16,6 +16,7 @@ import { RxModel } from '@/app/flow-core/common/rx-model';
 import { BackNodeCommand } from '@/app/flow-core/commands/node/node-back';
 import { FrontNodeCommand } from '@/app/flow-core/commands/node/node-front';
 import { GraphProviderService } from '@/app/flow-core/services/graph-provider.service';
+import { GraphResizeCommand } from '@/app/flow-core/commands/graph/graph-resize';
 
 @Injectable({
   providedIn: 'root'
@@ -89,6 +90,7 @@ export class CommandService implements IGraphCommandService {
     const commandList = [
       GraphLoadDataCommand,
       GraphRenderCommand,
+      GraphResizeCommand,
       AddNodeCommand,
       UpdateNodeCommand,
       SelectNodeCommand,
