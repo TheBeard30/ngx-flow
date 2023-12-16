@@ -2,17 +2,27 @@ import { Graph } from '@antv/x6';
 import { IGraphConfig } from '@/app/flow-core/interfaces';
 import { Transform } from '@antv/x6-plugin-transform';
 import { Snapline } from '@antv/x6-plugin-snapline';
+import { HookService } from '@/app/flow-core/services/hook.service';
+import { IHooks } from '@/app/flow-core/hooks/interface';
+import { CommandService, GraphProviderService, ModelService } from '@/app/flow-core/services';
+import { Injectable } from '@angular/core';
 
 export interface IGraphManger {
   getGraph: (graphId: string) => Promise<Graph>;
 }
 
 export class GraphManager implements IGraphManger {
+  constructor(
+    private hookService: HookService<IHooks>,
+    private commandService: CommandService,
+    private modelService: ModelService,
+    public graphProvider: GraphProviderService
+  ) {}
   /** 储存画布实例 */
   private graphMap = new Map<string, Graph>();
 
   private config: IGraphConfig;
-  getGraph(graphId: string): Promise<Graph> {
+  async getGraph(graphId: string): Promise<Graph> {
     let graph = this.graphMap.get(graphId);
     if (!graph) {
       const { graphContainer } = this.config;
@@ -24,7 +34,14 @@ export class GraphManager implements IGraphManger {
         height: clientHeight,
         ...this.config.x6Options
       });
+      const hooks = this.hookService.hookProvider();
       this.graphMap.set(graphId, graph);
+      await hooks.afterGraphInit.call({
+        graph,
+        commandService: this.commandService,
+        modelService: this.modelService,
+        options: (await this.graphProvider.getGraphOptions()) as unknown as IGraphConfig
+      });
       graph.on('node:moved', ({ node }) => {
         const nodeData = node.getData();
         const position = node.position();

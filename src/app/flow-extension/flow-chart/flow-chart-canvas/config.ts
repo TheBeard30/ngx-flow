@@ -49,6 +49,7 @@ export const useGraphConfig = createGraphConfig((config, proxy) => {
     {
       eventName: 'node:mouseenter',
       callback: e => {
+        console.log('node:mouseenter>>>test');
         mode === 'edit' && changePortsVisible(true, e, showPortsOnNodeSelected);
       }
     } as IEvent<'node:mouseenter'>,
