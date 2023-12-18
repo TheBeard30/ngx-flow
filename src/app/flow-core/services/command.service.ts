@@ -13,6 +13,10 @@ import { UpdateEdgeCommand } from '@/app/flow-core/commands/edge/edge-update';
 import { SelectNodeCommand } from '@/app/flow-core/commands/node/node-select';
 import { MoveNodeCommand } from '@/app/flow-core/commands/node/node-move';
 import { RxModel } from '@/app/flow-core/common/rx-model';
+import { BackNodeCommand } from '@/app/flow-core/commands/node/node-back';
+import { FrontNodeCommand } from '@/app/flow-core/commands/node/node-front';
+import { GraphProviderService } from '@/app/flow-core/services/graph-provider.service';
+import { GraphResizeCommand } from '@/app/flow-core/commands/graph/graph-resize';
 
 @Injectable({
   providedIn: 'root'
@@ -36,9 +40,11 @@ export class CommandService implements IGraphCommandService {
   private readonly cmdChangeEvent = new RxModel<null>(null);
   constructor(
     private injector: Injector,
-    public commandContributionService: CommandContributionService
+    public commandContributionService: CommandContributionService,
+    private graphProviderService: GraphProviderService
   ) {
     this.registerXFlowCommand();
+    this.graphProviderService.command = this;
   }
 
   onStart() {
@@ -84,10 +90,13 @@ export class CommandService implements IGraphCommandService {
     const commandList = [
       GraphLoadDataCommand,
       GraphRenderCommand,
+      GraphResizeCommand,
       AddNodeCommand,
       UpdateNodeCommand,
       SelectNodeCommand,
       MoveNodeCommand,
+      BackNodeCommand,
+      FrontNodeCommand,
       AddEdgeCommand,
       UpdateEdgeCommand,
       DeleteEdgeCommand,

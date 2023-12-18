@@ -3,6 +3,10 @@ import { Injectable } from '@angular/core';
 
 import { Graph } from '@antv/x6';
 import { GraphManager } from '@/app/flow-core/models';
+import { HookService } from '@/app/flow-core/services/hook.service';
+import { IHooks } from '@/app/flow-core/hooks/interface';
+import { CommandService } from '@/app/flow-core/services/command.service';
+import { ModelService } from '@/app/flow-core/services/model.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,15 +16,16 @@ export class GraphProviderService implements IGraphProvider {
 
   private graphConfig: IGraphConfig;
 
-  private groupManager: GraphManager;
+  public command: CommandService;
 
-  constructor() {
-    this.groupManager = new GraphManager();
-  }
+  public hookService: HookService<IHooks>;
+
+  public modelService: ModelService;
+
+  public groupManager: GraphManager;
 
   async getGraphInstance(): Promise<Graph> {
-    const graph = await this.groupManager.getGraph(this.graphConfig.graphId);
-    this.graphInstance = graph;
+    this.graphInstance = await this.groupManager.getGraph(this.graphConfig.graphId);
     return Promise.resolve(this.graphInstance);
   }
 
@@ -33,6 +38,7 @@ export class GraphProviderService implements IGraphProvider {
   }
 
   setGraphOptions(graphConfig: IGraphConfig) {
+    this.groupManager = new GraphManager(this.hookService, this.command, this.modelService, this);
     this.graphConfig = graphConfig;
     this.groupManager.setConfig(this.graphConfig);
   }

@@ -39,7 +39,7 @@ export class XFlowCanvasComponent implements OnChanges {
       setTimeout(() => {
         config.setX6Config();
         config.setRootContainer(this.rootRef.nativeElement);
-        config.setGraphContainer(this.rootRef.nativeElement);
+        config.setGraphContainer(this.canvasRef.nativeElement);
         this.app.graphProvider.setGraphOptions(config as unknown as IGraphConfig);
       });
     }

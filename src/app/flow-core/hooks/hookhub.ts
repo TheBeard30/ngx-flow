@@ -7,6 +7,7 @@ import {
   ScheduleTypeEnum
 } from '@/app/flow-core/hooks/interface';
 import { HookUtils } from '@/app/flow-core/hooks/utils';
+import { Disposable } from '../common/disposable';
 
 export class HookHub<Args = any, Result = Args | null> implements IHookHub<Args, Result> {
   /** hooks */
@@ -33,14 +34,27 @@ export class HookHub<Args = any, Result = Args | null> implements IHookHub<Args,
     return hooks;
   };
 
-  call(args: Args, main: IMainHandler<Args, Result>, runtimeHook: IRuntimeHook<Args>): Promise<Result | undefined> {
+  call(
+    args: Args,
+    main: IMainHandler<Args, Result> = async mainArgs => mainArgs as unknown as Result,
+    runtimeHook: IRuntimeHook<Args> = []
+  ): Promise<Result | undefined> {
     const hooks = this.getHooks(runtimeHook, true);
     const scheduler = this.schedulers[this.scheduleType];
     return scheduler(args, main, hooks);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  registerHook(hookConfig: IHook): any {}
+  registerHook = (hookMeta: IHook<Args, Result>): Disposable => {
+    if (this.hookMap.has(hookMeta.name)) {
+      console.error(`${hookMeta.name} is duplicated in hookmap`);
+    }
+    this.hookMap.set(hookMeta.name, hookMeta);
+    return {
+      dispose: () => {
+        this.hookMap.delete(hookMeta.name);
+      }
+    };
+  };
 
   /** 执行hook的scheduler */
   private schedulers = {

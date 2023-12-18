@@ -36,6 +36,10 @@ export class GraphConfig {
     this.appContainer = element;
   }
 
+  setEvents = (events: NsGraph.IEvent[]) => {
+    this.events = events;
+  };
+
   setRootContainer(element: HTMLElement) {
     this.rootContainer = element;
   }
@@ -133,6 +137,25 @@ export class GraphConfig {
     return defaultOptions;
   };
 }
+
+export interface IValueProxy<T> {
+  getValue: () => T;
+}
+
+/**
+ * 创建图配置对象
+ * @param {Function} addOptions  添加配置的回调方法
+ */
+export const createGraphConfig = <T = any>(addOptions: (config: GraphConfig, proxy: IValueProxy<T>) => void) => {
+  return (props?: T) => {
+    const graphConfig = new GraphConfig();
+    const propsContainer = {
+      getValue: () => props
+    };
+    addOptions(graphConfig, propsContainer);
+    return graphConfig;
+  };
+};
 
 export function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {

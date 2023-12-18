@@ -26,6 +26,7 @@ export class ModelService implements IModelService {
     private graphProvider: GraphProviderService
   ) {
     this.modelConfig = new ModelServiceConfig();
+    this.graphProvider.modelService = this;
   }
 
   onStart() {
