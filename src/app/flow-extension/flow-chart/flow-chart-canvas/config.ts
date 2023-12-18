@@ -7,8 +7,7 @@ import NODE_HEIGHT = NsUpdateNode.NODE_HEIGHT;
 import { ASPECTRATIONODE } from '@/app/flow-extension/flow-chart/flow-node-panel/constant';
 
 export const useGraphConfig = createGraphConfig((config, proxy) => {
-  const { mode = 'edit', showPortsOnNodeSelected = false, edgeConfig = {} } = proxy.getValue();
-
+  const { mode = 'edit', showPortsOnNodeSelected = false, edgeConfig = {}} = proxy.getValue();
   config.setX6Config(
     merge({
       grid: true,
@@ -50,7 +49,7 @@ export const useGraphConfig = createGraphConfig((config, proxy) => {
       eventName: 'node:mouseenter',
       callback: e => {
         console.log('node:mouseenter>>>test');
-        mode === 'edit' && changePortsVisible(true, e, showPortsOnNodeSelected);
+        mode === 'edit' && changePortsVisible(true, e, true);
       }
     } as IEvent<'node:mouseenter'>,
     {
