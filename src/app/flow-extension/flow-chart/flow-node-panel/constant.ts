@@ -18,44 +18,70 @@ export const DefaultNodeConfig = {
 
 export const NODE_POOL = [
   {
-    name: 'Terminal'
+    name: 'Terminal',
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT
   },
   {
-    name: 'Process'
+    name: 'Process',
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT
   },
   {
-    name: 'Decision'
+    name: 'Decision',
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT
   },
   {
-    name: 'MultiDocument'
+    name: 'MultiDocument',
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT
   },
   {
     name: 'Connector',
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT
   },
   {
     name: 'DataIO',
-    //ports: ['top', 'bottom']
+    ports: ['top', 'bottom'],
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT
   },
   {
-    name: 'Database'
+    name: 'Database',
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT
   },
   {
-    name: 'HardDisk'
+    name: 'HardDisk',
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT
   },
   {
-    name: 'StroedData'
+    name: 'StroedData',
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT
   },
   {
-    name: 'Document'
+    name: 'Document',
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT
   },
   {
-    name: 'PredefinedProcess'
+    name: 'PredefinedProcess',
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT
   },
   {
-    name: 'Extract'
+    name: 'Extract',
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT
   },
   {
-    name: 'Merge'
+    name: 'Merge',
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT
   },
   {
     name: 'Or',
@@ -63,37 +89,57 @@ export const NODE_POOL = [
     height: NODE_HEIGHT
   },
   {
-    name: 'ManualInput'
+    name: 'ManualInput',
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT
   },
   {
-    name: 'Preparation'
+    name: 'Preparation',
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT
   },
   {
-    name: 'Delay'
+    name: 'Delay',
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT
   },
   {
-    name: 'ManualOperation'
+    name: 'ManualOperation',
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT
   },
   {
-    name: 'Display'
+    name: 'Display',
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT
   },
   {
-    name: 'OffPageLink'
+    name: 'OffPageLink',
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT
   },
   {
     name: 'NoteLeft',
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT,
     label: '≣'
   },
   {
     name: 'NoteRight',
-    label: '≣'
+    label: '≣',
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT
   },
   {
-    name: 'InternalStorage'
+    name: 'InternalStorage',
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT
   },
   {
     name: 'Text',
-    label: 'text'
+    label: 'text',
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT
   }
 ];
 // 缩放时保存同比例

@@ -50,5 +50,34 @@ export const changePortsVisible = (visible: boolean, e?: any, showPortsOnNodeSel
   if (!visible) {
     resetTransform();
   }
-  // TODO 设置port显示隐藏
+  //设置port显示隐藏
+  const containers = getContainer(e)
+  // const graph = app.getGraphInstance().then((g)=>{console.log(g)});
+  // const selectedCell = graph.getSelectedCells()?.[0]
+  // // 节点选中并移入时，port transfrom scale * 2
+  // if (selectedCell?.isNode() && showPortsOnNodeSelected) {
+  //   setTransform(getSelectedCellPorts(selectedCell.id))
+  // }
+  Array.from(containers).forEach((container: HTMLDivElement) => {
+    const ports = container.querySelectorAll('.x6-port-body') as NodeListOf<SVGAElement>
+    for (let i = 0, len = ports.length; i < len; i = i + 1) {
+      ports[i].style.visibility =
+        (showPortsOnNodeSelected) && visible ? 'visible' : 'hidden'
+    }
+  })
 };
+const getContainer = e => {
+  let currentNode = e?.e?.currentTarget
+  if (!currentNode) {
+    return document.getElementsByClassName('xflow-canvas-root')
+  }
+  let containter = null
+  while (!containter) {
+    const current = currentNode.getElementsByClassName('xflow-canvas-root')
+    if (current?.length > 0) {
+      containter = current
+    }
+    currentNode = currentNode.parentNode
+  }
+  return containter
+}

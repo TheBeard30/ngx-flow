@@ -137,7 +137,7 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
         // @ts-ignore
         const element = componentRef.instance.elementRef.nativeElement;
         element.onmousedown = (ev: MouseEvent) => {
-          const node = this.graph.createNode({ shape: n.name });
+          const node = this.graph.createNode({ shape: n.name , ports: n.ports});
           const options = {} as any;
           if (n.label) {
             options.label = n.label;

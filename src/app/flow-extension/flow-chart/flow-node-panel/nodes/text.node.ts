@@ -10,7 +10,7 @@ import { createPath } from '@/app/flow-extension/flow-chart/flow-node-panel/util
   selector: 'app-text',
   template: `
     <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="viewBox" width="100%" height="100%">
-      <text>
+      <text x="0" y="0" alignment-baseline="text-before-edge">
         {{ data.label }}
       </text>
       Sorry, your browser does not support inline SVG.
