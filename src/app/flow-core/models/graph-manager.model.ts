@@ -63,16 +63,8 @@ export class GraphManager implements IGraphManger {
       //改变节点大小
       graph.use(
         new Transform({
-          resizing: {
-            enabled: true,
-            minWidth: 1,
-            maxWidth: 200,
-            minHeight: 1,
-            maxHeight: 150,
-            orthogonal: false,
-            restrict: false,
-            preserveAspectRatio: false
-          }
+          resizing: true,
+          rotating: false
         })
       );
       //对齐辅助线

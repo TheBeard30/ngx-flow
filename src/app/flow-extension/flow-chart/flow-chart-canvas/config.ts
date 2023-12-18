@@ -4,17 +4,18 @@ import { IEvent } from '@/app/flow-core/hooks/interface';
 import { changePortsVisible } from '@/app/flow-extension/flow-chart/events';
 import { NsUpdateNode } from '@/app/flow-core/commands';
 import NODE_HEIGHT = NsUpdateNode.NODE_HEIGHT;
+import NODE_WIDTH = NsUpdateNode.NODE_WIDTH;
 import { ASPECTRATIONODE } from '@/app/flow-extension/flow-chart/flow-node-panel/constant';
 
 export const useGraphConfig = createGraphConfig((config, proxy) => {
-  const { mode = 'edit', showPortsOnNodeSelected = false, edgeConfig = {}} = proxy.getValue();
+  const { mode = 'edit', showPortsOnNodeSelected = false, edgeConfig = {} } = proxy.getValue();
   config.setX6Config(
     merge({
       grid: true,
       history: true,
       resizing: {
         enabled: true,
-        minWidth: NODE_HEIGHT,
+        minWidth: NODE_WIDTH,
         minHeight: NODE_HEIGHT,
         preserveAspectRatio: shape => {
           const { data } = shape;
