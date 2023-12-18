@@ -17,7 +17,7 @@ import { initApp } from '@/app/flow-core/utils/app.util';
 import { XFlowGraphCommands } from '@/app/flow-core/constants';
 import { HookConfig } from '@/app/flow-core/hooks/hook-config';
 import { IGraphConfig, NsGraph } from '@/app/flow-core/interfaces';
-import { HookService } from '@/app/flow-core/services/hook.service';
+import { HookService } from '@/app/flow-core/services/hooks/hook.service';
 import { ModelServiceConfig } from '@/app/flow-core/models/model-config.model';
 import { ModelService } from '@/app/flow-core/services';
 import { XFlowCanvasComponent } from '@/app/flow-core/components';

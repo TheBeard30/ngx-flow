@@ -7,7 +7,7 @@ import {
   GraphRenderCommand,
   UpdateNodeCommand
 } from '@/app/flow-core/commands';
-import { CommandContributionService } from '@/app/flow-core/services/command-contribution.service';
+import { CommandContributionService } from '@/app/flow-core/services/command/command-contribution.service';
 import { AddEdgeCommand } from '@/app/flow-core/commands/edge/edge-add';
 import { UpdateEdgeCommand } from '@/app/flow-core/commands/edge/edge-update';
 import { SelectNodeCommand } from '@/app/flow-core/commands/node/node-select';

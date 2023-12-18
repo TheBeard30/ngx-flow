@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 
 import { Graph } from '@antv/x6';
 import { GraphManager } from '@/app/flow-core/models';
-import { HookService } from '@/app/flow-core/services/hook.service';
+import { HookService } from '@/app/flow-core/services/hooks/hook.service';
 import { IHooks } from '@/app/flow-core/hooks/interface';
-import { CommandService } from '@/app/flow-core/services/command.service';
-import { ModelService } from '@/app/flow-core/services/model.service';
+import { CommandService } from '@/app/flow-core/services/command/command.service';
+import { ModelService } from '@/app/flow-core/services/model/model.service';
 
 @Injectable({
   providedIn: 'root'

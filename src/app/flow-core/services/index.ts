@@ -1,3 +1,3 @@
-export * from './command.service';
-export * from './model.service';
+export * from './command/command.service';
+export * from './model/model.service';
 export * from './graph-provider.service';

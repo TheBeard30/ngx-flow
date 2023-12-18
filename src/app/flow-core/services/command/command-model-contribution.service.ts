@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { CommandService } from '@/app/flow-core/services/command.service';
-import { ModelService } from '@/app/flow-core/services/model.service';
+import { CommandService } from '@/app/flow-core/services/command/command.service';
+import { ModelService } from '@/app/flow-core/services/model/model.service';
 import { COMMAND_GLOBALS, COMMAND_REDOABLE, COMMAND_UNDOABLE } from '@/app/flow-core/constants/model-constant';
 
 @Injectable({

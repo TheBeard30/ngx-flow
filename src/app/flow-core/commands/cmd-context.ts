@@ -1,6 +1,6 @@
 import { CommandService, GraphProviderService, ModelService } from '@/app/flow-core/services';
 import { Graph } from '@antv/x6';
-import { HookService } from '@/app/flow-core/services/hook.service';
+import { HookService } from '@/app/flow-core/services/hooks/hook.service';
 import { IHooks, IRuntimeHook } from '@/app/flow-core/hooks/interface';
 import { Disposable, DisposableCollection } from '@/app/flow-core/common/disposable';
 
