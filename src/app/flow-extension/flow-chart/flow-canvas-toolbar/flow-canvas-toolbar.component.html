@@ -1,0 +1,9 @@
+<div class="ngx-flow-workspace-toolbar-top" style="position: absolute; inset: 0px;">
+    <div class="ngx-flow-toolbar-groups">
+        <div  *ngFor="let item of toolbarGroup" class="ngx-flow-toolbar-item">
+            <button [nzTooltipTitle]="item.tooltip" nzTooltipPlacement="bottom" nz-button nz-tooltip>
+                <span nz-icon [nzType]="item.iconName" nzTheme="outline"></span>
+            </button>
+        </div>
+    </div>
+</div>
