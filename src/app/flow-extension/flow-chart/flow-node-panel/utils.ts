@@ -4,7 +4,8 @@ import { NsUpdateNode } from '@/app/flow-core/commands';
 import NODE_WIDTH = NsUpdateNode.NODE_WIDTH;
 import NODE_HEIGHT = NsUpdateNode.NODE_HEIGHT;
 import { NODE_POOL } from '@/app/flow-extension/flow-chart/flow-node-panel/constant';
-import { uuidv4 } from '@/app/flow-core/models';
+import { GraphConfig, uuidv4 } from '@/app/flow-core/models';
+import * as NodesComponent from './nodes';
 
 export const createPath = (paths: (string | number)[][], offsetX = 0, offsetY = 0) => {
   if (!paths.length) {
@@ -73,4 +74,12 @@ export const getNodes = async nodes => {
       };
     })
   ];
+};
+
+export const setNodeRender = (config: GraphConfig) => {
+  if (!config.nodeRender.get('Terminal')) {
+    NODE_POOL.map(v => {
+      config.setNodeRender(v.name, NodesComponent[`${v.name}Node`]);
+    });
+  }
 };

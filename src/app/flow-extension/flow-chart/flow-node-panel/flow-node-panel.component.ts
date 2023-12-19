@@ -11,35 +11,9 @@ import {
 } from '@angular/core';
 import { getPositionStyle, IPosition } from '@/app/flow-core/interfaces';
 import { getNodes } from '@/app/flow-extension/flow-chart/flow-node-panel/utils';
-import {
-  TerminalNode,
-  ProcessNode,
-  DecisionNode,
-  MultiDocumentNode,
-  ConnectorNode,
-  DataIONode,
-  DatabaseNode,
-  HardDiskNode,
-  StroedDataNode,
-  DocumentNode,
-  PredefinedProcessNode,
-  ExtractNode,
-  MergeNode,
-  OrNode,
-  ManualInputNode,
-  PreparationNode,
-  DelayNode,
-  ManualOperationNode,
-  DisplayNode,
-  OffPageLinkNode,
-  NoteLeftNode,
-  NoteRightNode,
-  InternalStorageNode,
-  TextNode
-} from '@/app/flow-extension/flow-chart/flow-node-panel/nodes';
 import { Dnd } from '@antv/x6-plugin-dnd';
 import { GraphProviderService } from '@/app/flow-core/services';
-import { register } from '@antv/x6-angular-shape';
+import { register, AngularShape } from '@antv/x6-angular-shape';
 import { Graph } from '@antv/x6';
 import { DefaultNodeConfig } from '@/app/flow-extension/flow-chart/flow-node-panel/constant';
 
@@ -47,7 +21,7 @@ import { DefaultNodeConfig } from '@/app/flow-extension/flow-chart/flow-node-pan
   selector: 'app-flow-node-panel',
   templateUrl: './flow-node-panel.component.html',
   styleUrls: ['./flow-node-panel.component.less'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class FlowNodePanelComponent implements OnInit, AfterViewInit {
   @Input() position: IPosition = { width: 240, top: 40, bottom: 0, left: 0 };
@@ -81,6 +55,7 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.createDnd();
+      this.initNode();
     });
   }
 
@@ -94,37 +69,11 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngOnInit(): void {
-    this.style = getPositionStyle(this.position);
-    const componentMap = {
-      Terminal: TerminalNode,
-      Process: ProcessNode,
-      Decision: DecisionNode,
-      MultiDocument: MultiDocumentNode,
-      Connector: ConnectorNode,
-      DataIO: DataIONode,
-      Database: DatabaseNode,
-      HardDisk: HardDiskNode,
-      StroedData: StroedDataNode,
-      Document: DocumentNode,
-      PredefinedProcess: PredefinedProcessNode,
-      Extract: ExtractNode,
-      Merge: MergeNode,
-      Or: OrNode,
-      ManualInput: ManualInputNode,
-      Preparation: PreparationNode,
-      Delay: DelayNode,
-      ManualOperation: ManualOperationNode,
-      Display: DisplayNode,
-      OffPageLink: OffPageLinkNode,
-      NoteLeft: NoteLeftNode,
-      NoteRight: NoteRightNode,
-      InternalStorage: InternalStorageNode,
-      Text: TextNode
-    };
-    getNodes([]).then(nodes => {
+  initNode() {
+    getNodes([]).then(async nodes => {
+      const config = await this.graphProviderService.getGraphOptions();
       this.officialNodeList = nodes.map(n => {
-        const className = componentMap[n.name];
+        const className = config.nodeRender.get(n.name);
         register({
           shape: n.name,
           width: n.width || 180,
@@ -136,8 +85,8 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
         componentRef.instance.data.label = n.label;
         // @ts-ignore
         const element = componentRef.instance.elementRef.nativeElement;
-        element.onmousedown = (ev: MouseEvent) => {
-          const node = this.graph.createNode({ shape: n.name , ports: n.ports});
+        element.onmousedown = async (ev: MouseEvent) => {
+          const node = this.graph.createNode({ shape: n.name, ports: n.ports, width: n.width, height: n.height });
           const options = {} as any;
           if (n.label) {
             options.label = n.label;
@@ -164,6 +113,10 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
         };
       });
     });
+  }
+
+  ngOnInit(): void {
+    this.style = getPositionStyle(this.position);
   }
 
   setCollapse() {

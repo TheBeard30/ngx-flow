@@ -1,6 +1,7 @@
 import type { Graph as X6Graph } from '@antv/x6';
 import { NsGraph } from '@/app/flow-core/interfaces';
 import { MAX_ZOOM, MIN_ZOOM } from '@/app/flow-core/constants';
+import { Component } from '@angular/core';
 
 export class GraphConfig {
   readonly CONFIG_TYPE = 'GraphConfig';
@@ -17,7 +18,7 @@ export class GraphConfig {
 
   private graphContainer: HTMLElement;
 
-  private nodeRender = new Map();
+  public nodeRender = new Map<string, any>();
 
   private edgeRender = new Map();
 
@@ -47,6 +48,10 @@ export class GraphConfig {
   setGraphContainer(element: HTMLElement) {
     this.graphContainer = element;
   }
+
+  setNodeRender = (renderKey: string, component: any) => {
+    this.nodeRender.set(renderKey, component);
+  };
 
   private getDefaultGraphOptions = () => {
     const defaultOptions: X6Graph.Options = {
