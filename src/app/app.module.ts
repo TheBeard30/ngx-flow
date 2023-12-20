@@ -44,6 +44,7 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlowCanvasToolbarComponent } from './flow-extension/flow-chart/flow-canvas-toolbar/flow-canvas-toolbar.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FlowCanvasScaleToolbarComponent } from './flow-extension/flow-chart/flow-canvas-scale-toolbar/flow-canvas-scale-toolbar.component';
 
 const COMPONENTS = [
   XFlowComponent,
@@ -82,7 +83,7 @@ const Nodes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, FlowPage, ...COMPONENTS, ...Nodes, BasePanelComponent, FlowCanvasToolbarComponent],
+  declarations: [AppComponent, FlowPage, ...COMPONENTS, ...Nodes, BasePanelComponent, FlowCanvasToolbarComponent, FlowCanvasScaleToolbarComponent],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule, BrowserAnimationsModule, NzIconModule, NzCollapseModule,NzToolTipModule],
   providers: [],
   bootstrap: [AppComponent]
