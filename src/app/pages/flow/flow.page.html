@@ -1,6 +1,8 @@
 <div class='h-full'>
   <app-x-flow [graphData]='graphData' [onload]="onload">
-    <app-flow-chart-canvas #canvas [position]="{top: 40, left: 0, right: 0, bottom: 0}"></app-flow-chart-canvas>
+    <app-flow-chart-canvas #canvas [position]="{top: 40, left: 0, right: 0, bottom: 0}">
+      <app-flow-canvas-scale-toolbar></app-flow-canvas-scale-toolbar>
+    </app-flow-chart-canvas>
     <app-flow-canvas-toolbar></app-flow-canvas-toolbar>
     <app-flow-node-panel></app-flow-node-panel>
   </app-x-flow>

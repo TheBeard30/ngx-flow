@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TOOLBAR_GROUP } from './config/toolbar-config';
 import { IToolbarItemOptions } from '@/app/flow-core/toolbar/interface';
 
@@ -7,6 +7,16 @@ import { IToolbarItemOptions } from '@/app/flow-core/toolbar/interface';
   templateUrl: './flow-canvas-toolbar.component.html',
   styleUrls: ['./flow-canvas-toolbar.component.less']
 })
-export class FlowCanvasToolbarComponent {
-  toolbarGroup:IToolbarItemOptions[]=TOOLBAR_GROUP
+export class FlowCanvasToolbarComponent implements OnInit{
+  @Input() config:IToolbarItemOptions[];
+  toolbarGroup:IToolbarItemOptions[]=[]
+  ngOnInit(): void {
+    if(this.config){
+      this.toolbarGroup=this.config;
+    }else{
+      this.toolbarGroup=TOOLBAR_GROUP;
+    }
+   
+  }
+
 }
