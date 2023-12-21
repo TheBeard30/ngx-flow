@@ -1,3 +1,6 @@
+import { IGraphCommandService } from '@/app/flow-core/interfaces';
+import { XFlowNodeCommands } from '@/app/flow-core/constants';
+
 const setTransformData = (ele: HTMLElement, scale: number) => {
   const currentTransform = ele.getAttribute('transform');
   const transforms: (string | number)[] = currentTransform.split(',');
@@ -51,7 +54,7 @@ export const changePortsVisible = (visible: boolean, e?: any, showPortsOnNodeSel
     resetTransform();
   }
   //设置port显示隐藏
-  const containers = getContainer(e)
+  const containers = getContainer(e);
   // const graph = app.getGraphInstance().then((g)=>{console.log(g)});
   // const selectedCell = graph.getSelectedCells()?.[0]
   // // 节点选中并移入时，port transfrom scale * 2
@@ -59,25 +62,37 @@ export const changePortsVisible = (visible: boolean, e?: any, showPortsOnNodeSel
   //   setTransform(getSelectedCellPorts(selectedCell.id))
   // }
   Array.from(containers).forEach((container: HTMLDivElement) => {
-    const ports = container.querySelectorAll('.x6-port-body') as NodeListOf<SVGAElement>
+    const ports = container.querySelectorAll('.x6-port-body') as NodeListOf<SVGAElement>;
     for (let i = 0, len = ports.length; i < len; i = i + 1) {
-      ports[i].style.visibility =
-        (showPortsOnNodeSelected) && visible ? 'visible' : 'hidden'
+      ports[i].style.visibility = showPortsOnNodeSelected && visible ? 'visible' : 'hidden';
     }
-  })
+  });
 };
 const getContainer = e => {
-  let currentNode = e?.e?.currentTarget
+  let currentNode = e?.e?.currentTarget;
   if (!currentNode) {
-    return document.getElementsByClassName('xflow-canvas-root')
+    return document.getElementsByClassName('xflow-canvas-root');
   }
-  let containter = null
+  let containter = null;
   while (!containter) {
-    const current = currentNode.getElementsByClassName('xflow-canvas-root')
+    const current = currentNode.getElementsByClassName('xflow-canvas-root');
     if (current?.length > 0) {
-      containter = current
+      containter = current;
     }
-    currentNode = currentNode.parentNode
+    currentNode = currentNode.parentNode;
   }
-  return containter
-}
+  return containter;
+};
+
+export const resizeNode = async (e: any, cmd: IGraphCommandService) => {
+  const { node } = e;
+  if (!node) return;
+  const nodeConfig = {
+    id: node.id,
+    ...node.data,
+    ...node.getPosition(),
+    ...node.size()
+  };
+
+  await cmd.executeCommand(XFlowNodeCommands.UPDATE_NODE.id, { nodeConfig });
+};

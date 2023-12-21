@@ -26,7 +26,7 @@ export class UpdateNodeCommand {
         const graph = await this.ctx.getX6Graph();
         const node = this.getNodeCell(graph, handlerArgs);
         const nextNodeConfig = await this.getNextNodeConfig(handlerArgs, node);
-        this.setNodeConfig(node, nextNodeConfig, options);
+        this.setNodeConfig(node, nextNodeConfig as any, options);
         return {
           nodeConfig: nextNodeConfig,
           nodeCell: node
@@ -36,8 +36,15 @@ export class UpdateNodeCommand {
     );
   };
 
-  setNodeConfig = (x6Node: Node, nodeConfig: NsGraph.INodeConfig, options: Node.SetOptions) => {
+  setNodeConfig = (x6Node: Node, nodeConfig: NsGraph.INodeConfig & { ngArguments: any }, options: Node.SetOptions) => {
+    if (nodeConfig.ngArguments) {
+      nodeConfig.ngArguments.size = {
+        width: nodeConfig?.width || NsUpdateNode.NODE_WIDTH,
+        height: nodeConfig?.height || NsUpdateNode.NODE_HEIGHT
+      };
+    }
     x6Node.setData(nodeConfig, options);
+    console.log('nodeConfig>>>', nodeConfig);
     x6Node.setPosition(nodeConfig?.x || 0, nodeConfig?.y || 0);
     x6Node.setSize(nodeConfig?.width || NsUpdateNode.NODE_WIDTH, nodeConfig?.height || NsUpdateNode.NODE_HEIGHT);
     x6Node.angle(nodeConfig?.angle || 0, {

@@ -5,7 +5,6 @@ import { Snapline } from '@antv/x6-plugin-snapline';
 import { HookService } from '@/app/flow-core/services/hooks/hook.service';
 import { IHooks } from '@/app/flow-core/hooks/interface';
 import { CommandService, GraphProviderService, ModelService } from '@/app/flow-core/services';
-import { Injectable } from '@angular/core';
 
 export interface IGraphManger {
   getGraph: (graphId: string) => Promise<Graph>;
@@ -51,15 +50,24 @@ export class GraphManager implements IGraphManger {
           y: position?.y
         });
       });
-      graph.on('node:resized', ({ node }) => {
+      const resizeHandle = ({ node }) => {
+        console.log('resizeHandle');
         const nodeData = node.getData();
         const size = node.size();
+        if (nodeData.ngArguments) {
+          nodeData.ngArguments.size = {
+            width: size?.width,
+            height: size?.height
+          };
+        }
         node.setData({
           ...nodeData,
           width: size?.width,
           height: size?.height
         });
-      });
+      };
+      graph.on('node:resized', resizeHandle);
+      graph.on('node:resizing', resizeHandle);
       //改变节点大小
       graph.use(
         new Transform({

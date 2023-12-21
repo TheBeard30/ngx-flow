@@ -1,7 +1,7 @@
 import { createGraphConfig } from '@/app/flow-core/models';
 import { merge } from 'lodash';
 import { IEvent } from '@/app/flow-core/hooks/interface';
-import { changePortsVisible } from '@/app/flow-extension/flow-chart/events';
+import { changePortsVisible, resizeNode } from '@/app/flow-extension/flow-chart/events';
 import { NsUpdateNode } from '@/app/flow-core/commands';
 import NODE_HEIGHT = NsUpdateNode.NODE_HEIGHT;
 import NODE_WIDTH = NsUpdateNode.NODE_WIDTH;
@@ -69,9 +69,15 @@ export const useGraphConfig = createGraphConfig((config, proxy) => {
     } as IEvent<'node:moved'>,
     {
       eventName: 'node:resized',
-      callback: (e, cmds) => {
-        // resizeNode(e, cmds);
+      callback: (e, cmd) => {
+        resizeNode(e, cmd);
       }
-    } as IEvent<'node:resized'>
+    } as IEvent<'node:resized'>,
+    {
+      eventName: 'node:resizing',
+      callback: (e, cmd) => {
+        resizeNode(e, cmd);
+      }
+    } as IEvent<'node:resizing'>
   ]);
 });
