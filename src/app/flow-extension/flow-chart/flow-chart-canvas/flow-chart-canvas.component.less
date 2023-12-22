@@ -1,14 +1,25 @@
 :host::ng-deep{
+
   .flow-chart-container{
+    @primaryColor: #3572f9;
     .x6-edge {
       stroke-width: 1px;
-      &.success {
+      &.x6-edge-selected {
         path:nth-child(2) {
-          stroke: #888 !important;
+          stroke: @primaryColor;
+          stroke-width: 2px;
         }
-        path:nth-child(3) {
-          fill: #888 !important;
-          stroke: #888 !important;
+      }
+      &:hover {
+        path:nth-child(2) {
+          stroke: @primaryColor;
+          stroke-width: 2px;
+        }
+      }
+      &.hoverHighlight {
+        path:nth-child(2) {
+          stroke: @primaryColor;
+          stroke-width: 2px;
         }
       }
     }
