@@ -35,9 +35,14 @@ export class XFlowCanvasComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.app && changes.app.currentValue) {
-      const config = this.config ? this.config : new GraphConfig();
-      setTimeout(() => {
+      let config;
+      if (this.config) {
+        config = this.config;
+      } else {
+        config = new GraphConfig();
         config.setX6Config();
+      }
+      setTimeout(() => {
         config.setRootContainer(this.rootRef.nativeElement);
         config.setGraphContainer(this.canvasRef.nativeElement);
         this.app.graphProvider.setGraphOptions(config as unknown as IGraphConfig);

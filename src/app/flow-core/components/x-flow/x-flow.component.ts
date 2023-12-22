@@ -73,11 +73,11 @@ export class XFlowComponent implements OnInit, AfterViewInit, OnChanges {
     }
     setTimeout(async () => {
       // await this.app.commandService.executeCommand(XFlowGraphCommands.GRAPH_LAYOUT.id, { graphData: this.graphData });
-      await this.app.commandService.executeCommand(
-        XFlowGraphCommands.GRAPH_RENDER.id,
-        { graphData: this.graphData },
-        null
-      );
+      // await this.app.commandService.executeCommand(
+      //   XFlowGraphCommands.GRAPH_RENDER.id,
+      //   { graphData: this.graphData },
+      //   null
+      // );
       this.app.getGraphInstance().then(g => g.centerContent());
     }, 1000);
   }

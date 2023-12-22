@@ -7,6 +7,45 @@ import NODE_HEIGHT = NsUpdateNode.NODE_HEIGHT;
 import NODE_WIDTH = NsUpdateNode.NODE_WIDTH;
 import { ASPECTRATIONODE } from '@/app/flow-extension/flow-chart/flow-node-panel/constant';
 import { setNodeRender } from '@/app/flow-extension/flow-chart/flow-node-panel/utils';
+import { Shape } from '@antv/x6';
+
+const defaultEdgeConfig = {
+  attrs: {
+    line: {
+      stroke: '#A2B1C3',
+      targetMarker: {
+        name: 'block',
+        width: 12,
+        height: 8
+      },
+      strokeDasharray: '5 5',
+      strokeWidth: 1
+    }
+  }
+};
+
+const TEMP_EGDE = 'flowchart-connecting-edge';
+
+const XFlowEdge = Shape.Edge.registry.register(
+  'xflow',
+  Shape.Edge.define({
+    zIndex: 1,
+    highlight: true,
+    name: TEMP_EGDE,
+    label: '',
+    anchor: {
+      name: 'midSide',
+      args: {
+        dx: 10
+      }
+    },
+    attrs: defaultEdgeConfig.attrs,
+    data: {
+      label: ''
+    }
+  }),
+  true
+);
 
 export const useGraphConfig = createGraphConfig((config, proxy) => {
   const { mode = 'edit', showPortsOnNodeSelected = false, edgeConfig = {} } = proxy.getValue();
@@ -14,17 +53,73 @@ export const useGraphConfig = createGraphConfig((config, proxy) => {
     merge({
       grid: true,
       history: true,
-      resizing: {
-        enabled: true,
-        minWidth: NODE_WIDTH,
-        minHeight: NODE_HEIGHT,
-        preserveAspectRatio: shape => {
-          const { data } = shape;
-          return ASPECTRATIONODE.includes(data.name);
+      connecting: {
+        router: 'manhattan',
+        connector: {
+          name: 'rounded',
+          args: {
+            radius: 8
+          }
+        },
+        anchor: 'center',
+        connectionPoint: 'anchor',
+        allowBlank: false,
+        snap: {
+          radius: 20
+        },
+        createEdge() {
+          const tempEdge = new XFlowEdge({});
+          console.log('tempEdge>>>', tempEdge);
+          this.once('edge:connected', args => {
+            console.log('tempEdge>>>', tempEdge);
+            const { edge, isNew } = args;
+            /** 没有edge:connected时，会导致graph.once的事件没有执行 */
+            if (isNew && edge && edge.isEdge() && tempEdge === edge) {
+              const targetNode = edge.getTargetCell();
+              if (targetNode && targetNode.isNode()) {
+                const targetPortId = edge.getTargetPortId();
+                const sourcePortId = edge.getSourcePortId();
+                const sourceCellId = edge.getSourceCellId();
+                const targetCellId = edge.getTargetCellId();
+                const customEdgeConfig = typeof edgeConfig === 'function' ? edgeConfig(edge) : edgeConfig;
+                this.trigger('ADD_FLOWCHART_EDGE_CMD_EVENT', {
+                  targetPortId,
+                  sourcePortId,
+                  source: sourceCellId,
+                  target: targetCellId,
+                  edge: edge,
+                  tempEdgeId: tempEdge.id,
+                  ...merge(defaultEdgeConfig, customEdgeConfig)
+                });
+              }
+            }
+          });
+          return tempEdge;
+        },
+        validateEdge: args => {
+          const { edge } = args;
+          return !!(edge?.target as any)?.port;
+        },
+        // 是否触发交互事件
+        validateMagnet() {
+          // 所有锚点均可触发
+          return true;
+        },
+        // 显示可用的链接桩
+        validateConnection({ sourceView, targetView, targetMagnet }) {
+          // 不允许连接到自己
+          if (sourceView === targetView) {
+            return false;
+          }
+          const node = targetView!.cell as any;
+          // 判断目标链接桩是否可连接
+          if (targetMagnet) {
+            const portId = targetMagnet.getAttribute('port');
+            const port = node.getPort(portId);
+            return !(port && port.connected);
+          }
+          return undefined;
         }
-      },
-      snapline: {
-        enabled: true
       }
     })
   );
