@@ -1,0 +1,14 @@
+<app-base-panel [position]="position" [className]="CONTAINER_CLASS">
+    <div class="{{CONTAINER_CLASS}}">
+
+        <div class="{{CONTAINER_CLASS}}-icon" [ngStyle]="{
+            top: '21px',
+            left: !collapse ? '-10px' : '-20px',
+            borderRadius: !collapse ? '50%' : '50% 0 0 50%',
+            borderRight: !collapse ? '' : 'none',
+          }" (click)="setCollapse()">
+            <span *ngIf="collapse" nz-icon nzType="double-left" nzTheme="outline"></span>
+            <span *ngIf="!collapse" nz-icon nzType="double-right" nzTheme="outline"></span>
+        </div>
+    </div>
+</app-base-panel>

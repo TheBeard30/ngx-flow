@@ -45,6 +45,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlowCanvasToolbarComponent } from './flow-extension/flow-chart/flow-canvas-toolbar/flow-canvas-toolbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FlowCanvasScaleToolbarComponent } from './flow-extension/flow-chart/flow-canvas-scale-toolbar/flow-canvas-scale-toolbar.component';
+import { EditorPanelComponent } from './flow-extension/editor-panel/editor-panel.component';
 
 const COMPONENTS = [
   XFlowComponent,
@@ -52,7 +53,11 @@ const COMPONENTS = [
   FlowChartCanvasComponent,
   FlowNodePanelComponent,
   BasePanelComponent,
-  FlowNodeComponent
+  FlowNodeComponent,
+  BasePanelComponent,
+  FlowCanvasToolbarComponent,
+  FlowCanvasScaleToolbarComponent,
+  EditorPanelComponent
 ];
 
 const Nodes = [
@@ -83,8 +88,16 @@ const Nodes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, FlowPage, ...COMPONENTS, ...Nodes, BasePanelComponent, FlowCanvasToolbarComponent, FlowCanvasScaleToolbarComponent],
-  imports: [BrowserModule, HttpClientModule, AppRoutingModule, BrowserAnimationsModule, NzIconModule, NzCollapseModule,NzToolTipModule],
+  declarations: [AppComponent, FlowPage, ...COMPONENTS, ...Nodes],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    NzIconModule,
+    NzCollapseModule,
+    NzToolTipModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

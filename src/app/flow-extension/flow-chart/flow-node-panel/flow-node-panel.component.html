@@ -2,23 +2,25 @@
   [className]="CONTAINER_CLASS"
   [position]="position"
 >
-  <div>
-    <nz-collapse nzBordered="false">
-      <nz-collapse-panel nzHeader="通用节点" nzActive>
-        <div class="xflow-node-panel-official" #dndContainer>
-          <ng-template #templateRef></ng-template>
-        </div>
-      </nz-collapse-panel>
-    </nz-collapse>
-  </div>
+  <div class="{{CONTAINER_CLASS}}">
+    <div>
+      <nz-collapse nzBordered="false">
+        <nz-collapse-panel nzHeader="通用节点" nzActive>
+          <div class="xflow-node-panel-official" #dndContainer>
+            <ng-template #templateRef></ng-template>
+          </div>
+        </nz-collapse-panel>
+      </nz-collapse>
+    </div>
 
-  <div class="{{CONTAINER_CLASS}}-icon" [ngStyle]="{
+    <div class="{{CONTAINER_CLASS}}-icon" [ngStyle]="{
             top: '21px',
             right: !collapse ? '-10px' : '-20px',
             borderRadius: !collapse ? '50%' : '0 50% 50% 0',
             borderLeft: !collapse ? '' : 'none',
           }" (click)="setCollapse()">
-    <span *ngIf="collapse" nz-icon nzType="double-right" nzTheme="outline"></span>
-    <span *ngIf="!collapse" nz-icon nzType="double-left" nzTheme="outline"></span>
+      <span *ngIf="collapse" nz-icon nzType="double-right" nzTheme="outline"></span>
+      <span *ngIf="!collapse" nz-icon nzType="double-left" nzTheme="outline"></span>
+    </div>
   </div>
 </app-base-panel>
