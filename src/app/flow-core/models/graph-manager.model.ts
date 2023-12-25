@@ -2,6 +2,7 @@ import { Graph } from '@antv/x6';
 import { IGraphConfig } from '@/app/flow-core/interfaces';
 import { Transform } from '@antv/x6-plugin-transform';
 import { Snapline } from '@antv/x6-plugin-snapline';
+import { History } from '@antv/x6-plugin-history';
 import { HookService } from '@/app/flow-core/services/hooks/hook.service';
 import { IHooks } from '@/app/flow-core/hooks/interface';
 import { CommandService, GraphProviderService, ModelService } from '@/app/flow-core/services';
@@ -83,6 +84,11 @@ export class GraphManager implements IGraphManger {
         })
       );
     }
+    graph.use(
+      new History({
+        enabled: true
+      })
+    );
 
     return Promise.resolve(graph);
   }

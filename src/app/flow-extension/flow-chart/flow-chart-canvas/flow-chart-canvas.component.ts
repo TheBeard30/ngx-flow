@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { IPosition } from '@/app/flow-core/interfaces';
-import { Application, GraphConfig } from '@/app/flow-core/models';
+import { Application } from '@/app/flow-core/models';
 import { useGraphConfig } from '@/app/flow-extension/flow-chart/flow-chart-canvas/config';
-
 @Component({
   selector: 'app-flow-chart-canvas',
   templateUrl: './flow-chart-canvas.component.html',
