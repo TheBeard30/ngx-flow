@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CommandService, GraphProviderService, ModelService } from '@/app/flow-core/services';
 import { cellsToJson } from '@/app/flow-core/utils/app.util';
 import { HookService } from '@/app/flow-core/services/hooks/hook.service';
+import { IHooks } from '@/app/flow-core/hooks/interface';
 
 @Injectable({ providedIn: 'root' })
 export class Application {
@@ -9,7 +10,7 @@ export class Application {
     public graphProvider: GraphProviderService,
     public commandService: CommandService,
     public modelService: ModelService,
-    public hookService: HookService<any>
+    public hookService: HookService<IHooks>
   ) {}
 
   /**
