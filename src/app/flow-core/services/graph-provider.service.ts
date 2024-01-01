@@ -1,6 +1,5 @@
 import { IGraphConfig, IGraphProvider } from '@/app/flow-core/interfaces';
 import { Injectable } from '@angular/core';
-
 import { Graph } from '@antv/x6';
 import { GraphManager } from '@/app/flow-core/models';
 import { HookService } from '@/app/flow-core/services/hooks/hook.service';
@@ -16,16 +15,21 @@ export class GraphProviderService implements IGraphProvider {
 
   private graphConfig: IGraphConfig;
 
-  public command: CommandService;
-
-  public hookService: HookService<IHooks>;
-
-  public modelService: ModelService;
+  constructor(
+    public commandService: CommandService,
+    public hookService: HookService<IHooks>,
+    public modelService: ModelService
+  ) {}
 
   public groupManager: GraphManager;
 
   async getGraphInstance(): Promise<Graph> {
-    this.graphInstance = await this.groupManager.getGraph(this.graphConfig.graphId);
+    this.graphInstance = await this.groupManager.getGraph(
+      this.graphConfig.graphId,
+      this.hookService,
+      this.commandService,
+      this.modelService
+    );
     return Promise.resolve(this.graphInstance);
   }
 
@@ -38,7 +42,7 @@ export class GraphProviderService implements IGraphProvider {
   }
 
   setGraphOptions(graphConfig: IGraphConfig) {
-    this.groupManager = new GraphManager(this.hookService, this.command, this.modelService, this);
+    this.groupManager = new GraphManager();
     this.graphConfig = graphConfig;
     this.groupManager.setConfig(this.graphConfig);
   }

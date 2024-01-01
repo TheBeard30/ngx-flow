@@ -2,10 +2,6 @@ import { createGraphConfig } from '@/app/flow-core/models';
 import { merge } from 'lodash';
 import { IEvent } from '@/app/flow-core/hooks/interface';
 import { changePortsVisible, resizeNode } from '@/app/flow-extension/flow-chart/events';
-import { NsUpdateNode } from '@/app/flow-core/commands';
-import NODE_HEIGHT = NsUpdateNode.NODE_HEIGHT;
-import NODE_WIDTH = NsUpdateNode.NODE_WIDTH;
-import { ASPECTRATIONODE } from '@/app/flow-extension/flow-chart/flow-node-panel/constant';
 import { setNodeRender } from '@/app/flow-extension/flow-chart/flow-node-panel/utils';
 import { Shape } from '@antv/x6';
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { GraphProviderService } from '@/app/flow-core/services/graph-provider.service';
 import { IModelService } from '@/app/flow-core/interfaces/model.interface';
 import * as MODELS from '@/app/flow-core/constants/model-constant';
@@ -10,11 +10,12 @@ import { Graph } from '@antv/x6';
   providedIn: 'root'
 })
 export class GraphModelContribution {
-  constructor(private graphProvider: GraphProviderService) {}
+  constructor(private injector: Injector) {}
 
   getGraphInstance = async () => {
-    const graphInstance = await this.graphProvider.getGraphInstance();
-    const graphConfig = await this.graphProvider.getGraphOptions();
+    const graphProvider = this.injector.get(GraphProviderService);
+    const graphInstance = await graphProvider.getGraphInstance();
+    const graphConfig = await graphProvider.getGraphOptions();
 
     return { graph: graphInstance, config: graphConfig };
   };
@@ -66,10 +67,12 @@ export class GraphModelContribution {
       getInitialValue: () => [],
       watchChange: async self => {
         const { graph } = await this.getGraphInstance();
-        // @ts-ignore
-        const onChange = (e: EventArgs['selection:changed']) => {
-          const { selected } = e;
+        console.log('graph>>>', graph);
+
+        const onChange = (e: EventArgs) => {
+          const { selected } = e as any;
           self.setValue(selected);
+          console.log('selection:changed>>>', e);
         };
         graph.on('selection:changed', onChange);
         return Disposable.create(() => graph.off('selection:changed', onChange));
@@ -103,6 +106,7 @@ export class GraphModelContribution {
       watchChange: async (self, modelService) => {
         const model = await MODELS.SELECTED_NODES.getModel(modelService);
         const disposable = model.watch(nodes => {
+          console.log('nodes>>>', nodes);
           self.setValue([...nodes].pop() || null);
         });
         return disposable;

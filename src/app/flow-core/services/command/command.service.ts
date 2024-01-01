@@ -40,11 +40,9 @@ export class CommandService implements IGraphCommandService {
   private readonly cmdChangeEvent = new RxModel<null>(null);
   constructor(
     private injector: Injector,
-    public commandContributionService: CommandContributionService,
-    private graphProviderService: GraphProviderService
+    public commandContributionService: CommandContributionService
   ) {
     this.registerXFlowCommand();
-    this.graphProviderService.command = this;
   }
 
   onStart() {

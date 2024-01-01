@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { CommandService, GraphProviderService, ModelService } from '@/app/flow-core/services';
-import { CommandContributionService } from '@/app/flow-core/services/command/command-contribution.service';
 import { cellsToJson } from '@/app/flow-core/utils/app.util';
 import { HookService } from '@/app/flow-core/services/hooks/hook.service';
 

@@ -22,17 +22,15 @@ export class ModelService implements IModelService {
 
   constructor(
     private commandModelContribution: CommandModelContributionService,
-    private graphModelContribution: GraphModelContribution,
-    private graphProvider: GraphProviderService
+    private graphModelContribution: GraphModelContribution
   ) {
     this.modelConfig = new ModelServiceConfig();
-    this.graphProvider.modelService = this;
   }
 
   onStart() {
     this.commandModelContribution.registerModel(this);
     this.graphModelContribution.registerModel(this);
-    // this.registerRuntimeModel();
+    this.registerRuntimeModel();
   }
 
   onStop() {
@@ -76,11 +74,11 @@ export class ModelService implements IModelService {
 
   registerRuntimeModel = async () => {
     const { modelRegisterFunc } = await this.modelConfig.getConfig();
-    const graphInstance = await this.graphProvider.getGraphInstance();
+    const { graph } = await this.graphModelContribution.getGraphInstance();
 
     if (modelRegisterFunc) {
       // @ts-ignore
-      modelRegisterFunc(this, graphInstance);
+      modelRegisterFunc(this, graph);
     }
   };
 

@@ -3,26 +3,33 @@ import { IGraphConfig } from '@/app/flow-core/interfaces';
 import { Transform } from '@antv/x6-plugin-transform';
 import { Snapline } from '@antv/x6-plugin-snapline';
 import { History } from '@antv/x6-plugin-history';
+import { Selection } from '@antv/x6-plugin-selection';
 import { HookService } from '@/app/flow-core/services/hooks/hook.service';
 import { IHooks } from '@/app/flow-core/hooks/interface';
 import { CommandService, GraphProviderService, ModelService } from '@/app/flow-core/services';
 
 export interface IGraphManger {
-  getGraph: (graphId: string) => Promise<Graph>;
+  getGraph: (
+    graphId: string,
+    hookService: HookService<IHooks>,
+    commandService: CommandService,
+    modelService: ModelService,
+    graphProvider: GraphProviderService
+  ) => Promise<Graph>;
 }
 
 export class GraphManager implements IGraphManger {
-  constructor(
-    private hookService: HookService<IHooks>,
-    private commandService: CommandService,
-    private modelService: ModelService,
-    public graphProvider: GraphProviderService
-  ) {}
+  constructor() {}
   /** 储存画布实例 */
   private graphMap = new Map<string, Graph>();
 
   private config: IGraphConfig;
-  async getGraph(graphId: string): Promise<Graph> {
+  async getGraph(
+    graphId: string,
+    hookService: HookService<IHooks>,
+    commandService: CommandService,
+    modelService: ModelService
+  ): Promise<Graph> {
     let graph = this.graphMap.get(graphId);
     if (!graph) {
       const { graphContainer } = this.config;
@@ -34,13 +41,13 @@ export class GraphManager implements IGraphManger {
         height: clientHeight,
         ...this.config.x6Options
       });
-      const hooks = this.hookService.hookProvider();
+      const hooks = hookService.hookProvider();
       this.graphMap.set(graphId, graph);
       await hooks.afterGraphInit.call({
         graph,
-        commandService: this.commandService,
-        modelService: this.modelService,
-        options: (await this.graphProvider.getGraphOptions()) as unknown as IGraphConfig
+        commandService: commandService,
+        modelService: modelService,
+        options: this.config
       });
       graph.on('node:moved', ({ node }) => {
         const nodeData = node.getData();
@@ -83,12 +90,17 @@ export class GraphManager implements IGraphManger {
           clean: false
         })
       );
+      graph.use(
+        new History({
+          enabled: true
+        })
+      );
+      graph.use(
+        new Selection({
+          enabled: true
+        })
+      );
     }
-    graph.use(
-      new History({
-        enabled: true
-      })
-    );
 
     return Promise.resolve(graph);
   }

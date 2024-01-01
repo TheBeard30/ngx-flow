@@ -23,7 +23,6 @@ export class HookService<T extends IHooks> implements IHookService<T> {
     const hookConfig = new HookConfig();
     this.hookConfig = hookConfig;
     this.runtimeHookContribution.hookConfig = hookConfig;
-    this.graphEventHookContribution.graphProviderService.hookService = this;
   }
 
   hookProvider = () => this.hooks;

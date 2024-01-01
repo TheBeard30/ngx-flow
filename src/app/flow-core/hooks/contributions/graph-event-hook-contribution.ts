@@ -1,5 +1,5 @@
 import { IHookContribution, IHooks } from '@/app/flow-core/hooks/interface';
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { Disposable, DisposableCollection } from '@/app/flow-core/common/disposable';
 import { GraphProviderService } from '@/app/flow-core/services';
 import { XFlowGraphCommands } from '@/app/flow-core/commands';
@@ -9,14 +9,14 @@ import { throttle } from '@/app/flow-core/common/util';
   providedIn: 'root'
 })
 export class GraphEventHookContribution implements IHookContribution<IHooks> {
-  constructor(public graphProviderService: GraphProviderService) {}
+  constructor(public injector: Injector) {}
   registerHook = async (hooks: IHooks) => {
     const toDispose = new DisposableCollection();
     const disposables = [
       hooks.x6Events.registerHook({
         name: NsGraphEventPlugin.pluginId,
         handler: async args => {
-          const { events } = await this.graphProviderService.getGraphOptions();
+          const { events } = await this.injector.get(GraphProviderService).getGraphOptions();
           events.forEach(event => {
             args.push(event);
           });
@@ -72,7 +72,6 @@ export class GraphEventHookContribution implements IHookContribution<IHooks> {
   };
 
   registerHookHub = async () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     return Disposable.create(() => {});
   };
 }
