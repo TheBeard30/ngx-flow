@@ -46,6 +46,22 @@ export namespace NsGraph {
     [key: string]: any;
   }
 
+  /** 群组节点信息 */
+  export interface IGroupConfig extends INodeConfig {
+    /** 是否折叠 */
+    isCollapsed?: boolean;
+    /** group 折叠后的大小 */
+    groupCollapsedSize?: { width: number; height: number };
+    /** group 未折叠的大小 */
+    groupChildrenSize?: { width: number; height: number };
+    /** 子节点元素集合 */
+    groupChildren?: string[];
+    /** group Header */
+    groupHeaderHeight?: number;
+    /** group 内边距 */
+    groupPadding?: number;
+  }
+
   /** 边信息 */
   export interface IEdgeConfig {
     /** 边的唯一标识 */

@@ -1,5 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { IPosition } from '@/app/flow-core/interfaces';
+import { Application } from '@/app/flow-core/models';
+import { useJsonFormModal } from '@/app/flow-extension/editor-panel/util';
+import { defaultFormSchemaService } from '@/app/flow-extension/editor-panel/from-scheam.service';
 
 @Component({
   selector: 'app-editor-panel',
@@ -17,6 +20,13 @@ export class EditorPanelComponent {
   private width = 240;
 
   private right = 0;
+
+  constructor(private app: Application) {
+    useJsonFormModal({
+      app: app,
+      formSchemaService: defaultFormSchemaService
+    });
+  }
 
   setCollapse() {
     this.collapse = !this.collapse;
