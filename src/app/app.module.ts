@@ -12,8 +12,6 @@ import {
   BasePanelComponent,
   FlowNodeComponent
 } from '@/app/flow-extension';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import {
   TerminalNode,
   ProcessNode,
@@ -40,12 +38,13 @@ import {
   InternalStorageNode,
   TextNode
 } from '@/app/flow-extension/flow-chart/flow-node-panel/nodes';
-import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlowCanvasToolbarComponent } from './flow-extension/flow-chart/flow-canvas-toolbar/flow-canvas-toolbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FlowCanvasScaleToolbarComponent } from './flow-extension/flow-chart/flow-canvas-scale-toolbar/flow-canvas-scale-toolbar.component';
 import { EditorPanelComponent } from './flow-extension/editor-panel/editor-panel.component';
+
+import { SharedModule } from '@/app/shared/shared.module';
 
 const COMPONENTS = [
   XFlowComponent,
@@ -89,15 +88,7 @@ const Nodes = [
 
 @NgModule({
   declarations: [AppComponent, FlowPage, ...COMPONENTS, ...Nodes],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    NzIconModule,
-    NzCollapseModule,
-    NzToolTipModule
-  ],
+  imports: [BrowserModule, HttpClientModule, AppRoutingModule, BrowserAnimationsModule, SharedModule],
   providers: [],
   bootstrap: [AppComponent]
 })
