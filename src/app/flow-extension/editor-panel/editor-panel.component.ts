@@ -8,8 +8,7 @@ import { defaultFormSchemaService } from '@/app/flow-extension/editor-panel/from
   selector: 'app-editor-panel',
   templateUrl: './editor-panel.component.html',
   styleUrls: ['./editor-panel.component.less'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: []
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditorPanelComponent {
   @Input() position: IPosition = { width: 240, top: 0, bottom: 0, right: 0 };

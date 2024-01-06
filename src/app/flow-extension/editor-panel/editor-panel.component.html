@@ -1,6 +1,8 @@
 <app-base-panel [position]="position" [className]="CONTAINER_CLASS">
     <div class="{{CONTAINER_CLASS}}">
-
+        <div>
+          <app-edge-widget></app-edge-widget>
+        </div>
         <div class="{{CONTAINER_CLASS}}-icon" [ngStyle]="{
             top: '21px',
             left: !collapse ? '-10px' : '-20px',
