@@ -72,7 +72,7 @@ export class GraphModelContribution {
         const onChange = (e: EventArgs) => {
           const { selected } = e as any;
           self.setValue(selected);
-          console.log('selection:changed>>>', e);
+          console.log('SELECTED_CELLS selection:changed>>>', e);
         };
         graph.on('selection:changed', onChange);
         return Disposable.create(() => graph.off('selection:changed', onChange));
@@ -106,7 +106,6 @@ export class GraphModelContribution {
       watchChange: async (self, modelService) => {
         const model = await MODELS.SELECTED_NODES.getModel(modelService);
         const disposable = model.watch(nodes => {
-          console.log('nodes>>>', nodes);
           self.setValue([...nodes].pop() || null);
         });
         return disposable;

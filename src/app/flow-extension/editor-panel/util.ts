@@ -5,6 +5,7 @@ import { ISchema, TargetData, TargetType } from '@/app/flow-extension/editor-pan
 import * as MODELS from '@/app/flow-core/constants/model-constant';
 import { IGraphCommandService } from '@/app/flow-core/interfaces';
 import { XFlowModelCommands } from '@/app/flow-core/constants';
+import { Application } from '@/app/flow-core/models';
 
 export namespace NsJsonSchemaFormModel {
   export const id = 'XFLOW_JSON_SCHEMA_FORM';
@@ -33,18 +34,22 @@ export const executeJsonSchemaFormCommand = (
   });
 };
 
-export const useJsonFormModal = props => {
+export const useJsonFormModal = (props: {
+  app: Application;
+  formSchemaService: any;
+  targetType: string[];
+  callback: (ev) => void;
+}) => {
   const { app, formSchemaService } = props;
   if (!app || !app.modelService) {
     return null;
   }
-  const { commandService, modelService, getGraphInstance } = app;
+  const { commandService, modelService } = app;
   const collection = new DisposableCollection();
   const model = app.modelService.findDeferredModel(NsJsonSchemaFormModel.id);
   if (!model) {
     const d = app.modelService.registerModel({
       id: NsJsonSchemaFormModel.id,
-      modelFactory: () => model,
       watchChange: async (self, modelService) => {
         const selectedCellModel = await MODELS.SELECTED_CELL.getModel(modelService);
         const nodeDisposable = selectedCellModel.watch(async cell => {
@@ -75,7 +80,7 @@ export const useJsonFormModal = props => {
             if (!formSchemaService) {
               return;
             }
-            const graph = await getGraphInstance();
+            const graph = await app.getGraphInstance();
             const schema = await formSchemaService({
               commandService,
               modelService,
@@ -84,16 +89,18 @@ export const useJsonFormModal = props => {
               targetType: type,
               graph
             });
-            self.setValue({
+            const v = {
               loading: false,
               schema: schema,
               targetType: type,
               targetCell: targetCell,
               targetData: targetData
-            });
+            };
+            self.setValue(v);
+            props.callback(v);
           };
 
-          if (['node', 'canvas'].includes(targetCellType)) {
+          if ((props.targetType || ['node', 'canvas']).includes(targetCellType)) {
             await updateState(cell, targetCellType);
           }
         });
@@ -105,5 +112,4 @@ export const useJsonFormModal = props => {
     });
     collection.push(d);
   }
-  return { commandService, modelService };
 };

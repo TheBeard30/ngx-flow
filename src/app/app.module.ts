@@ -45,8 +45,7 @@ import { FlowCanvasScaleToolbarComponent } from './flow-extension/flow-chart/flo
 import { EditorPanelComponent } from './flow-extension/editor-panel/editor-panel.component';
 
 import { SharedModule } from '@/app/shared/shared.module';
-import { NodeWidget } from '@/app/flow-extension/editor-panel/components';
-import { EdgeWidget } from '@/app/flow-extension/editor-panel/components/edge.widget';
+import { CanvasWidget, NodeWidget, EdgeWidget } from '@/app/flow-extension/editor-panel/components';
 
 const COMPONENTS = [
   XFlowComponent,
@@ -88,7 +87,7 @@ const Nodes = [
   TextNode
 ];
 
-const EDITOR_STANDALONE_COMPONENTS = [NodeWidget, EdgeWidget];
+const EDITOR_STANDALONE_COMPONENTS = [NodeWidget, EdgeWidget, CanvasWidget];
 
 @NgModule({
   declarations: [AppComponent, FlowPage, ...COMPONENTS, ...Nodes],
