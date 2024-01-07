@@ -14,7 +14,14 @@ import { createPath } from '@/app/flow-extension/flow-chart/flow-node-panel/util
       <path [attr.d]="createCustomPath(1)" [attr.fill]="data.fill" [attr.stroke]="data.stroke" />
       <path [attr.d]="createCustomPath(2)" [attr.fill]="data.fill" [attr.stroke]="data.stroke" />
       <path [attr.d]="createCustomPath(3)" [attr.fill]="data.fill" [attr.stroke]="data.stroke" />
-      <text>
+      <text
+        [attr.x]="size.width / 2"
+        [attr.y]="size.height / 2"
+        [attr.fill]="data.fontFill"
+        [attr.font-size]="data.fontSize"
+        text-anchor="middle"
+        alignment-baseline="middle"
+      >
         {{ data.label }}
       </text>
       Sorry, your browser does not support inline SVG.
@@ -35,8 +42,8 @@ export class InternalStorageNode implements OnChanges, OnInit {
   rx: number;
 
   path: (string | number)[][];
-  path1:string;
-  path2:string;
+  path1: string;
+  path2: string;
 
   viewBox: string;
 
@@ -60,32 +67,31 @@ export class InternalStorageNode implements OnChanges, OnInit {
     const availableHieght = this.size.height - 2 * NODE_PADDING;
     const rx = 6;
     this.path = [
-        ['M', NODE_PADDING, NODE_PADDING],
-        ['L', availableWidth - rx, NODE_PADDING],
-        ['C', availableWidth, NODE_PADDING, availableWidth, rx],
-        ['', availableWidth, this.size.height / 2],
-        ['L', availableWidth, availableHieght - rx],
-        ['C', availableWidth, availableHieght, availableWidth - rx, availableHieght],
-        ['', availableWidth - rx, availableHieght],
-        ['L', rx, availableHieght],
-        ['C', NODE_PADDING, availableHieght, NODE_PADDING, availableHieght - rx],
-        ['', NODE_PADDING, availableHieght - rx],
-        ['Z'],
+      ['M', NODE_PADDING, NODE_PADDING],
+      ['L', availableWidth - rx, NODE_PADDING],
+      ['C', availableWidth, NODE_PADDING, availableWidth, rx],
+      ['', availableWidth, this.size.height / 2],
+      ['L', availableWidth, availableHieght - rx],
+      ['C', availableWidth, availableHieght, availableWidth - rx, availableHieght],
+      ['', availableWidth - rx, availableHieght],
+      ['L', rx, availableHieght],
+      ['C', NODE_PADDING, availableHieght, NODE_PADDING, availableHieght - rx],
+      ['', NODE_PADDING, availableHieght - rx],
+      ['Z']
     ];
-    this.path1=`M ${NODE_PADDING},${rx} L ${availableWidth - 1} ${rx}`;
-    this.path2=`M ${rx},${NODE_PADDING} L ${rx} ${availableHieght} `;
+    this.path1 = `M ${NODE_PADDING},${rx} L ${availableWidth - 1} ${rx}`;
+    this.path2 = `M ${rx},${NODE_PADDING} L ${rx} ${availableHieght} `;
     this.viewBox = `0 0  ${this.size.width} ${this.size.height}`;
   }
 
-  createCustomPath(index:number) {
-    switch(index){
-        case 1:
-            return createPath(this.path);
-        case 2:
-            return this.path1;
-        default:
-            return this.path2;
+  createCustomPath(index: number) {
+    switch (index) {
+      case 1:
+        return createPath(this.path);
+      case 2:
+        return this.path1;
+      default:
+        return this.path2;
     }
-    
   }
 }

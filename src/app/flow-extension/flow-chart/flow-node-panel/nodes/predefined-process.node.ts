@@ -14,7 +14,14 @@ import { createPath } from '@/app/flow-extension/flow-chart/flow-node-panel/util
       <path [attr.d]="createCustomPath(1)" [attr.fill]="data.fill" [attr.stroke]="data.stroke" />
       <path [attr.d]="createCustomPath(2)" [attr.fill]="data.fill" [attr.stroke]="data.stroke" />
       <path [attr.d]="createCustomPath(3)" [attr.fill]="data.fill" [attr.stroke]="data.stroke" />
-      <text>
+      <text
+        [attr.x]="size.width / 2"
+        [attr.y]="size.height / 2"
+        [attr.fill]="data.fontFill"
+        [attr.font-size]="data.fontSize"
+        text-anchor="middle"
+        alignment-baseline="middle"
+      >
         {{ data.label }}
       </text>
       Sorry, your browser does not support inline SVG.
@@ -60,32 +67,31 @@ export class PredefinedProcessNode implements OnChanges, OnInit {
 
     const struckOffset = this.size.width / 8;
     this.path1 = [
-        ['M', NODE_PADDING, NODE_PADDING],
-        ['L', this.size.width - 2 * NODE_PADDING, NODE_PADDING],
-        ['L', this.size.width - 2 * NODE_PADDING, this.size.height - 2 * NODE_PADDING],
-        ['L', NODE_PADDING, this.size.height - 2 * NODE_PADDING],
-        ['Z'],
+      ['M', NODE_PADDING, NODE_PADDING],
+      ['L', this.size.width - 2 * NODE_PADDING, NODE_PADDING],
+      ['L', this.size.width - 2 * NODE_PADDING, this.size.height - 2 * NODE_PADDING],
+      ['L', NODE_PADDING, this.size.height - 2 * NODE_PADDING],
+      ['Z']
     ];
-    this.path2=[
-        ['M', struckOffset, NODE_PADDING],
-        ['L', struckOffset, this.size.height - 2 * NODE_PADDING],
+    this.path2 = [
+      ['M', struckOffset, NODE_PADDING],
+      ['L', struckOffset, this.size.height - 2 * NODE_PADDING]
     ];
-    this.path3=[
-        ['M', this.size.width - struckOffset, NODE_PADDING],
-        ['L', this.size.width - struckOffset, this.size.height - 2 * NODE_PADDING],
+    this.path3 = [
+      ['M', this.size.width - struckOffset, NODE_PADDING],
+      ['L', this.size.width - struckOffset, this.size.height - 2 * NODE_PADDING]
     ];
     this.viewBox = `0 0  ${this.size.width} ${this.size.height}`;
   }
 
-  createCustomPath(index:number) {
-    switch (index){
-        case 1:
-            return createPath(this.path1);
-        case 2:
-            return createPath(this.path2);
-        default:
-            return createPath(this.path3);
+  createCustomPath(index: number) {
+    switch (index) {
+      case 1:
+        return createPath(this.path1);
+      case 2:
+        return createPath(this.path2);
+      default:
+        return createPath(this.path3);
     }
-   
   }
 }

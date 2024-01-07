@@ -14,7 +14,14 @@ import { createPath } from '@/app/flow-extension/flow-chart/flow-node-panel/util
       <path [attr.d]="createCustomPath(1)" [attr.fill]="data.fill" [attr.stroke]="data.stroke" />
       <path [attr.d]="createCustomPath(2)" [attr.fill]="data.fill" [attr.stroke]="data.stroke" />
       <path [attr.d]="createCustomPath(3)" [attr.fill]="data.fill" [attr.stroke]="data.stroke" />
-      <text>
+      <text
+        [attr.x]="size.width / 2"
+        [attr.y]="size.height / 2"
+        [attr.fill]="data.fontFill"
+        [attr.font-size]="data.fontSize"
+        text-anchor="middle"
+        alignment-baseline="middle"
+      >
         {{ data.label }}
       </text>
       Sorry, your browser does not support inline SVG.
@@ -57,27 +64,28 @@ export class OrNode implements OnChanges, OnInit {
 
   create() {
     this.rx = Math.min(this.size.height, this.size.width) / 2;
-    this.path=`M ${NODE_PADDING},${this.size.height / 2} a ${(this.size.height - 2 * NODE_PADDING) / 2} ${(this.size.height - 2 * NODE_PADDING) / 2} 0 1 1 0 1 z`
+    this.path = `M ${NODE_PADDING},${this.size.height / 2} a ${(this.size.height - 2 * NODE_PADDING) / 2} ${
+      (this.size.height - 2 * NODE_PADDING) / 2
+    } 0 1 1 0 1 z`;
     this.path1 = [
-        ['M', this.size.height / 2, NODE_PADDING],
-        ['L', this.size.height / 2, this.size.height - 2 * NODE_PADDING],
+      ['M', this.size.height / 2, NODE_PADDING],
+      ['L', this.size.height / 2, this.size.height - 2 * NODE_PADDING]
     ];
     this.path2 = [
-        ['M', NODE_PADDING, this.size.height / 2],
-        ['L', this.size.height - 2 * NODE_PADDING, this.size.height / 2],
+      ['M', NODE_PADDING, this.size.height / 2],
+      ['L', this.size.height - 2 * NODE_PADDING, this.size.height / 2]
     ];
     this.viewBox = `0 0  ${this.size.width} ${this.size.height}`;
   }
 
-  createCustomPath(index:number) {
-    switch(index){
-        case 1:
-            return this.path;
-        case 2:
-            return createPath(this.path1);
-        default:
-            return createPath(this.path2);
+  createCustomPath(index: number) {
+    switch (index) {
+      case 1:
+        return this.path;
+      case 2:
+        return createPath(this.path1);
+      default:
+        return createPath(this.path2);
     }
-
   }
 }

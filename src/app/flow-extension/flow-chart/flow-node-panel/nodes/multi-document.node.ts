@@ -13,7 +13,14 @@ import { createPath } from '@/app/flow-extension/flow-chart/flow-node-panel/util
     <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="viewBox" width="100%" height="100%">
       <path [attr.d]="createCustomPath(false)" [attr.fill]="data.fill" [attr.stroke]="data.stroke" />
       <path [attr.d]="createCustomPath(true)" [attr.fill]="data.fill" [attr.stroke]="data.stroke" />
-      <text>
+      <text
+        [attr.x]="size.width / 2"
+        [attr.y]="size.height / 2"
+        [attr.fill]="data.fontFill"
+        [attr.font-size]="data.fontSize"
+        text-anchor="middle"
+        alignment-baseline="middle"
+      >
         {{ data.label }}
       </text>
       Sorry, your browser does not support inline SVG.
@@ -21,7 +28,6 @@ import { createPath } from '@/app/flow-extension/flow-chart/flow-node-panel/util
   `
 })
 export class MultiDocumentNode implements OnChanges, OnInit {
-
   @Input() size = { width: NODE_WIDTH, height: NODE_HEIGHT };
 
   @Input() data = {
@@ -31,7 +37,6 @@ export class MultiDocumentNode implements OnChanges, OnInit {
     fontFill: DefaultNodeConfig.fontFill,
     fontSize: DefaultNodeConfig.fontSize
   };
-
 
   rx: number;
 
@@ -66,35 +71,28 @@ export class MultiDocumentNode implements OnChanges, OnInit {
     const bezierY = height / 8;
 
     this.path = [
-        ['M', padding + multiPadding, padding],
-        ['L', width - 2 * padding, padding],
-        ['L', width - 2 * padding, height - 2 * padding - bezierY],
-        [
-            'C',
-            width - 2 * padding - bezierX,
-            height - 2 * padding - 2 * bezierY,
-            width / 2 + bezierX,
-            height - 2 * padding - 2 * bezierY,
-        ],
-        ['', width / 2, height - 2 * padding - bezierY],
-        [
-            'S',
-            width / 4,
-            height - 2 * padding,
-            padding + multiPadding,
-            height - 2 * padding - 2 * bezierY,
-        ],
-        ['L', padding + multiPadding, padding],
+      ['M', padding + multiPadding, padding],
+      ['L', width - 2 * padding, padding],
+      ['L', width - 2 * padding, height - 2 * padding - bezierY],
+      [
+        'C',
+        width - 2 * padding - bezierX,
+        height - 2 * padding - 2 * bezierY,
+        width / 2 + bezierX,
+        height - 2 * padding - 2 * bezierY
+      ],
+      ['', width / 2, height - 2 * padding - bezierY],
+      ['S', width / 4, height - 2 * padding, padding + multiPadding, height - 2 * padding - 2 * bezierY],
+      ['L', padding + multiPadding, padding]
     ];
     this.viewBox = `0 0  ${width} ${height}`;
   }
 
-  createCustomPath(bg:boolean) {
-    if(bg){
-        return createPath(this.path,-3,3);
-    }else{
-        return createPath(this.path);
+  createCustomPath(bg: boolean) {
+    if (bg) {
+      return createPath(this.path, -3, 3);
+    } else {
+      return createPath(this.path);
     }
-    
   }
 }

@@ -12,7 +12,14 @@ import { createPath } from '@/app/flow-extension/flow-chart/flow-node-panel/util
   template: `
     <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="viewBox" width="100%" height="100%">
       <path [attr.d]="createCustomPath()" [attr.fill]="data.fill" [attr.stroke]="data.stroke" />
-      <text>
+      <text
+        [attr.x]="size.width / 2"
+        [attr.y]="size.height / 2"
+        [attr.fill]="data.fontFill"
+        [attr.font-size]="data.fontSize"
+        text-anchor="middle"
+        alignment-baseline="middle"
+      >
         {{ data.label }}
       </text>
       Sorry, your browser does not support inline SVG.
@@ -55,11 +62,11 @@ export class ManualInputNode implements OnChanges, OnInit {
     this.rx = Math.min(this.size.height, this.size.width) / 2;
 
     this.path = [
-        ['M', NODE_PADDING, this.size.height / 5],
-        ['L', this.size.width - 2 * NODE_PADDING, NODE_PADDING],
-        ['L', this.size.width - 2 * NODE_PADDING, this.size.height - 2 * NODE_PADDING],
-        ['L', NODE_PADDING, this.size.height - 2 * NODE_PADDING],
-        ['Z'],
+      ['M', NODE_PADDING, this.size.height / 5],
+      ['L', this.size.width - 2 * NODE_PADDING, NODE_PADDING],
+      ['L', this.size.width - 2 * NODE_PADDING, this.size.height - 2 * NODE_PADDING],
+      ['L', NODE_PADDING, this.size.height - 2 * NODE_PADDING],
+      ['Z']
     ];
     this.viewBox = `0 0  ${this.size.width} ${this.size.height}`;
   }

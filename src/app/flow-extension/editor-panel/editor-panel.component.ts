@@ -13,6 +13,7 @@ import { useJsonFormModal } from '@/app/flow-extension/editor-panel/util';
 import { defaultFormSchemaService } from '@/app/flow-extension/editor-panel/from-scheam.service';
 import { defaultControlMap } from '@/app/flow-extension/editor-panel/components';
 import * as MODELS from '@/app/flow-core/constants/model-constant';
+import { XFlowNodeCommands } from '@/app/flow-core/constants';
 
 @Component({
   selector: 'app-editor-panel',
@@ -38,10 +39,28 @@ export class EditorPanelComponent {
   getSelectNode = async () => {
     const node = await MODELS.SELECTED_NODE.useValue(this.app.modelService);
     return {
+      id: node.id,
       ...node.position(),
       ...node.size(),
       ...node.data['ngArguments'].data
     };
+  };
+
+  updateNode = async (record: Record<string, any>) => {
+    const currentNodeData = await this.getSelectNode();
+    const nodeConfig = {
+      ngArguments: {
+        data: {
+          ...currentNodeData,
+          ...record
+        }
+      },
+      ...currentNodeData,
+      ...record
+    };
+    await this.app.commandService.executeCommand(XFlowNodeCommands.UPDATE_NODE.id, {
+      nodeConfig
+    });
   };
 
   getSelectEdge = async () => {
@@ -69,6 +88,10 @@ export class EditorPanelComponent {
         const componentRef = this.configRef.createComponent(widget, { injector: this.injector });
         // @ts-ignore
         componentRef.instance.config = v;
+        // @ts-ignore
+        componentRef.instance.plugin = {
+          updateNode: this.updateNode
+        };
         this.cdr.markForCheck();
       });
     });

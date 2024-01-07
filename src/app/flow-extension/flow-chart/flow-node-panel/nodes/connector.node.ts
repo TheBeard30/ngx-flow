@@ -12,7 +12,14 @@ import { createPath } from '@/app/flow-extension/flow-chart/flow-node-panel/util
   template: `
     <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="viewBox" width="100%" height="100%">
       <path [attr.d]="createCustomPath()" [attr.fill]="data.fill" [attr.stroke]="data.stroke" />
-      <text>
+      <text
+        [attr.x]="size.width / 2"
+        [attr.y]="size.height / 2"
+        [attr.fill]="data.fontFill"
+        [attr.font-size]="data.fontSize"
+        text-anchor="middle"
+        alignment-baseline="middle"
+      >
         {{ data.label }}
       </text>
       Sorry, your browser does not support inline SVG.
@@ -32,7 +39,7 @@ export class ConnectorNode implements OnChanges, OnInit {
 
   rx: number;
 
-  path: string ;
+  path: string;
 
   viewBox: string;
 
@@ -53,7 +60,9 @@ export class ConnectorNode implements OnChanges, OnInit {
 
   create() {
     this.rx = Math.min(this.size.height, this.size.width) / 2;
-    this.path = `M ${NODE_PADDING},${this.size.height / 2} a ${(this.size.height - 2 * NODE_PADDING) / 2} ${(this.size.height - 2 * NODE_PADDING) / 2} 0 1 1 0 1 z`
+    this.path = `M ${NODE_PADDING},${this.size.height / 2} a ${(this.size.height - 2 * NODE_PADDING) / 2} ${
+      (this.size.height - 2 * NODE_PADDING) / 2
+    } 0 1 1 0 1 z`;
     this.viewBox = `0 0  ${this.size.width} ${this.size.height}`;
   }
 
