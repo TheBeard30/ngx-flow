@@ -63,7 +63,11 @@ import { SharedModule } from '@/app/shared/shared.module';
         </div>
         <div class="flex items-center mb-2">
           <span class="text-black/45 mr-2 w-8">字号</span>
-          <nz-input-number class="w-16 mr-2" [(ngModel)]="config.fontSize" />
+          <nz-input-number
+            class="w-16 mr-2"
+            [(ngModel)]="config.fontSize"
+            (ngModelChange)="onNodeConfigChange($event, 'fontSize')"
+          />
           <input
             nz-input
             class="w-10"

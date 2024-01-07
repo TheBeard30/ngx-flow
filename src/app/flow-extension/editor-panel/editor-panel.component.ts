@@ -38,6 +38,8 @@ export class EditorPanelComponent {
 
   getSelectNode = async () => {
     const node = await MODELS.SELECTED_NODE.useValue(this.app.modelService);
+    console.log('getSelectNode>>>', node);
+
     return {
       id: node.id,
       ...node.position(),
@@ -48,11 +50,16 @@ export class EditorPanelComponent {
 
   updateNode = async (record: Record<string, any>) => {
     const currentNodeData = await this.getSelectNode();
+    const data = {
+      ...currentNodeData,
+      ...record
+    };
     const nodeConfig = {
       ngArguments: {
-        data: {
-          ...currentNodeData,
-          ...record
+        data: data,
+        size: {
+          width: data.width,
+          height: data.height
         }
       },
       ...currentNodeData,
