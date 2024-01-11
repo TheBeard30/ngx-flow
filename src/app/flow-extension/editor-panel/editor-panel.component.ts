@@ -75,7 +75,8 @@ export class EditorPanelComponent {
     console.log(cell);
     return {
       id: cell.id,
-      ...cell.getData()
+      ...cell.getData(),
+      attrs: cell.getAttrs()
     };
   };
 
