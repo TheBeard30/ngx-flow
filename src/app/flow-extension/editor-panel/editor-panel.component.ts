@@ -42,9 +42,9 @@ export class EditorPanelComponent {
 
     return {
       id: node.id,
+      ...node.data['ngArguments'].data,
       ...node.position(),
-      ...node.size(),
-      ...node.data['ngArguments'].data
+      ...node.size()
     };
   };
 

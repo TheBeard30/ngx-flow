@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { SharedModule } from '@/app/shared/shared.module';
 
 @Component({
@@ -9,7 +9,12 @@ import { SharedModule } from '@/app/shared/shared.module';
         <h5>内容</h5>
         <div class="flex items-center mb-2">
           <span class="text-black/45 mr-2 w-8">标题</span>
-          <input class="flex-1" nz-input />
+          <input
+            class="flex-1"
+            nz-input
+            [(ngModel)]="config.label"
+            (ngModelChange)="onNodeConfigChange($event, 'label')"
+          />
         </div>
       </div>
       <div>
@@ -19,10 +24,10 @@ import { SharedModule } from '@/app/shared/shared.module';
           <span class="text-black/45 mr-2 w-8">箭头</span>
           <div class="flex-1 flex min-w-0">
             <nz-select class="w-full">
-              <nz-option nzLabel="正向"></nz-option>
-              <nz-option nzLabel="逆向"></nz-option>
-              <nz-option nzLabel="双向"></nz-option>
-              <nz-option nzLabel="无"></nz-option>
+              <nz-option nzLabel="正向" nzValue="target"></nz-option>
+              <nz-option nzLabel="逆向" nzValue="source"></nz-option>
+              <nz-option nzLabel="双向" nzValue="all"></nz-option>
+              <nz-option nzLabel="无" nzValue="none"></nz-option>
             </nz-select>
           </div>
         </div>
@@ -30,10 +35,8 @@ import { SharedModule } from '@/app/shared/shared.module';
           <span class="text-black/45 mr-2 w-8">线形</span>
           <div class="flex-1 flex min-w-0">
             <nz-select class="w-full mr-2">
-              <nz-option nzLabel="正向"></nz-option>
-              <nz-option nzLabel="逆向"></nz-option>
-              <nz-option nzLabel="双向"></nz-option>
-              <nz-option nzLabel="无"></nz-option>
+              <nz-option nzLabel="实线"></nz-option>
+              <nz-option nzLabel="虚线"></nz-option>
             </nz-select>
             <nz-input-number />
           </div>
@@ -55,4 +58,15 @@ import { SharedModule } from '@/app/shared/shared.module';
   imports: [SharedModule],
   standalone: true
 })
-export class EdgeWidget {}
+export class EdgeWidget {
+  @Input() config;
+
+  @Input() plugin;
+
+  onNodeConfigChange(value: number | string, key: string) {
+    const { updateEdge } = this.plugin;
+    updateEdge({
+      [key]: value
+    });
+  }
+}
