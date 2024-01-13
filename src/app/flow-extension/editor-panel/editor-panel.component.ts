@@ -13,7 +13,7 @@ import { useJsonFormModal } from '@/app/flow-extension/editor-panel/util';
 import { defaultFormSchemaService } from '@/app/flow-extension/editor-panel/from-scheam.service';
 import { defaultControlMap } from '@/app/flow-extension/editor-panel/components';
 import * as MODELS from '@/app/flow-core/constants/model-constant';
-import { XFlowNodeCommands } from '@/app/flow-core/constants';
+import { XFlowEdgeCommands, XFlowNodeCommands } from '@/app/flow-core/constants';
 
 @Component({
   selector: 'app-editor-panel',
@@ -38,7 +38,7 @@ export class EditorPanelComponent {
 
   getSelectNode = async () => {
     const node = await MODELS.SELECTED_NODE.useValue(this.app.modelService);
-    console.log('getSelectNode>>>', node);
+    console.log('node>>>', node);
 
     return {
       id: node.id,
@@ -72,12 +72,28 @@ export class EditorPanelComponent {
 
   getSelectEdge = async () => {
     const cell = await MODELS.SELECTED_CELL.useValue(this.app.modelService);
-    console.log(cell);
+    console.log('edge>>>', cell);
     return {
       id: cell.id,
       ...cell.getData(),
       attrs: cell.getAttrs()
     };
+  };
+
+  updateEdge = async (value: Record<string, any>, type: 'text' | 'line' = 'line', key?: string) => {
+    const config = await this.getSelectEdge();
+    const edgeConfig = {
+      ...config,
+      ...(key ? value[key] : value),
+      attrs: {
+        ...config.attrs,
+        [type]: {
+          ...config.attrs?.[type],
+          ...(key ? value[key] : value)
+        }
+      }
+    };
+    await this.app.commandService.executeCommand(XFlowEdgeCommands.UPDATE_EDGE.id, { edgeConfig });
   };
 
   changeSchema = ev => {
@@ -98,7 +114,8 @@ export class EditorPanelComponent {
         componentRef.instance.config = v;
         // @ts-ignore
         componentRef.instance.plugin = {
-          updateNode: this.updateNode
+          updateNode: this.updateNode,
+          updateEdge: this.updateEdge
         };
         this.cdr.markForCheck();
       });

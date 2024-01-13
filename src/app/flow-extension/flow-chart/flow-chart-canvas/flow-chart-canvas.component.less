@@ -24,13 +24,20 @@
       }
     }
     .x6-widget-transform {
-      margin: -1px 0 0 -1px;
+      box-sizing: border-box !important;
+      margin: 0;
       padding: 0;
-      border: 1px solid #239edd;
+      border: 2px solid #239edd;
+      box-shadow: 0 4px 4px 0 #dbe6ff;
+
+      > div {
+        width: 8px;
+        height: 8px;
+        background-color: #fff;
+        border: 1px solid #239edd;
+      }
     }
-    .x6-widget-transform > div {
-      border: 1px solid #239edd;
-    }
+
     .x6-widget-transform > div:hover {
       background-color: #3dafe4;
     }
