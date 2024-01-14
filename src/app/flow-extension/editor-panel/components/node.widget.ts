@@ -45,7 +45,7 @@ import { SharedModule } from '@/app/shared/shared.module';
           <span class="text-black/45 mr-2 w-8">填充</span>
           <input
             nz-input
-            class="w-10"
+            class="w-10 p-1"
             type="color"
             [(ngModel)]="config.fill"
             (ngModelChange)="onNodeConfigChange($event, 'fill')"
@@ -55,7 +55,7 @@ import { SharedModule } from '@/app/shared/shared.module';
           <span class="text-black/45 mr-2 w-8">边框</span>
           <input
             nz-input
-            class="w-10"
+            class="w-10  p-1"
             type="color"
             [(ngModel)]="config.stroke"
             (ngModelChange)="onNodeConfigChange($event, 'stroke')"
@@ -70,7 +70,7 @@ import { SharedModule } from '@/app/shared/shared.module';
           />
           <input
             nz-input
-            class="w-10"
+            class="w-10  p-1"
             type="color"
             [(ngModel)]="config.fontFill"
             (ngModelChange)="onNodeConfigChange($event, 'fontFill')"

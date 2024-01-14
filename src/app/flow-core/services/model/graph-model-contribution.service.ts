@@ -53,6 +53,7 @@ export class GraphModelContribution {
           const fullscreen = !!document.fullscreenElement;
           const fullscreenModel = await MODELS.GRAPH_FULLSCREEN.getModel(modelService);
           fullscreenModel.setValue(fullscreen);
+          console.log('handleFullScreenChange>>>', fullscreen);
         };
         document.addEventListener('fullscreenchange', handleFullScreenChange, false);
         return Disposable.create(() => {

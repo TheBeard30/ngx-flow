@@ -3,8 +3,10 @@ import { ICommandFactory, IGraphCommand, IGraphCommandService } from '@/app/flow
 import {
   AddNodeCommand,
   DeleteEdgeCommand,
+  GraphFullscreenCommand,
   GraphLoadDataCommand,
   GraphRenderCommand,
+  GraphZoomCommand,
   UpdateNodeCommand
 } from '@/app/flow-core/commands';
 import { CommandContributionService } from '@/app/flow-core/services/command/command-contribution.service';
@@ -15,7 +17,6 @@ import { MoveNodeCommand } from '@/app/flow-core/commands/node/node-move';
 import { RxModel } from '@/app/flow-core/common/rx-model';
 import { BackNodeCommand } from '@/app/flow-core/commands/node/node-back';
 import { FrontNodeCommand } from '@/app/flow-core/commands/node/node-front';
-import { GraphProviderService } from '@/app/flow-core/services/graph-provider.service';
 import { GraphResizeCommand } from '@/app/flow-core/commands/graph/graph-resize';
 
 @Injectable({
@@ -89,6 +90,8 @@ export class CommandService implements IGraphCommandService {
       GraphLoadDataCommand,
       GraphRenderCommand,
       GraphResizeCommand,
+      GraphZoomCommand,
+      GraphFullscreenCommand,
       AddNodeCommand,
       UpdateNodeCommand,
       SelectNodeCommand,

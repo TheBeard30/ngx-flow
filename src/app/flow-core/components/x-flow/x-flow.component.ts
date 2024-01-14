@@ -12,9 +12,8 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
-import { Application } from '@/app/flow-core/models';
+import { Application, GraphConfig } from '@/app/flow-core/models';
 import { initApp } from '@/app/flow-core/utils/app.util';
-import { XFlowGraphCommands } from '@/app/flow-core/constants';
 import { HookConfig } from '@/app/flow-core/hooks/hook-config';
 import { IGraphConfig, NsGraph } from '@/app/flow-core/interfaces';
 import { HookService } from '@/app/flow-core/services/hooks/hook.service';
@@ -78,11 +77,11 @@ export class XFlowComponent implements OnInit, AfterViewInit, OnChanges {
       //   { graphData: this.graphData },
       //   null
       // );
-      this.app.getGraphInstance().then(g => g.centerContent());
+      this.app.getGraphConfig().then((config: any) => config.setAppContainer(this.XFlow.nativeElement));
     }, 1000);
   }
 
   ngAfterViewInit(): void {
-    this.haveCanvasComponent = this.content.some(child => child && child.isXFlowCanvas);
+    setTimeout(() => (this.haveCanvasComponent = this.content.some(child => child && child.isXFlowCanvas)));
   }
 }

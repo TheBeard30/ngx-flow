@@ -35,7 +35,8 @@
         "@typescript-eslint/ban-ts-comment": "off",
         "no-extra-boolean-cast": "off",
         "@angular-eslint/component-class-suffix": "off",
-        "@typescript-eslint/no-empty-function": "off"
+        "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/no-empty-interface": "off"
       }
     },
     {

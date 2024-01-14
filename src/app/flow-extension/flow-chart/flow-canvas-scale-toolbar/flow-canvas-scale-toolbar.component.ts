@@ -1,12 +1,52 @@
-import { Component } from '@angular/core';
-import { SCALE_TOOLBAR_GROUP } from './config/scale-toolbar-config';
+import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
+import { CANVAS_SCALE_TOOLBAR_CONFIG } from './config/scale-toolbar-config';
 import { IToolbarItemOptions } from '@/app/flow-core/toolbar/interface';
+import * as MODELS from '@/app/flow-core/constants/model-constant';
+import { ModelService } from '@/app/flow-core/services';
 
 @Component({
   selector: 'app-flow-canvas-scale-toolbar',
   templateUrl: './flow-canvas-scale-toolbar.component.html',
   styleUrls: ['./flow-canvas-scale-toolbar.component.less']
 })
-export class FlowCanvasScaleToolbarComponent {
-  toolbarGroup:IToolbarItemOptions[]=SCALE_TOOLBAR_GROUP;
+export class FlowCanvasScaleToolbarComponent implements AfterViewInit {
+  toolbarGroup: IToolbarItemOptions[] = [];
+
+  constructor(
+    private modelService: ModelService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngAfterViewInit() {
+    MODELS.GRAPH_SCALE.useValue(this.modelService).then(graphScale => {
+      console.log('GRAPH_SCALE');
+      this.toolbarGroup = CANVAS_SCALE_TOOLBAR_CONFIG.getToolbarConfig({
+        zoomFactor: graphScale.zoomFactor,
+        fullscreen: false
+      });
+
+      MODELS.GRAPH_FULLSCREEN.getModel(this.modelService).then(model => {
+        /** 初始化全屏默认值 */
+        model.setValue(false);
+        /** 全屏 */
+        model.watch(fullscreen => {
+          this.toolbarGroup = CANVAS_SCALE_TOOLBAR_CONFIG.getToolbarConfig({
+            zoomFactor: graphScale.zoomFactor,
+            fullscreen
+          });
+          console.log('GRAPH_FULLSCREEN>>>', this.toolbarGroup);
+        });
+      });
+    });
+
+    MODELS.GRAPH_SCALE.getModel(this.modelService).then(model => {
+      model.watch(async ({ zoomFactor }) => {
+        const fullscreen = await MODELS.GRAPH_FULLSCREEN.useValue(this.modelService);
+        this.toolbarGroup = CANVAS_SCALE_TOOLBAR_CONFIG.getToolbarConfig({
+          zoomFactor,
+          fullscreen
+        });
+      });
+    });
+  }
 }

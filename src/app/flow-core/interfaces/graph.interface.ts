@@ -1,6 +1,6 @@
 import type { Attr } from '@antv/x6/lib/registry/attr';
 import { PortManager } from '@antv/x6/es/model/port';
-import { EventArgs, Graph } from '@antv/x6';
+import { EventArgs, Graph, Point } from '@antv/x6';
 
 export namespace NsGraph {
   export interface IGraphMeta {
@@ -124,5 +124,14 @@ export namespace NsGraph {
   export interface IEvent<K extends keyof EventArgs = any> {
     eventName: K;
     callback: (x6Event: EventArgs[K], commandService: any, modelService: any, graph: Graph) => void;
+  }
+
+  /** XFlow画布缩放选项 */
+  export interface ZoomOptions {
+    absolute?: boolean;
+    minScale?: number;
+    maxScale?: number;
+    scaleGrid?: number;
+    center?: Point.PointLike;
   }
 }
