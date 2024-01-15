@@ -9,13 +9,17 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import { getPositionStyle, IPosition } from '@/app/flow-core/interfaces';
+import { getPositionStyle, IPosition, NsGraph } from '@/app/flow-core/interfaces';
 import { getNodes } from '@/app/flow-extension/flow-chart/flow-node-panel/utils';
 import { Dnd } from '@antv/x6-plugin-dnd';
-import { GraphProviderService } from '@/app/flow-core/services';
-import { register, AngularShape } from '@antv/x6-angular-shape';
-import { Graph } from '@antv/x6';
+import { CommandService, GraphProviderService } from '@/app/flow-core/services';
+import { register } from '@antv/x6-angular-shape';
+import { Graph, Node } from '@antv/x6';
 import { DefaultNodeConfig } from '@/app/flow-extension/flow-chart/flow-node-panel/constant';
+import ValidateNodeOptions = Dnd.ValidateNodeOptions;
+import { uuidv4 } from '@/app/flow-core/models';
+import { XFlowNodeCommands } from '@/app/flow-core/constants';
+import Properties = Node.Properties;
 
 @Component({
   selector: 'app-flow-node-panel',
@@ -40,7 +44,6 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
 
   private left = 0;
 
-  // TODO 先暂时写一个数组
   officialNodeList = [];
 
   dnd: Dnd;
@@ -49,6 +52,7 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
 
   constructor(
     private graphProviderService: GraphProviderService,
+    private commandService: CommandService,
     private injector: Injector
   ) {}
 
@@ -64,8 +68,34 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
     this.graph = graph;
     this.dnd = new Dnd({
       target: graph,
-      scaled: true,
-      dndContainer: this.dndContainer.nativeElement
+      scaled: false,
+      dndContainer: this.dndContainer.nativeElement,
+      validateNode: async (droppingNode: Node<Properties>, options: ValidateNodeOptions) => {
+        const nodeConfig = {
+          shape: droppingNode.shape,
+          ...droppingNode.getSize(),
+          ...droppingNode.getData<NsGraph.INodeConfig>(),
+          ...droppingNode.getPosition()
+        };
+        const ports = droppingNode.getPorts();
+        const config = {
+          ...nodeConfig,
+          id: `node-${uuidv4()}`,
+          zIndex: 10,
+          ports: {
+            ...ports,
+            items: ports['items']?.map(item => ({
+              ...item,
+              id: uuidv4()
+            }))
+          }
+        };
+        const args = {
+          nodeConfig: config
+        };
+        await this.commandService.executeCommand(XFlowNodeCommands.ADD_NODE.id, args);
+        return false;
+      }
     });
   }
 

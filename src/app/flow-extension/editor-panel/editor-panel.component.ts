@@ -38,8 +38,7 @@ export class EditorPanelComponent {
 
   getSelectNode = async () => {
     const node = await MODELS.SELECTED_NODE.useValue(this.app.modelService);
-    console.log('node>>>', node);
-
+    if (!node) return {};
     return {
       id: node.id,
       ...node.data['ngArguments'].data,

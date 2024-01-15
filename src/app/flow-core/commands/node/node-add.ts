@@ -24,6 +24,7 @@ export class AddNodeCommand {
         const { createNodeService, cellFactory, commandService, options } = handlerArgs;
         const graph = await this.ctx.getX6Graph();
         let rawNode: NsGraph.INodeConfig = handlerArgs.nodeConfig;
+        console.log('rawNode>>>', rawNode);
         // 通过createNodeService来获取诸如nodeId的信息，如果返回的nodeid为空则不添加到画布
         if (createNodeService) {
           const res = await createNodeService(handlerArgs);
