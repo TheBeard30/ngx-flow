@@ -77,7 +77,7 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
           ...droppingNode.getData<NsGraph.INodeConfig>(),
           ...droppingNode.getPosition()
         };
-        const ports = droppingNode.getPorts();
+        const { ports } = droppingNode;
         const config = {
           ...nodeConfig,
           id: `node-${uuidv4()}`,
