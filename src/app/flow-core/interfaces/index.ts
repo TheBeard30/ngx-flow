@@ -4,3 +4,4 @@ export * from './graph-command.interface';
 export * from './command.interface';
 export * from './graph-config.interface';
 export * from './graph-provider.interface';
+export * from './keybinding.interface';
