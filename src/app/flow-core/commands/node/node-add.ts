@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { CmdContext } from '@/app/flow-core/commands';
-import { XFlowNodeCommands } from '@/app/flow-core/constants';
+import { XFLOW_DEFAULT_NODE, XFlowNodeCommands } from '@/app/flow-core/constants';
 import { NsGraph } from '@/app/flow-core/interfaces';
 import { Model, Node } from '@antv/x6';
 import { HookHub } from '@/app/flow-core/hooks/hookhub';
 import { IHooks } from '@/app/flow-core/hooks/interface';
 import { IArgsBase } from '@/app/flow-core/commands/interface';
+import { GroupNodeComponent } from '@/app/flow-extension/flow-chart/flow-node-panel/group/group.node.component';
+import { register } from '@antv/x6-angular-shape';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +16,11 @@ export class AddNodeCommand {
   token: string = XFlowNodeCommands.ADD_NODE.id;
   // 需要一个上下文
   ctx: CmdContext<NsAddNode.IArgs, NsAddNode.IResult, NsAddNode.ICmdHooks>;
-
+  constructor(private injector: Injector) { }
   execute = async () => {
     const { args, hooks: runtimeHook } = this.ctx.getArgs();
     const hooks = this.ctx.getHooks();
-    await hooks.addNode.call(
+    const result = await hooks.addNode.call(
       args,
       async handlerArgs => {
         const { createNodeService, cellFactory, commandService, options } = handlerArgs;
@@ -48,6 +50,7 @@ export class AddNodeCommand {
       },
       runtimeHook
     );
+    this.ctx.setResult(result);
   };
 
   processNodeConfig = async (nodeConfig: NsGraph.INodeConfig) => {
@@ -55,15 +58,18 @@ export class AddNodeCommand {
      * 1. react shape node 逻辑
      * 2. X6不会处理data数据, 仅透传。可以通过x6Node?.getData()方法获取这份数据
      */
-    nodeConfig.data = { ...nodeConfig };
+    nodeConfig.data = { ngArguments: { data: { ...nodeConfig } } };
 
     /** 非 react shape */
     if (nodeConfig.shape) {
       return nodeConfig;
     }
+
     return nodeConfig;
   };
+
 }
+
 
 export namespace NsAddNode {
   /** Command: 用于注册named factory */

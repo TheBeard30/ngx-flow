@@ -11,7 +11,7 @@ export interface IGraphCommandService {
 
   isUndoable: boolean;
 
-  executeCommand: <Args = any, Result = any>(commandId: string, args: Args, hooks?: any) => Promise<void>;
+  executeCommand: <Args = any, Result = any>(commandId: string, args: Args, hooks?: any) => Promise<any>;
 }
 
 export const CommandInjectionToken = new InjectionToken<IGraphCommandService>('command injection token');

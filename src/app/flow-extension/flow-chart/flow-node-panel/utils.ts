@@ -3,9 +3,10 @@ import { isNumber } from 'lodash';
 import { NsUpdateNode } from '@/app/flow-core/commands';
 import NODE_WIDTH = NsUpdateNode.NODE_WIDTH;
 import NODE_HEIGHT = NsUpdateNode.NODE_HEIGHT;
-import { NODE_POOL } from '@/app/flow-extension/flow-chart/flow-node-panel/constant';
+import { GROUP_NODE_RENDER_ID, NODE_POOL } from '@/app/flow-extension/flow-chart/flow-node-panel/constant';
 import { GraphConfig, uuidv4 } from '@/app/flow-core/models';
 import * as NodesComponent from './nodes';
+import { GroupNodeComponent } from './group/group.node.component';
 
 export const createPath = (paths: (string | number)[][], offsetX = 0, offsetY = 0) => {
   if (!paths.length) {
@@ -83,3 +84,8 @@ export const setNodeRender = (config: GraphConfig) => {
     });
   }
 };
+
+export const setGroupRender = config => {
+  config.setNodeRender(GROUP_NODE_RENDER_ID, GroupNodeComponent)
+}
+

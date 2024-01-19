@@ -4,11 +4,16 @@ import { ModelService } from '@/app/flow-core/services';
 import { Simplify } from '@/app/flow-core/common/types';
 import type { ICmdHooks as IGraphHooks } from './graph';
 import { IModelService } from '@/app/flow-core/interfaces/model.interface';
+import { IHooks } from '../hooks/interface';
 
-export interface IContext<Args = any> {
+export interface IContext<Args = any, Result = any, Hooks = IHooks> {
   undo: () => Promise<void>;
   getArgs: () => any;
   setArgs: (args: Args) => void;
+  /** 获取结果 */
+  getResult: () => Result
+  /** 设置结果 */
+  setResult: (result: Result) => Result
   /** 获取Graph */
   getX6Graph: () => Promise<Graph>;
   /** 获取GraphMeta */

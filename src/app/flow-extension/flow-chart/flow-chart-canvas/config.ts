@@ -1,8 +1,8 @@
 import { createGraphConfig } from '@/app/flow-core/models';
 import { merge } from 'lodash';
 import { IEvent } from '@/app/flow-core/hooks/interface';
-import { changePortsVisible, resizeNode } from '@/app/flow-extension/flow-chart/events';
-import { setNodeRender } from '@/app/flow-extension/flow-chart/flow-node-panel/utils';
+import { changePortsVisible, nodeChangePosition, resizeNode } from '@/app/flow-extension/flow-chart/events';
+import { setGroupRender, setNodeRender } from '@/app/flow-extension/flow-chart/flow-node-panel/utils';
 import { Shape } from '@antv/x6';
 
 const defaultEdgeConfig = {
@@ -120,6 +120,7 @@ export const useGraphConfig = createGraphConfig((config, proxy) => {
     })
   );
   setNodeRender(config);
+  setGroupRender(config);
   config.setEvents([
     {
       eventName: 'node:selected',
@@ -168,6 +169,13 @@ export const useGraphConfig = createGraphConfig((config, proxy) => {
       callback: (e, cmd) => {
         resizeNode(e, cmd);
       }
-    } as IEvent<'node:resizing'>
+    } as IEvent<'node:resizing'>,
+    {
+      eventName: 'node:change:position',
+      callback: e => {
+        console.log('is useful', e)
+        nodeChangePosition(e)
+      }
+    } as IEvent<'node:change:position'>
   ]);
 });

@@ -96,3 +96,79 @@ export const resizeNode = async (e: any, cmd: IGraphCommandService) => {
 
   await cmd.executeCommand(XFlowNodeCommands.UPDATE_NODE.id, { nodeConfig });
 };
+export const nodeChangePosition = async (e: any) => {
+  const { node } = e;
+  if (node.prop('skipNodeChangePosition')) {
+    node.prop('skipNodeChangePosition', false)
+    return
+  }
+
+  const children = node.getChildren()
+  if (children && children.length) {
+    node.prop('previousPosition', node.getPosition())
+  }
+
+  const parent = node.getParent()
+  if (parent && parent.isNode()) {
+    let previousSize = parent.prop('previousSize')
+    if (previousSize == null) {
+      previousSize = parent.getSize()
+      parent.prop('previousSize', previousSize)
+    }
+
+    let previousPosition = parent.prop('previousPosition')
+    if (previousPosition == null) {
+      previousPosition = parent.getPosition()
+      parent.prop('previousPosition', previousPosition)
+    }
+
+    let x = previousPosition.x
+    let y = previousPosition.y
+    let cornerX = previousPosition.x + previousSize.width
+    let cornerY = previousPosition.y + previousSize.height
+    let hasChange = false
+
+    const children = parent.getChildren()
+    if (children) {
+      children.forEach((child) => {
+        const bbox = child.getBBox().inflate(20)
+        const corner = bbox.getCorner()
+
+        if (bbox.x < x) {
+          x = bbox.x
+          hasChange = true
+        }
+
+        if (bbox.y < y) {
+          y = bbox.y
+          hasChange = true
+        }
+
+        if (corner.x > cornerX) {
+          cornerX = corner.x
+          hasChange = true
+        }
+
+        if (corner.y > cornerY) {
+          cornerY = corner.y
+          hasChange = true
+        }
+      })
+    }
+
+    if (hasChange) {
+      parent.prop(
+        {
+          position: { x, y },
+          size: { width: cornerX - x, height: cornerY - y },
+        }
+      )
+      parent.setData({
+        ngArguments: {
+          size: { width: cornerX - x, height: cornerY - y }
+        }
+      })
+    }
+  }
+
+}

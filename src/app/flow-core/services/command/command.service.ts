@@ -18,6 +18,12 @@ import { RxModel } from '@/app/flow-core/common/rx-model';
 import { BackNodeCommand } from '@/app/flow-core/commands/node/node-back';
 import { FrontNodeCommand } from '@/app/flow-core/commands/node/node-front';
 import { GraphResizeCommand } from '@/app/flow-core/commands/graph/graph-resize';
+import { GraphToggleMultiSelectCommand } from '../../commands/graph/graph-toggle-multi-select';
+import { AddGroupCommand } from '../../commands/group/group-add';
+import { CollapseGroupCommand } from '../../commands/group/group-toggle-collapse';
+import { DelGroupCommand } from '../../commands/group/group-del';
+import { DeleteNodeCommand } from '../../commands/node/node-delete';
+import { GraphSaveDataCommand } from '../../commands/graph/graph-save-data';
 
 @Injectable({
   providedIn: 'root'
@@ -54,7 +60,8 @@ export class CommandService implements IGraphCommandService {
     const factory = this.getFactory(commandId);
     if (factory) {
       const cmdHandle = factory.createCommand(commandId, args, hooks);
-      cmdHandle.execute();
+      await cmdHandle.execute();
+      return cmdHandle
     }
 
     return Promise.resolve(undefined);
@@ -92,7 +99,10 @@ export class CommandService implements IGraphCommandService {
       GraphResizeCommand,
       GraphZoomCommand,
       GraphFullscreenCommand,
+      GraphToggleMultiSelectCommand,
+      GraphSaveDataCommand,
       AddNodeCommand,
+      DeleteNodeCommand,
       UpdateNodeCommand,
       SelectNodeCommand,
       MoveNodeCommand,
@@ -101,7 +111,10 @@ export class CommandService implements IGraphCommandService {
       AddEdgeCommand,
       UpdateEdgeCommand,
       DeleteEdgeCommand,
-      DeleteEdgeCommand
+      DeleteEdgeCommand,
+      AddGroupCommand,
+      CollapseGroupCommand,
+      DelGroupCommand
     ];
     for (const cls of commandList) {
       const command = this.injector.get(cls);

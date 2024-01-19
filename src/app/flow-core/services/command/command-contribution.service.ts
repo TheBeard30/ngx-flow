@@ -3,7 +3,7 @@ import { nodeHookHubList } from '@/app/flow-core/commands/node';
 import { edgeHookHubList } from '@/app/flow-core/commands/edge';
 import { CommandService } from '@/app/flow-core/services/command/command.service';
 import { Injectable, Injector } from '@angular/core';
-import { CmdContext } from '@/app/flow-core/commands';
+import { CmdContext, groupHookhubList } from '@/app/flow-core/commands';
 import { GraphProviderService } from '@/app/flow-core/services/graph-provider.service';
 import { ModelService } from '@/app/flow-core/services/model/model.service';
 import { IEvent, IHookContribution, IHookService } from '@/app/flow-core/hooks/interface';
@@ -11,7 +11,7 @@ import { ICmdHooks } from '@/app/flow-core/commands/interface';
 import { HookHub } from '@/app/flow-core/hooks/hookhub';
 import { HookService } from '@/app/flow-core/services/hooks/hook.service';
 
-const hookHubList = [...graphHookHubList, ...nodeHookHubList, ...edgeHookHubList];
+const hookHubList = [...graphHookHubList, ...nodeHookHubList, ...edgeHookHubList, ...groupHookhubList];
 
 const defaultHookFactory = () => new HookHub();
 
