@@ -54,7 +54,7 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
     private graphProviderService: GraphProviderService,
     private commandService: CommandService,
     private injector: Injector
-  ) {}
+  ) { }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -100,6 +100,9 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
   }
 
   initNode() {
+
+    // const className = config.nodeRender.get(GROUP_NODE_RENDER_ID);
+
     getNodes([]).then(async nodes => {
       const config = await this.graphProviderService.getGraphOptions();
       this.officialNodeList = nodes.map(n => {

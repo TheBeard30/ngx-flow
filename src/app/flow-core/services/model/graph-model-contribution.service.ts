@@ -72,6 +72,9 @@ export class GraphModelContribution {
 
         const onChange = (e: EventArgs) => {
           const { selected } = e as any;
+          selected.forEach(s=>{
+            graph.createTransformWidget(s)
+          });
           self.setValue(selected);
           console.log('SELECTED_CELLS selection:changed>>>', e);
         };

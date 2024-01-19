@@ -54,6 +54,7 @@ export interface IGeneralAppService {
 
 export const initHooks = () => ({
   graphOptions: new HookHub<Graph.Options>(),
+  angularNodeRender: new HookHub<Map<string, any>>(),
   afterGraphInit: new HookHub<IGeneralAppService>(),
   beforeGraphDestroy: new HookHub<IGeneralAppService>(),
   x6Events: new HookHub<IEventCollection, IEventSubscription>()

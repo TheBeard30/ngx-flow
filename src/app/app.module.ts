@@ -46,6 +46,7 @@ import { EditorPanelComponent } from './flow-extension/editor-panel/editor-panel
 
 import { SharedModule } from '@/app/shared/shared.module';
 import { CanvasWidget, NodeWidget, EdgeWidget } from '@/app/flow-extension/editor-panel/components';
+import { GroupNodeComponent } from './flow-extension/flow-chart/flow-node-panel/group/group.node.component';
 
 const COMPONENTS = [
   XFlowComponent,
@@ -90,7 +91,7 @@ const Nodes = [
 const EDITOR_STANDALONE_COMPONENTS = [NodeWidget, EdgeWidget, CanvasWidget];
 
 @NgModule({
-  declarations: [AppComponent, FlowPage, ...COMPONENTS, ...Nodes],
+  declarations: [AppComponent, FlowPage, ...COMPONENTS, ...Nodes, GroupNodeComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
