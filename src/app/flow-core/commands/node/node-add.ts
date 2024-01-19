@@ -58,7 +58,11 @@ export class AddNodeCommand {
      * 1. react shape node 逻辑
      * 2. X6不会处理data数据, 仅透传。可以通过x6Node?.getData()方法获取这份数据
      */
-    nodeConfig.data = { ngArguments: { data: { ...nodeConfig } } };
+    if (nodeConfig.shape === 'GROUP_NODE_RENDER_ID') {
+      nodeConfig.data = { ngArguments: { data: { ...nodeConfig } } };
+    } else {
+      nodeConfig.data = { ...nodeConfig }
+    }
 
     /** 非 react shape */
     if (nodeConfig.shape) {
