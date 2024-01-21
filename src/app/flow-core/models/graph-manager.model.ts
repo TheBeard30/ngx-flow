@@ -99,6 +99,8 @@ export class GraphManager implements IGraphManger {
       graph.use(
         new Selection({
           enabled: true,
+          multiple: true,
+          rubberband: true,
           showNodeSelectionBox: true
         })
       );

@@ -21,15 +21,11 @@ export class SelectNodeCommand {
       args,
       async handlerArgs => {
         const graph = await this.ctx.getX6Graph();
-        // @ts-ignore
         const currentSelectionIds = graph.getSelectedCells().map(node => node.id);
         const { nodeIds, resetSelection, commandService } = handlerArgs;
-
         if (resetSelection) {
-          // @ts-ignore
           graph.resetSelection(nodeIds);
         } else {
-          // @ts-ignore
           graph.select(nodeIds);
         }
         return {};

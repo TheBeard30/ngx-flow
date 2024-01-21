@@ -68,15 +68,9 @@ export class GraphModelContribution {
       getInitialValue: () => [],
       watchChange: async self => {
         const { graph } = await this.getGraphInstance();
-        console.log('graph>>>', graph);
-
         const onChange = (e: EventArgs) => {
           const { selected } = e as any;
-          selected.forEach(s=>{
-            graph.createTransformWidget(s)
-          });
           self.setValue(selected);
-          console.log('SELECTED_CELLS selection:changed>>>', e);
         };
         graph.on('selection:changed', onChange);
         return Disposable.create(() => graph.off('selection:changed', onChange));
