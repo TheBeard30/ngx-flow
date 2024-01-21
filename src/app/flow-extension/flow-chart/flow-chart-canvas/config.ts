@@ -4,6 +4,9 @@ import { IEvent } from '@/app/flow-core/hooks/interface';
 import { changePortsVisible, nodeChangePosition, resizeNode } from '@/app/flow-extension/flow-chart/events';
 import { setGroupRender, setNodeRender } from '@/app/flow-extension/flow-chart/flow-node-panel/utils';
 import { Shape } from '@antv/x6';
+import { KeybindingConfig } from '@/app/flow-core/models/keybinding-config.model';
+import { XFlowGraphCommands } from '@/app/flow-core/constants';
+import { NsGraphCmd } from '@/app/flow-core/commands';
 
 const defaultEdgeConfig = {
   attrs: {
@@ -173,9 +176,34 @@ export const useGraphConfig = createGraphConfig((config, proxy) => {
     {
       eventName: 'node:change:position',
       callback: e => {
-        console.log('is useful', e)
-        nodeChangePosition(e)
+        console.log('is useful', e);
+        nodeChangePosition(e);
       }
     } as IEvent<'node:change:position'>
   ]);
 });
+
+export const useKeybindingConfig = (config: KeybindingConfig) => {
+  config.setKeybindingFunc(registry => {
+    return registry.registerKeybinding([
+      {
+        id: 'undo',
+        keybinding: ['meta+z', 'ctrl+z'],
+        callback: async function (item, ctx, cmd, e) {
+          e.preventDefault();
+          cmd.executeCommand(XFlowGraphCommands.GRAPH_HISTORY_UNDO.id, {});
+        }
+      },
+      {
+        id: 'redo',
+        keybinding: ['meta+shift+z', 'ctrl+shift+z'],
+        callback: async function (item, ctx, cmd, e) {
+          e.preventDefault();
+          cmd.executeCommand(XFlowGraphCommands.GRAPH_HISTORY_REDO.id, {});
+        }
+      }
+    ]);
+  });
+  config.setMountState();
+  return config;
+};

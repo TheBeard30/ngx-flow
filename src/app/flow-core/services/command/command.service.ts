@@ -4,6 +4,8 @@ import {
   AddNodeCommand,
   DeleteEdgeCommand,
   GraphFullscreenCommand,
+  GraphHistoryRedoCommand,
+  GraphHistoryUndoCommand,
   GraphLoadDataCommand,
   GraphRenderCommand,
   GraphZoomCommand,
@@ -61,7 +63,7 @@ export class CommandService implements IGraphCommandService {
     if (factory) {
       const cmdHandle = factory.createCommand(commandId, args, hooks);
       await cmdHandle.execute();
-      return cmdHandle
+      return cmdHandle;
     }
 
     return Promise.resolve(undefined);
@@ -114,7 +116,9 @@ export class CommandService implements IGraphCommandService {
       DeleteEdgeCommand,
       AddGroupCommand,
       CollapseGroupCommand,
-      DelGroupCommand
+      DelGroupCommand,
+      GraphHistoryRedoCommand,
+      GraphHistoryUndoCommand
     ];
     for (const cls of commandList) {
       const command = this.injector.get(cls);

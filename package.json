@@ -25,6 +25,7 @@
 		"@antv/x6-angular-shape": "^2.0.2",
 		"@antv/x6-plugin-dnd": "^2.1.1",
 		"@antv/x6-plugin-history": "^2.2.4",
+		"@antv/x6-plugin-keyboard": "^2.2.2",
 		"@antv/x6-plugin-selection": "^2.2.1",
 		"@antv/x6-plugin-snapline": "^2.1.7",
 		"@antv/x6-plugin-transform": "^2.1.8",

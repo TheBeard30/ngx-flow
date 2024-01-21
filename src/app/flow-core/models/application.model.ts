@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CommandService, GraphProviderService, ModelService } from '@/app/flow-core/services';
+import { CommandService, GraphProviderService, KeybindingService, ModelService } from '@/app/flow-core/services';
 import { cellsToJson } from '@/app/flow-core/utils/app.util';
 import { HookService } from '@/app/flow-core/services/hooks/hook.service';
 import { IHooks } from '@/app/flow-core/hooks/interface';
@@ -10,7 +10,8 @@ export class Application {
     public graphProvider: GraphProviderService,
     public commandService: CommandService,
     public modelService: ModelService,
-    public hookService: HookService<IHooks>
+    public hookService: HookService<IHooks>,
+    public keybindingService: KeybindingService
   ) {}
 
   /**
@@ -20,8 +21,12 @@ export class Application {
     // TODO 启动配置
     this.commandService.onStart();
     this.hookService.onStart();
+
     // TODO 整体流程需要修改
-    setTimeout(() => this.modelService.onStart(), 1000);
+    setTimeout(() => {
+      this.keybindingService.onStart();
+      this.modelService.onStart();
+    }, 1000);
   }
 
   /**

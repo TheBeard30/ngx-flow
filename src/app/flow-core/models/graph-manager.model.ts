@@ -7,6 +7,7 @@ import { Selection } from '@antv/x6-plugin-selection';
 import { HookService } from '@/app/flow-core/services/hooks/hook.service';
 import { IHooks } from '@/app/flow-core/hooks/interface';
 import { CommandService, GraphProviderService, ModelService } from '@/app/flow-core/services';
+import { Keyboard } from '@antv/x6-plugin-keyboard';
 
 export interface IGraphManger {
   getGraph: (
@@ -19,7 +20,7 @@ export interface IGraphManger {
 }
 
 export class GraphManager implements IGraphManger {
-  constructor() { }
+  constructor() {}
   /** 储存画布实例 */
   private graphMap = new Map<string, Graph>();
 
@@ -98,7 +99,12 @@ export class GraphManager implements IGraphManger {
       graph.use(
         new Selection({
           enabled: true,
-          showNodeSelectionBox: true,
+          showNodeSelectionBox: true
+        })
+      );
+      graph.use(
+        new Keyboard({
+          enabled: true
         })
       );
     }

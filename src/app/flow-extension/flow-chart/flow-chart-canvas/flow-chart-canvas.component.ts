@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, Inject, Injector, Input } from '@angular/core';
 import { IPosition } from '@/app/flow-core/interfaces';
 import { Application } from '@/app/flow-core/models';
-import { useGraphConfig } from '@/app/flow-extension/flow-chart/flow-chart-canvas/config';
+import { useGraphConfig, useKeybindingConfig } from '@/app/flow-extension/flow-chart/flow-chart-canvas/config';
 import { NSToolbarConfig } from '../flow-canvas-toolbar/config/toolbar-config';
+import { KeybindingConfig } from '@/app/flow-core/models/keybinding-config.model';
 @Component({
   selector: 'app-flow-chart-canvas',
   templateUrl: './flow-chart-canvas.component.html',
@@ -16,7 +17,12 @@ export class FlowChartCanvasComponent {
 
   config = useGraphConfig({});
 
-  constructor(public app: Application, private injector: Injector) {
+  keybindingConfig = useKeybindingConfig(new KeybindingConfig());
+
+  constructor(
+    public app: Application,
+    private injector: Injector
+  ) {
     NSToolbarConfig.initTollbar(injector);
   }
 }

@@ -11,6 +11,8 @@ import {
 } from '@angular/core';
 import { getPositionStyle, IGraphConfig, IPosition } from '@/app/flow-core/interfaces';
 import { Application, GraphConfig } from '@/app/flow-core/models';
+import { KeybindingConfig } from '@/app/flow-core/models/keybinding-config.model';
+import { KeybindingService } from '@/app/flow-core/services';
 
 @Component({
   selector: 'app-x-flow-canvas',
@@ -25,7 +27,9 @@ export class XFlowCanvasComponent implements OnChanges {
 
   @Input() isXFlowCanvas = true;
 
-  @Input() config: GraphConfig;
+  @Input() graphConfig: GraphConfig;
+
+  @Input() keybindingConfig: KeybindingConfig;
 
   @Input() position?: IPosition;
 
@@ -33,14 +37,19 @@ export class XFlowCanvasComponent implements OnChanges {
   /** 暂时先传一下，后面改为service全局 */
   @Input() app: Application;
 
+  constructor(private keybindingService: KeybindingService) {}
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.app && changes.app.currentValue) {
       let config;
-      if (this.config) {
-        config = this.config;
+      if (this.graphConfig) {
+        config = this.graphConfig;
       } else {
         config = new GraphConfig();
         config.setX6Config();
+      }
+      if (this.keybindingConfig) {
+        this.keybindingService.setKeybindingConfig(this.keybindingConfig);
       }
       setTimeout(() => {
         config.setRootContainer(this.rootRef.nativeElement);

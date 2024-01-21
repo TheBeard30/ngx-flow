@@ -1,5 +1,7 @@
 import { IGraphCommandService } from '@/app/flow-core/interfaces/graph-command.interface';
 import { IModelService } from '@/app/flow-core/interfaces/model.interface';
+import { Disposable } from '../common/disposable';
+import { KeybindingService } from '@/app/flow-core/services';
 
 export interface IKeyBinding {
   /** keybinding的唯一标识  */
@@ -22,4 +24,8 @@ export interface IKeyBinding {
 
 export interface ICmdExecutor {
   (item: IKeyBinding, modelService: IModelService, cmd: IGraphCommandService, e: KeyboardEvent): Promise<void>;
+}
+
+export interface IRegisterKeybindingFunction {
+  (registry: KeybindingService): Disposable;
 }
