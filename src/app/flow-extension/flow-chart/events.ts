@@ -106,6 +106,9 @@ export const nodeChangePosition = async (e: any) => {
   const children = node.getChildren()
   if (children && children.length) {
     node.prop('previousPosition', node.getPosition())
+    children.forEach(child => {
+      child.prop('skipNodeChangePosition', true)
+    })
   }
 
   const parent = node.getParent()
@@ -160,7 +163,7 @@ export const nodeChangePosition = async (e: any) => {
       parent.prop(
         {
           position: { x, y },
-          size: { width: cornerX - x, height: cornerY - y },
+          size: { width: cornerX - x, height: cornerY - y }
         }
       )
       parent.setData({
