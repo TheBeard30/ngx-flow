@@ -34,16 +34,16 @@ export class GroupNodeComponent implements OnInit {
   }
 
 
-  onExpand() {
-    this.commandService.executeCommand(XFlowGroupCommands.COLLAPSE_GROUP.id, {
+  async onExpand() {
+    await this.commandService.executeCommand(XFlowGroupCommands.COLLAPSE_GROUP.id, {
       nodeId: this.data.id,
       isCollapsed: false,
       collapsedSize: { width: 200, height: 40 },
     })
     this.data.isCollapsed = true
   }
-  onCollapse() {
-    this.commandService.executeCommand(XFlowGroupCommands.COLLAPSE_GROUP.id, {
+  async onCollapse() {
+    await this.commandService.executeCommand(XFlowGroupCommands.COLLAPSE_GROUP.id, {
       nodeId: this.data.id,
       isCollapsed: true,
       collapsedSize: { width: this.size.width, height: 40 },
