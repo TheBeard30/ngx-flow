@@ -43,10 +43,12 @@ import { FlowCanvasToolbarComponent } from './flow-extension/flow-chart/flow-can
 import { HttpClientModule } from '@angular/common/http';
 import { FlowCanvasScaleToolbarComponent } from './flow-extension/flow-chart/flow-canvas-scale-toolbar/flow-canvas-scale-toolbar.component';
 import { EditorPanelComponent } from './flow-extension/editor-panel/editor-panel.component';
+import { HomeComponent } from './pages/home/home.component';
 
 import { SharedModule } from '@/app/shared/shared.module';
 import { CanvasWidget, NodeWidget, EdgeWidget } from '@/app/flow-extension/editor-panel/components';
 import { GroupNodeComponent } from './flow-extension/flow-chart/flow-node-panel/group/group.node.component';
+import { ErComponent } from './pages/er/er.component';
 
 const COMPONENTS = [
   XFlowComponent,
@@ -90,8 +92,10 @@ const Nodes = [
 
 const EDITOR_STANDALONE_COMPONENTS = [NodeWidget, EdgeWidget, CanvasWidget];
 
+const PAGES = [FlowPage, HomeComponent, ErComponent];
+
 @NgModule({
-  declarations: [AppComponent, FlowPage, ...COMPONENTS, ...Nodes, GroupNodeComponent],
+  declarations: [AppComponent, ...COMPONENTS, ...Nodes, ...PAGES, GroupNodeComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
