@@ -1,12 +1,12 @@
-/* eslint-disable*/
 import { NsGraphCmd, NsNodeCmd, NsGroupCmd } from '@/app/flow-core/commands';
 import { XFlowGraphCommands, XFlowGroupCommands, XFlowNodeCommands } from '@/app/flow-core/constants';
 import { IModelService } from '@/app/flow-core/interfaces/model.interface';
-import { MODELS, uuidv4 } from '@/app/flow-core/models';
+import { uuidv4 } from '@/app/flow-core/models';
 import { IToolbarItemOptions } from '@/app/flow-core/toolbar/interface';
 import { GroupNodeComponent } from '../../flow-node-panel/group/group.node.component';
 import { Injector } from '@angular/core';
 import { register } from '@antv/x6-angular-shape';
+import * as MODELS from '@/app/flow-core/constants/model-constant';
 
 const GROUP_NODE_RENDER_ID = 'GROUP_NODE_RENDER_ID';
 

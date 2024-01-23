@@ -6,9 +6,7 @@ import { GraphEventHookContribution } from '@/app/flow-core/hooks/contributions/
 import { CommandContributionService } from '@/app/flow-core/services/command/command-contribution.service';
 import { HookConfig } from '@/app/flow-core/hooks/hook-config';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class HookService<T extends IHooks> implements IHookService<T> {
   hooks: T;
 

@@ -3,7 +3,7 @@ import { Graph } from '@antv/x6';
 import { HookService } from '@/app/flow-core/services/hooks/hook.service';
 import { IHooks, IRuntimeHook } from '@/app/flow-core/hooks/interface';
 import { Disposable, DisposableCollection } from '@/app/flow-core/common/disposable';
-import { MODELS } from '../models';
+import * as MODELS from '../constants/model-constant';
 import { NsGraph } from '@/app/flow-core/interfaces';
 
 export class CmdContext<Args = any, Result = any, Hooks extends IHooks = IHooks> {
@@ -15,7 +15,7 @@ export class CmdContext<Args = any, Result = any, Hooks extends IHooks = IHooks>
   /** hook */
   private runtimeHooks: IRuntimeHook = [];
   /** graph meta */
-  private graphMeta: NsGraph.IGraphMeta
+  private graphMeta: NsGraph.IGraphMeta;
 
   private result: Result;
   constructor(
@@ -23,7 +23,7 @@ export class CmdContext<Args = any, Result = any, Hooks extends IHooks = IHooks>
     private graphProvider: GraphProviderService,
     private modelService: ModelService,
     private hookService: HookService<Hooks>
-  ) { }
+  ) {}
 
   /** 获取Context Service */
   getModelService = () => {
@@ -110,8 +110,8 @@ export class CmdContext<Args = any, Result = any, Hooks extends IHooks = IHooks>
   };
   /** 获取 graphMeta */
   getGraphMeta = async () => {
-    const service = this.getModelService()
-    const meta = this.graphMeta || (await MODELS.GRAPH_META.useValue(service))
-    return meta
-  }
+    const service = this.getModelService();
+    const meta = this.graphMeta || (await MODELS.GRAPH_META.useValue(service));
+    return meta;
+  };
 }

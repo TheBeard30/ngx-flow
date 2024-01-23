@@ -6,9 +6,7 @@ import type { EventArgs } from '@antv/x6/lib/graph/events';
 import { Disposable, DisposableCollection } from '@/app/flow-core/common/disposable';
 import { Graph } from '@antv/x6';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class GraphModelContribution {
   constructor(private injector: Injector) {}
 

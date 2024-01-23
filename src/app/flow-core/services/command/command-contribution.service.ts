@@ -15,9 +15,7 @@ const hookHubList = [...graphHookHubList, ...nodeHookHubList, ...edgeHookHubList
 
 const defaultHookFactory = () => new HookHub();
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CommandContributionService implements IHookContribution<ICmdHooks> {
   constructor(private injector: Injector) {}
 

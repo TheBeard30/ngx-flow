@@ -5,9 +5,7 @@ import { GraphProviderService } from '@/app/flow-core/services';
 import { XFlowGraphCommands } from '@/app/flow-core/commands';
 import { throttle } from '@/app/flow-core/common/util';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class GraphEventHookContribution implements IHookContribution<IHooks> {
   constructor(public injector: Injector) {}
   registerHook = async (hooks: IHooks) => {

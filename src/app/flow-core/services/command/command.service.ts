@@ -27,9 +27,7 @@ import { DelGroupCommand } from '../../commands/group/group-del';
 import { DeleteNodeCommand } from '../../commands/node/node-delete';
 import { GraphSaveDataCommand } from '../../commands/graph/graph-save-data';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CommandService implements IGraphCommandService {
   /**
    * undo cmd后将命令存储在队列中给redo调用

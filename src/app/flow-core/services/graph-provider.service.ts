@@ -7,9 +7,7 @@ import { IHooks } from '@/app/flow-core/hooks/interface';
 import { CommandService } from '@/app/flow-core/services/command/command.service';
 import { ModelService } from '@/app/flow-core/services/model/model.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class GraphProviderService implements IGraphProvider {
   private graphInstance: Graph;
 

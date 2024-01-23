@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { XFlowGraphCommands } from '../constant';
-import { MODELS } from '../../models';
-import { IArgsBase, IContext } from '../interface';
+import * as MODELS from '../../constants/model-constant';
+import { IArgsBase } from '../interface';
 import { HookHub } from '../../hooks/hookhub';
 import { IHooks } from '../../hooks/interface';
 import { CmdContext } from '../cmd-context';

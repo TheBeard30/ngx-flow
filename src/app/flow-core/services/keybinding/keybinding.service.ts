@@ -1,12 +1,10 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { IKeyBinding } from '@/app/flow-core/interfaces';
 import { Disposable, DisposableCollection } from '@/app/flow-core/common/disposable';
 import { CommandService, GraphProviderService, ModelService } from '@/app/flow-core/services';
 import { KeybindingConfig } from '@/app/flow-core/models/keybinding-config.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class KeybindingService {
   private toDispose = new DisposableCollection();
 

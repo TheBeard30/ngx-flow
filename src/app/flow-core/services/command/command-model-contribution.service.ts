@@ -3,9 +3,7 @@ import { CommandService } from '@/app/flow-core/services/command/command.service
 import { ModelService } from '@/app/flow-core/services/model/model.service';
 import { COMMAND_GLOBALS, COMMAND_REDOABLE, COMMAND_UNDOABLE } from '@/app/flow-core/constants/model-constant';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CommandModelContributionService {
   constructor(private command: CommandService) {}
 

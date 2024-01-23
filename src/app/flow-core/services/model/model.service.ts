@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { IModelOptions, IModelService, NsModel } from '@/app/flow-core/interfaces/model.interface';
 import { CommandModelContributionService } from '@/app/flow-core/services/command/command-model-contribution.service';
 import { GraphModelContribution } from '@/app/flow-core/services/model/graph-model-contribution.service';
-import { GraphProviderService } from '@/app/flow-core/services/graph-provider.service';
 import { Token } from '@/app/flow-core/common/types';
 import { RxModel } from '@/app/flow-core/common/rx-model';
 import { Disposable, DisposableCollection } from '@/app/flow-core/common/disposable';

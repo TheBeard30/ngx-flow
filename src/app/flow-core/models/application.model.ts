@@ -4,7 +4,7 @@ import { cellsToJson } from '@/app/flow-core/utils/app.util';
 import { HookService } from '@/app/flow-core/services/hooks/hook.service';
 import { IHooks } from '@/app/flow-core/hooks/interface';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class Application {
   constructor(
     public graphProvider: GraphProviderService,

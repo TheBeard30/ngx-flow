@@ -1,7 +1,6 @@
 import type { Graph as X6Graph } from '@antv/x6';
 import { NsGraph } from '@/app/flow-core/interfaces';
 import { MAX_ZOOM, MIN_ZOOM } from '@/app/flow-core/constants';
-import { Component } from '@angular/core';
 
 export class GraphConfig {
   readonly CONFIG_TYPE = 'GraphConfig';

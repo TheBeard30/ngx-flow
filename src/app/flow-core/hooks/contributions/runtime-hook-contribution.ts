@@ -2,9 +2,7 @@ import { IHookContribution, IHooks, IHookService } from '@/app/flow-core/hooks/i
 import { Injectable } from '@angular/core';
 import { HookConfig } from '@/app/flow-core/hooks/hook-config';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class RuntimeHookContribution implements IHookContribution<IHooks> {
   hookConfig: HookConfig;
 

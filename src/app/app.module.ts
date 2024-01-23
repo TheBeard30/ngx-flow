@@ -25,7 +25,7 @@ const PAGES = [FlowPage, HomeComponent, ErComponent];
     BrowserAnimationsModule,
     SharedModule,
     FlowExtensionModule,
-    FlowCoreModule
+    FlowCoreModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
