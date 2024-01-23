@@ -5,7 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './flow.page.html',
   styleUrls: ['./flow.page.less']
 })
-// eslint-disable-next-line @angular-eslint/component-class-suffix
 export class FlowPage {
   graphData;
 

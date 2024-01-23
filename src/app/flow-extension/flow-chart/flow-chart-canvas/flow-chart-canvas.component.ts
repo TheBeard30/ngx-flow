@@ -23,6 +23,6 @@ export class FlowChartCanvasComponent {
     public app: Application,
     private injector: Injector
   ) {
-    NSToolbarConfig.initTollbar(injector);
+    NSToolbarConfig.initToolbar(injector);
   }
 }
