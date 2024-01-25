@@ -176,7 +176,6 @@ export const useGraphConfig = createGraphConfig((config, proxy) => {
     {
       eventName: 'node:change:position',
       callback: e => {
-        console.log('is useful', e);
         nodeChangePosition(e);
       }
     } as IEvent<'node:change:position'>

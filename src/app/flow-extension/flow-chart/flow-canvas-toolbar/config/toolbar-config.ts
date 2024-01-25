@@ -116,7 +116,7 @@ export namespace NSToolbarConfig {
       tooltip: '新建群组',
       iconName: 'group',
       id: TOOLBAR_ITEMS.ADD_GROUP,
-      isEnabled: true,
+      isEnabled: state.isNodeSelected,
       onClick: async ({ commandService, modelService }) => {
         const cells = await MODELS.SELECTED_CELLS.useValue(modelService);
         const groupChildren = cells.map(cell => cell.id);
@@ -136,7 +136,7 @@ export namespace NSToolbarConfig {
       tooltip: '解散群组',
       iconName: 'ungroup',
       id: TOOLBAR_ITEMS.DEL_GROUP,
-      isEnabled: true,
+      isEnabled: state.isGroupSelected,
       onClick: async ({ commandService, modelService }) => {
         const cell = await MODELS.SELECTED_NODE.useValue(modelService);
         const nodeConfig = cell.getData();
