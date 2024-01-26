@@ -17,7 +17,7 @@ export class GraphProviderService implements IGraphProvider {
     public commandService: CommandService,
     public hookService: HookService<IHooks>,
     public modelService: ModelService
-  ) {}
+  ) { }
 
   public groupManager: GraphManager;
 

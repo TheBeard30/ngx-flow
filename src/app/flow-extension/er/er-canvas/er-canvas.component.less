@@ -1,0 +1,56 @@
+:host::ng-deep {
+  .er-chart-container {
+    @primaryColor: #3572f9;
+    .x6-edge {
+      stroke-width: 1px;
+      &.x6-edge-selected {
+        path:nth-child(2) {
+          stroke: @primaryColor;
+          stroke-width: 2px;
+        }
+      }
+      &:hover {
+        path:nth-child(2) {
+          stroke: @primaryColor;
+          stroke-width: 2px;
+        }
+      }
+      &.hoverHighlight {
+        path:nth-child(2) {
+          stroke: @primaryColor;
+          stroke-width: 2px;
+        }
+      }
+    }
+    .x6-widget-transform {
+      box-sizing: border-box !important;
+      margin: 0;
+      padding: 0;
+      border: 2px solid #239edd;
+      box-shadow: 0 4px 4px 0 #dbe6ff;
+
+      > div {
+        width: 8px;
+        height: 8px;
+        background-color: #fff;
+        border: 1px solid #239edd;
+      }
+    }
+
+    .x6-widget-transform > div:hover {
+      background-color: #3dafe4;
+    }
+    .x6-widget-transform-active-handle {
+      background-color: #3dafe4;
+    }
+    .x6-widget-transform-resize {
+      border-radius: 0;
+    }
+    .x6-widget-selection-inner {
+      border: 1px solid #239edd;
+    }
+    .x6-widget-selection-box {
+      opacity: 0;
+    }
+  }
+}

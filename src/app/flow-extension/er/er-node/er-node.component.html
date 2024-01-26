@@ -1,0 +1,23 @@
+<div class="entity-container {{getCls()}}">
+    <div class="content {{getCls()}}">
+        <div class="head">
+            <div>
+                <span nz-icon nzType="bars" nzTheme="outline" class="type"></span>
+                <span>{{entity.entityName}}</span>
+            </div>
+            <div class="del-icon">
+                <span nz-icon nzType="delete" nzTheme="outline"></span>
+            </div>
+        </div>
+        <div class="body">
+            <div *ngFor="let item of entityProperties" class="body-item">
+                <div class="name ">
+                    <span *ngIf="item.isPK" class="pk">PK</span>
+                    <span *ngIf="item.isFK" class="fk">FK</span>
+                    {{item.propertyName}}
+                </div>
+                <div class="type">{{item.propertyType}}</div>
+            </div>
+        </div>
+    </div>
+</div>
