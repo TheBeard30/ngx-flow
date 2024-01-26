@@ -36,6 +36,8 @@ import {
 import { GroupNodeComponent } from '@/app/flow-extension/flow-chart/flow-node-panel/group/group.node.component';
 import { CanvasWidget, EdgeWidget, NodeWidget } from '@/app/flow-extension/editor-panel/components';
 import { FlowCoreModule } from '@/app/flow-core/flow-core.module';
+import { ErCanvasComponent } from './er/er-canvas/er-canvas.component';
+import { ErNodeComponent } from './er/er-node/er-node.component';
 
 const COMPONENTS = [
   FlowChartCanvasComponent,
@@ -45,7 +47,8 @@ const COMPONENTS = [
   BasePanelComponent,
   FlowCanvasToolbarComponent,
   FlowCanvasScaleToolbarComponent,
-  EditorPanelComponent
+  EditorPanelComponent,
+  ErCanvasComponent
 ];
 
 const Nodes = [
@@ -79,9 +82,9 @@ const Nodes = [
 const EDITOR_STANDALONE_COMPONENTS = [NodeWidget, EdgeWidget, CanvasWidget];
 
 @NgModule({
-  declarations: [...COMPONENTS, ...Nodes],
+  declarations: [...COMPONENTS, ...Nodes, ErNodeComponent],
   imports: [SharedModule, FlowCoreModule, EDITOR_STANDALONE_COMPONENTS],
   exports: [...COMPONENTS],
   providers: []
 })
-export class FlowExtensionModule {}
+export class FlowExtensionModule { }
