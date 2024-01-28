@@ -38,6 +38,7 @@ import { CanvasWidget, EdgeWidget, NodeWidget } from '@/app/flow-extension/edito
 import { FlowCoreModule } from '@/app/flow-core/flow-core.module';
 import { ErCanvasComponent } from './er/er-canvas/er-canvas.component';
 import { ErNodeComponent } from './er/er-node/er-node.component';
+import { ContextMenuComponent } from './context-menu/context-menu.component';
 
 const COMPONENTS = [
   FlowChartCanvasComponent,
@@ -48,7 +49,9 @@ const COMPONENTS = [
   FlowCanvasToolbarComponent,
   FlowCanvasScaleToolbarComponent,
   EditorPanelComponent,
-  ErCanvasComponent
+  ErCanvasComponent,
+  ErNodeComponent,
+  ContextMenuComponent
 ];
 
 const Nodes = [
@@ -82,9 +85,9 @@ const Nodes = [
 const EDITOR_STANDALONE_COMPONENTS = [NodeWidget, EdgeWidget, CanvasWidget];
 
 @NgModule({
-  declarations: [...COMPONENTS, ...Nodes, ErNodeComponent],
+  declarations: [...COMPONENTS, ...Nodes],
   imports: [SharedModule, FlowCoreModule, EDITOR_STANDALONE_COMPONENTS],
   exports: [...COMPONENTS],
   providers: []
 })
-export class FlowExtensionModule { }
+export class FlowExtensionModule {}

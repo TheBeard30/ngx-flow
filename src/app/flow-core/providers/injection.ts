@@ -5,6 +5,8 @@ import { GraphEventHookContribution } from '@/app/flow-core/hooks/contributions/
 import { CommandContributionService } from '@/app/flow-core/services/command/command-contribution.service';
 import { KeybindingService } from '@/app/flow-core/services';
 import { Disposable } from '../common/disposable';
+import { IModelService } from '@/app/flow-core/interfaces/model.interface';
+import { IMenuService } from '@/app/flow-core/interfaces';
 
 export const HookToken = new InjectionToken<IHookService<IHooks>>('hook token');
 
@@ -23,3 +25,26 @@ export interface IKeyBindingContribution {
    */
   registerKeybinding: (registry: KeybindingService) => Disposable;
 }
+
+export const MenuToken = new InjectionToken<IMenu>('menu token');
+
+export interface IMenu {
+  /**
+   * 注册Menu
+   * @param registry the toolbar registry.
+   */
+  registerMenu: (registry: IMenuService) => void;
+}
+
+/**
+ * 扩展Model
+ */
+export interface IModel {
+  /**
+   * 注册Model
+   * @param registry the toolbar registry.
+   */
+  registerModel: (registry: IModelService) => void;
+}
+
+export const ModelToken = new InjectionToken<IModel>('model token');

@@ -1,6 +1,7 @@
 import { asyncScheduler, distinctUntilChanged, filter, Observable, throttleTime } from 'rxjs';
 import { Token } from '@/app/flow-core/common/types';
 import { Deferred } from '../common/deferred';
+import { Disposable } from '../common/disposable';
 
 export namespace NsModel {
   /** model的类型 */
@@ -71,9 +72,9 @@ export interface IModelOptions<T = any> {
 
 export interface IModelService {
   /** 注册模型 */
-  registerModel: <T>(options: IModelOptions<T>) => void;
+  registerModel: <T>(options: IModelOptions<T>) => Disposable;
   /** 异步获取模型：promise会在模型注册成功后resolve */
   awaitModel: <T = any>(token: Token<T>) => Promise<NsModel.IModel<T>>;
   /** 同步获取模型，没有注册的token会返回undefined */
-  findDeferredModel: <T = any>(token: Token<T>) => undefined | Deferred<NsModel.IModel<T>>
+  findDeferredModel: <T = any>(token: Token<T>) => undefined | Deferred<NsModel.IModel<T>>;
 }

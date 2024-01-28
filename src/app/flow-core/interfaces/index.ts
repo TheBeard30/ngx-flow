@@ -5,3 +5,4 @@ export * from './command.interface';
 export * from './graph-config.interface';
 export * from './graph-provider.interface';
 export * from './keybinding.interface';
+export * from './menu.interface';

@@ -7,6 +7,7 @@ import {
   GraphProviderService,
   HookService,
   KeybindingService,
+  MenuService,
   ModelService
 } from '@/app/flow-core/services';
 import { CommandContributionService } from '@/app/flow-core/services/command/command-contribution.service';
@@ -35,7 +36,8 @@ export class FlowCoreModule {
         ...COMMAND_PROVIDERS,
         ...HOOK_PROVIDERS,
         ...MODEL_PROVIDERS,
-        KeybindingService
+        KeybindingService,
+        MenuService
       ]
     };
   }

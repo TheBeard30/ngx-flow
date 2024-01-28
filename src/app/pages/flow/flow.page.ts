@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { useMenuConfig } from '@/app/flow-extension/context-menu/context-menu.config';
 
 @Component({
   selector: 'app-flow',
@@ -7,6 +8,8 @@ import { Component } from '@angular/core';
 })
 export class FlowPage {
   graphData;
+
+  menuConfig = useMenuConfig();
 
   onload = app => {
     console.log('flow app>>>', app);

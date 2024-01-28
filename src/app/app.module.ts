@@ -13,6 +13,8 @@ import { SharedModule } from '@/app/shared/shared.module';
 import { ErComponent } from './pages/er/er.component';
 import { FlowExtensionModule } from '@/app/flow-extension/flow-extension.module';
 import { FlowCoreModule } from '@/app/flow-core/flow-core.module';
+import { MenuToken, ModelToken } from '@/app/flow-core/providers/injection';
+import { ContextMenuService } from '@/app/flow-extension/context-menu/context-menu.service';
 
 const PAGES = [FlowPage, HomeComponent, ErComponent];
 
@@ -27,7 +29,7 @@ const PAGES = [FlowPage, HomeComponent, ErComponent];
     FlowExtensionModule,
     FlowCoreModule.forRoot()
   ],
-  providers: [],
+  providers: [{ provide: ModelToken, useClass: ContextMenuService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
