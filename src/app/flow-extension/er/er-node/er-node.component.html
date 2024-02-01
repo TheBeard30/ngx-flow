@@ -10,18 +10,9 @@
                 <span nz-icon nzType="delete" nzTheme="outline"></span>
             </div>
         </div>
-        <!-- w-[calc(100%-12px)] h-[100%-36px-6px] mb-[6px] ml-[6px] overflow-auto bg-white cursor-pointer -->
         <div class="body">
-            <div *ngFor="let item of entityProperties"
-                class="flex flex-row items-center justify-between w-[100%] h-[28px] text-[#595959] text-[12px] border-solid border-b border-[#ced4de33]">
-                <div class="ml-[6px] truncate">
-                    <span *ngIf="item.isPK"
-                        class="w-[12px] mr-[6px] text-[#ffd666] font-[HelveticaNeue-CondensedBold]">PK</span>
-                    <span *ngIf="item.isFK"
-                        class="w-[12px] mr-[6px] text-[#ffd666] font-[HelveticaNeue-CondensedBold]">FK</span>
-                    {{item.propertyName}}
-                </div>
-                <div class="mr-[8px] text-[#bfbfbf] text-[8px]">{{item.propertyType}}</div>
+            <div *ngFor="let item of this.entity.entityProperties">
+                <app-er-field [item]="item"></app-er-field>
             </div>
         </div>
     </div>

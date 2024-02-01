@@ -2,9 +2,9 @@ import { IPosition } from '@/app/flow-core/interfaces';
 import { Application } from '@/app/flow-core/models';
 import { KeybindingConfig } from '@/app/flow-core/models/keybinding-config.model';
 import { Component, Injector, Input } from '@angular/core';
-import { useGraphConfig, useKeybindingConfig } from '../../flow-chart/flow-chart-canvas/config';
 import { register } from '@antv/x6-angular-shape';
 import { ErNodeComponent } from '../er-node/er-node.component';
+import { useGraphConfig, useKeybindingConfig } from './config';
 
 @Component({
   selector: 'app-er-canvas',
@@ -20,7 +20,7 @@ export class ErCanvasComponent {
   config = useGraphConfig({});
   keybindingConfig = useKeybindingConfig(new KeybindingConfig());
 
-  constructor(public app: Application, private injector: Injector,) {
+  constructor(public app: Application, private injector: Injector) {
     register({
       shape: 'er-node',
       width: 170,

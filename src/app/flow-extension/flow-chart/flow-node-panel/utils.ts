@@ -44,8 +44,8 @@ const getAnchorStyle = (position: string) => {
     zIndex: 10
   };
 };
-
-const getPorts = (position = ['top', 'right', 'bottom', 'left']) => {
+//暂时添加export 供测试ernode使用
+export const getPorts = (position = ['top', 'right', 'bottom', 'left']) => {
   return {
     items: position.map(name => {
       return { group: name, id: uuidv4() };

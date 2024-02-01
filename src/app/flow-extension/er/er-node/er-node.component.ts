@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { GraphProviderService } from '@/app/flow-core/services';
+import { AfterViewInit, Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-er-node',
@@ -6,69 +7,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./er-node.component.less']
 })
 export class ErNodeComponent {
-  entity: any = {
-    entityName: '测试表',
-    entityType: 'FACT',
-    properties: []
-  };
-  entityProperties = [
-    {
-      propertyName: "姓名",
-      propertyType: "string",
-      isPK: true,
-      isFK: false
-    },
-    {
-      propertyName: "年龄",
-      propertyType: "int",
-      isPK: false,
-      isFK: false
-    },
-    {
-      propertyName: "性别",
-      propertyType: "string",
-      isPK: false,
-      isFK: false
-    },
-    {
-      propertyName: "身份",
-      propertyType: "string",
-      isPK: false,
-      isFK: true
-    },
-    {
-      propertyName: "性别",
-      propertyType: "string",
-      isPK: false,
-      isFK: false
-    },
-    {
-      propertyName: "性别",
-      propertyType: "string",
-      isPK: false,
-      isFK: false
-    },
-    {
-      propertyName: "性别",
-      propertyType: "string",
-      isPK: false,
-      isFK: false
-    },
-    {
-      propertyName: "性别",
-      propertyType: "string",
-      isPK: false,
-      isFK: false
-    },
-    {
-      propertyName: "性别",
-      propertyType: "string",
-      isPK: false,
-      isFK: false
-    },
-  ]
-
+  @Input() entity: any;
+  @Input() id: string;
+  constructor(graphProvider: GraphProviderService) {
+    graphProvider.getGraphInstance().then(g => {
+      const self = g.getCellById(this.id);
+    });
+  }
   getCls() {
+
     if (this.entity?.entityType === 'FACT') {
       return 'fact'
     }
