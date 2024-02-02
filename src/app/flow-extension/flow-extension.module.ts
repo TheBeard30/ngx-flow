@@ -40,6 +40,7 @@ import { ErCanvasComponent } from './er/er-canvas/er-canvas.component';
 import { ErNodeComponent } from './er/er-node/er-node.component';
 import { ContextMenuComponent } from './context-menu/context-menu.component';
 import { ErFieldComponent } from './er/er-node/er-field/er-field.component';
+import { ErCanvasToolbarComponent } from './er/er-canvas-toolbar/er-canvas-toolbar.component';
 
 const COMPONENTS = [
   FlowChartCanvasComponent,
@@ -52,7 +53,9 @@ const COMPONENTS = [
   EditorPanelComponent,
   ErCanvasComponent,
   ErNodeComponent,
-  ContextMenuComponent
+  ContextMenuComponent,
+  ErCanvasToolbarComponent,
+  ErFieldComponent
 ];
 
 const Nodes = [
@@ -86,9 +89,9 @@ const Nodes = [
 const EDITOR_STANDALONE_COMPONENTS = [NodeWidget, EdgeWidget, CanvasWidget];
 
 @NgModule({
-  declarations: [...COMPONENTS, ...Nodes, ErFieldComponent],
+  declarations: [...COMPONENTS, ...Nodes],
   imports: [SharedModule, FlowCoreModule, EDITOR_STANDALONE_COMPONENTS],
   exports: [...COMPONENTS],
   providers: []
 })
-export class FlowExtensionModule {}
+export class FlowExtensionModule { }
