@@ -3,6 +3,9 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { Node } from '@antv/x6';
 import * as MODELS from '@/app/flow-core/constants/model-constant';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { CommandService } from '@/app/flow-core/services';
+import { XFlowNodeCommands } from '@/app/flow-core/constants';
+import { NsNodeCmd } from '@/app/flow-core/commands';
 
 @Component({
   selector: 'app-er-canvas-toolbar',
@@ -13,7 +16,7 @@ export class ErCanvasToolbarComponent implements OnInit {
   selectedNode: Node[] = [];
   //画布状态监听
   @Output() changeGraphStatus = new EventEmitter<string>;
-  constructor(private app: Application, private message: NzMessageService) { }
+  constructor(private app: Application, private commandService: CommandService, private message: NzMessageService) { }
 
   ngOnInit(): void {
     const modelService = this.app && this.app?.modelService;
@@ -37,6 +40,14 @@ export class ErCanvasToolbarComponent implements OnInit {
   }
   //删除节点
   delNode() {
-    console.log('delNode')
+    this.selectedNode.forEach(node => {
+      const data = node.getData()
+      console.log(data)
+      this.commandService.executeCommand(XFlowNodeCommands.DEL_NODE.id, {
+        nodeConfig: {
+          id: data.ngArguments.id
+        }
+      });
+    });
   }
 }

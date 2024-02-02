@@ -1,4 +1,5 @@
-import { GraphProviderService } from '@/app/flow-core/services';
+import { XFlowNodeCommands } from '@/app/flow-core/constants';
+import { CommandService, GraphProviderService } from '@/app/flow-core/services';
 import { AfterViewInit, Component, Input } from '@angular/core';
 
 @Component({
@@ -9,7 +10,7 @@ import { AfterViewInit, Component, Input } from '@angular/core';
 export class ErNodeComponent {
   @Input() entity: any;
   @Input() id: string;
-  constructor(graphProvider: GraphProviderService) {
+  constructor(private graphProvider: GraphProviderService, private commandService: CommandService) {
     graphProvider.getGraphInstance().then(g => {
       const self = g.getCellById(this.id);
     });
@@ -26,5 +27,12 @@ export class ErNodeComponent {
       return 'other'
     }
     return ''
+  }
+  delNode() {
+    this.commandService.executeCommand(XFlowNodeCommands.DEL_NODE.id, {
+      nodeConfig: {
+        id: this.id
+      }
+    });
   }
 }

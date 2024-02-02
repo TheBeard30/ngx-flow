@@ -5,8 +5,8 @@
                 <span nz-icon nzType="bars" nzTheme="outline" class="pr-[8px]"></span>
                 <span>{{entity.entityName}}</span>
             </div>
-            <div
-                class="cursor-pointer w-[20px] h-[20px] flex items-center justify-center size-[16px] text-[14px] hover:text-[#1890ff] hover:opacity-[0.6]">
+            <div class="cursor-pointer w-[20px] h-[20px] flex items-center justify-center size-[16px] text-[14px] hover:text-[#1890ff] hover:opacity-[0.6]"
+                (click)="delNode()">
                 <span nz-icon nzType="delete" nzTheme="outline"></span>
             </div>
         </div>
