@@ -41,6 +41,9 @@ import { ErNodeComponent } from './er/er-node/er-node.component';
 import { ContextMenuComponent } from './context-menu/context-menu.component';
 import { ErFieldComponent } from './er/er-node/er-field/er-field.component';
 import { ErCanvasToolbarComponent } from './er/er-canvas-toolbar/er-canvas-toolbar.component';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+import { CreateNodeModalComponent } from './er/create-node-modal/create-node-modal.component';
+import { NzFormModule } from 'ng-zorro-antd/form';
 
 const COMPONENTS = [
   FlowChartCanvasComponent,
@@ -55,7 +58,8 @@ const COMPONENTS = [
   ErNodeComponent,
   ContextMenuComponent,
   ErCanvasToolbarComponent,
-  ErFieldComponent
+  ErFieldComponent,
+  CreateNodeModalComponent
 ];
 
 const Nodes = [
@@ -90,7 +94,7 @@ const EDITOR_STANDALONE_COMPONENTS = [NodeWidget, EdgeWidget, CanvasWidget];
 
 @NgModule({
   declarations: [...COMPONENTS, ...Nodes],
-  imports: [SharedModule, FlowCoreModule, EDITOR_STANDALONE_COMPONENTS],
+  imports: [SharedModule, FlowCoreModule, NzMessageModule, NzFormModule, EDITOR_STANDALONE_COMPONENTS],
   exports: [...COMPONENTS],
   providers: []
 })
