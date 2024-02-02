@@ -1,7 +1,14 @@
-<div class='h-full overflow-hidden'>
+<div class='h-full overflow-hidden' (mousemove)="mouseMove($event)" (mousedown)="mouseDown($event)"
+    (mouseleave)="mouseLeave($event)">
     <app-x-flow [graphData]='graphData' [onload]="onload">
-        <app-er-canvas-toolbar></app-er-canvas-toolbar>
-        <button class="bg-slate-600 z-50" (click)="onclick()">测试</button>
-        <app-er-canvas #canvas [position]="{top: 80, left: 0, right: 0, bottom: 0}"></app-er-canvas>
+        <app-er-canvas-toolbar (changeGraphStatus)="changeGraphStatus($event)"></app-er-canvas-toolbar>
+        <app-create-node-modal *ngIf="this.IsShowCreateNodeModal"></app-create-node-modal>
+        <app-er-canvas #canvas [position]="{top: 40, left: 0, right: 0, bottom: 0}"></app-er-canvas>
     </app-x-flow>
+    <!-- 建立节点提示 -->
+    <div class="cursor-tip-container" #cursorTipRef>
+        <div class="draft-entity-container">
+            <div>未命名模型</div>
+        </div>
+    </div>
 </div>
