@@ -27,6 +27,10 @@ export class ContextMenuService implements IModel {
     const toDispose = new DisposableCollection();
     this.toDispose.push(toDispose);
     const data = cell ? cell.getData<any>() : null;
+    // fix: 修改删除边的时候没有ID的问题
+    if (!data.id) {
+      data.id = cell.id;
+    }
     const menuModel = new RxModel<IMenuOptions>({
       id: 'menuroot',
       type: MenuItemType.Root,

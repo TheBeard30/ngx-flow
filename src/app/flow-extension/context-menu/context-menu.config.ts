@@ -58,7 +58,7 @@ export namespace NsMenuItemConfig {
   export const DELETE_EDGE: IMenuOptions = {
     id: XFlowEdgeCommands.DEL_EDGE.id,
     label: '删除边',
-    iconName: 'DeleteOutlined',
+    iconName: 'delete',
     onClick: async ({ target, commandService }) => {
       commandService.executeCommand(XFlowEdgeCommands.DEL_EDGE.id, {
         edgeConfig: target.data as NsGraph.IEdgeConfig
@@ -69,7 +69,7 @@ export namespace NsMenuItemConfig {
   export const DELETE_NODE: IMenuOptions = {
     id: XFlowNodeCommands.DEL_NODE.id,
     label: '删除节点',
-    iconName: 'DeleteOutlined',
+    iconName: 'delete',
     onClick: async ({ target, commandService }) => {
       commandService.executeCommand<NsNodeCmd.DelNode.IArgs>(XFlowNodeCommands.DEL_NODE.id, {
         nodeConfig: { id: target.data.id }
@@ -81,7 +81,7 @@ export namespace NsMenuItemConfig {
     id: 'EMPTY_MENU_ITEM',
     label: '暂无可用',
     isEnabled: false,
-    iconName: 'DeleteOutlined'
+    iconName: 'delete'
   };
 
   export const SEPARATOR: IMenuOptions = {

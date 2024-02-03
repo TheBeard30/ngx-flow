@@ -1,5 +1,8 @@
 <nz-dropdown-menu #menu="nzDropdownMenu" >
   <ul nz-menu>
-    <li nz-menu-item>测试</li>
+    <li *ngIf="subMenu" nz-menu-item (click)="subMenuClick()">
+      <span nz-icon [nzType]="subMenu.iconName"></span>
+      {{subMenu.label}}
+    </li>
   </ul>
 </nz-dropdown-menu>
