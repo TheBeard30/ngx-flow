@@ -6,7 +6,9 @@ import { setGroupRender, setNodeRender } from '@/app/flow-extension/flow-chart/f
 import { Shape } from '@antv/x6';
 import { KeybindingConfig } from '@/app/flow-core/models/keybinding-config.model';
 import { XFlowGraphCommands } from '@/app/flow-core/constants';
-import { NsGraphCmd } from '@/app/flow-core/commands';
+import { NsGraphCmd, NsUpdateNode } from '@/app/flow-core/commands';
+import { ASPECTRATIONODE } from '@/app/flow-extension/flow-chart/flow-node-panel/constant';
+import NODE_HEIGHT = NsUpdateNode.NODE_HEIGHT;
 
 const defaultEdgeConfig = {
   attrs: {
@@ -52,6 +54,15 @@ export const useGraphConfig = createGraphConfig((config, proxy) => {
     merge({
       grid: true,
       history: true,
+      resizing: {
+        enabled: true,
+        minWidth: NODE_HEIGHT,
+        minHeight: NODE_HEIGHT,
+        preserveAspectRatio: shape => {
+          const { data } = shape;
+          return ASPECTRATIONODE.includes(data.shape);
+        }
+      },
       connecting: {
         router: 'manhattan',
         connector: {

@@ -20,7 +20,7 @@ export interface IGraphManger {
 }
 
 export class GraphManager implements IGraphManger {
-  constructor() { }
+  constructor() {}
   /** 储存画布实例 */
   private graphMap = new Map<string, Graph>();
 
@@ -77,10 +77,13 @@ export class GraphManager implements IGraphManger {
       };
       graph.on('node:resized', resizeHandle);
       graph.on('node:resizing', resizeHandle);
+      const resizingOptions = {
+        ...this.config.x6Options['resizing']
+      };
       //改变节点大小
       graph.use(
         new Transform({
-          resizing: true,
+          resizing: Object.keys(resizingOptions).length ? resizingOptions : true,
           rotating: false
         })
       );
