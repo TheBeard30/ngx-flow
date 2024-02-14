@@ -1,8 +1,9 @@
-import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input } from '@angular/core';
 import { CANVAS_SCALE_TOOLBAR_CONFIG } from './config/scale-toolbar-config';
 import { IToolbarItemOptions } from '@/app/flow-core/toolbar/interface';
 import * as MODELS from '@/app/flow-core/constants/model-constant';
 import { ModelService } from '@/app/flow-core/services';
+import { IPosition } from '@/app/flow-core/interfaces';
 
 @Component({
   selector: 'app-flow-canvas-scale-toolbar',
@@ -12,6 +13,10 @@ import { ModelService } from '@/app/flow-core/services';
 export class FlowCanvasScaleToolbarComponent implements AfterViewInit {
   toolbarGroup: IToolbarItemOptions[] = [];
 
+  @Input() position: IPosition;
+
+  @Input() style: { [p: string]: any };
+
   constructor(
     private modelService: ModelService,
     private cdr: ChangeDetectorRef
@@ -19,7 +24,6 @@ export class FlowCanvasScaleToolbarComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     MODELS.GRAPH_SCALE.useValue(this.modelService).then(graphScale => {
-      console.log('GRAPH_SCALE');
       this.toolbarGroup = CANVAS_SCALE_TOOLBAR_CONFIG.getToolbarConfig({
         zoomFactor: graphScale.zoomFactor,
         fullscreen: false

@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { IToolbarItemOptions } from '@/app/flow-core/toolbar/interface';
 import { CommandService, ModelService } from '@/app/flow-core/services';
 import { NSToolbarConfig } from './config/toolbar-config';
+import { getPositionStyle, IPosition } from '@/app/flow-core/interfaces';
 
 @Component({
   selector: 'app-flow-canvas-toolbar',
@@ -10,7 +11,14 @@ import { NSToolbarConfig } from './config/toolbar-config';
 })
 export class FlowCanvasToolbarComponent implements OnInit, OnChanges {
   @Input() config: IToolbarItemOptions[];
+
+  @Input() position: IPosition;
+
+  @Input() style: { [p: string]: any };
+
   toolbarGroup: IToolbarItemOptions[] = [];
+
+  containerStyle: { [p: string]: any } = {};
 
   constructor(
     public commandService: CommandService,
@@ -20,6 +28,10 @@ export class FlowCanvasToolbarComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.config && changes.config.currentValue) {
       this.toolbarGroup = this.config;
+    }
+
+    if (changes.position && changes.position.currentValue) {
+      this.setContainerStyle();
     }
   }
 
@@ -36,5 +48,13 @@ export class FlowCanvasToolbarComponent implements OnInit, OnChanges {
         });
       });
     });
+  }
+
+  setContainerStyle() {
+    const positionStyle = getPositionStyle(this.position);
+    this.containerStyle = {
+      ...positionStyle,
+      ...this.style
+    };
   }
 }
