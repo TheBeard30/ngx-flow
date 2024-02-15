@@ -1,5 +1,5 @@
 <div class='h-full overflow-hidden'>
-  <app-x-flow [graphData]='graphData' [onload]="onload">
+  <app-x-flow [graphData]='graphData' [onload]="onload" [graphConfig]="graphConfig">
     <app-flow-chart-canvas #canvas [position]="{top: 40, left: 0, right: 0, bottom: 0}">
     </app-flow-chart-canvas>
     <app-flow-canvas-scale-toolbar [position]="{right: 0,top: 0}" [style]="{'z-index': 1}"></app-flow-canvas-scale-toolbar>

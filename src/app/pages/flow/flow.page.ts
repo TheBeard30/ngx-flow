@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { useMenuConfig } from '@/app/flow-extension/context-menu/context-menu.config';
+import { IGraphConfig, NsGraph } from '@/app/flow-core/interfaces';
+import { Application } from '@/app/flow-core/models';
 
 @Component({
   selector: 'app-flow',
@@ -7,11 +9,13 @@ import { useMenuConfig } from '@/app/flow-extension/context-menu/context-menu.co
   styleUrls: ['./flow.page.less']
 })
 export class FlowPage {
-  graphData;
+  graphData: NsGraph.IGraphData;
 
   menuConfig = useMenuConfig();
 
-  onload = app => {
+  graphConfig: IGraphConfig;
+
+  onload = (app: Application) => {
     console.log('flow app>>>', app);
   };
 }

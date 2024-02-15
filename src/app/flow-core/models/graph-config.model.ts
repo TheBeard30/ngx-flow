@@ -19,7 +19,7 @@ export class GraphConfig {
 
   public nodeRender = new Map<string, any>();
 
-  private edgeRender = new Map();
+  private edgeRender = new Map<string, any>();
 
   private events: NsGraph.IEvent[] = [];
 
