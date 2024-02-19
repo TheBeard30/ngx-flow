@@ -5,6 +5,7 @@ import { Graph, Node } from '@antv/x6';
 import { Dnd } from '@antv/x6-plugin-dnd';
 import ValidateNodeOptions = Dnd.ValidateNodeOptions;
 import Properties = Node.Properties;
+import { uuidv4 } from '@/app/flow-core/models';
 
 @Component({
   selector: 'app-er-table-panel',
@@ -42,8 +43,11 @@ export class ErTablePanelComponent implements AfterViewInit {
     this.graph = graph;
     this.dnd = new Dnd({
       target: graph,
+      getDragNode: (node) => node.clone({ keepId: true }),
+      getDropNode: (node) => node.clone({ keepId: true }),
       validateNode: async (droppingNode: Node<Properties>, options: ValidateNodeOptions) => {
         const droppingNodeKey = droppingNode.getData().ngArguments.entity.entityName;
+        //判断表节点是否已经存在
         for (const n of graph.getNodes()) {
           if (n.getData().ngArguments.entity.entityName === droppingNodeKey) {
             return false;
@@ -58,7 +62,7 @@ export class ErTablePanelComponent implements AfterViewInit {
   startDrag(e: MouseEvent, item: any) {
     // 该 node 为拖拽的节点，默认也是放置到画布上的节点，可以自定义任何属性
     const node = this.graph.createNode({
-      shape: 'er-node'
+      shape: 'er-node',
     })
     node.setData({
       ngArguments: {
