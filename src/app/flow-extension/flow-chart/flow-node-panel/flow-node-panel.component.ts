@@ -54,7 +54,7 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
     private graphProviderService: GraphProviderService,
     private commandService: CommandService,
     private injector: Injector
-  ) {}
+  ) { }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
