@@ -9,4 +9,15 @@
     <div class="pt-0 pb-0 pl-[8px] pr-[8px] {{isDisable()}}" (click)="delNode()">
         <span nz-icon nzType="delete" nzTheme="outline" (click)="delNode()">删除节点</span>
     </div>
+    <div class="pt-0 pb-0 pl-[8px] pr-[8px] text-[rgba(0,0,0,.65)] hover:text-[#000] cursor-pointer">
+        <button nz-button nz-dropdown [nzDropdownMenu]="menu">
+            数据源：{{ dataSource }}
+            <span nz-icon nzType="down" class=""></span>
+        </button>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu *ngFor="let item of dataSourceMenu">
+                <li nz-menu-item (click)="changeDataSource.emit(item)">{{item}}</li>
+            </ul>
+        </nz-dropdown-menu>
+    </div>
 </div>

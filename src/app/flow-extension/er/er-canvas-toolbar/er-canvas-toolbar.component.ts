@@ -1,11 +1,10 @@
 import { Application } from '@/app/flow-core/models';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Node } from '@antv/x6';
 import * as MODELS from '@/app/flow-core/constants/model-constant';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { CommandService } from '@/app/flow-core/services';
 import { XFlowNodeCommands } from '@/app/flow-core/constants';
-import { NsNodeCmd } from '@/app/flow-core/commands';
 
 @Component({
   selector: 'app-er-canvas-toolbar',
@@ -16,6 +15,12 @@ export class ErCanvasToolbarComponent implements OnInit {
   selectedNode: Node[] = [];
   //画布状态监听
   @Output() changeGraphStatus = new EventEmitter<string>;
+
+  //数据源
+  @Input() dataSource: string;
+  @Input() dataSourceMenu: any;
+  @Output() changeDataSource = new EventEmitter<string>;
+
   constructor(private app: Application, private commandService: CommandService, private message: NzMessageService) { }
 
   ngOnInit(): void {

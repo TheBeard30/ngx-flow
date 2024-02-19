@@ -1,0 +1,54 @@
+@light-border: ~'1px solid #d9d9d9';
+@dnd-panel-prefix-container: ~'xflow-node-panel-collpase';
+
+.@{dnd-panel-prefix-container} {
+  position: relative;
+  height: 100%;
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 12px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow:
+    rgba(17, 17, 26, 0.1) 0px 8px 24px,
+    rgba(17, 17, 26, 0.1) 0px 16px 56px,
+    rgba(17, 17, 26, 0.1) 0px 24px 80px;
+
+  &-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  &-nodes {
+    border-right: @light-border;
+  }
+
+  &-icon {
+    position: absolute;
+    z-index: 99;
+    width: 20px;
+    color: #aaa;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #ccc;
+    transform: translate(0, -50%);
+    cursor: pointer;
+    span {
+      vertical-align: 1px;
+    }
+
+    &:hover {
+      color: rgb(43, 132, 192);
+    }
+  }
+}
+
+.xflow-node-panel-official {
+  grid-gap: 5px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #fff;
+  cursor: grab;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(24px, 1fr));
+}
