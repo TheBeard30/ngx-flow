@@ -1,8 +1,10 @@
 import { IPosition } from '@/app/flow-core/interfaces';
-import { GraphProviderService } from '@/app/flow-core/services';
+import { CommandService, GraphProviderService } from '@/app/flow-core/services';
 import { AfterViewInit, Component, Input } from '@angular/core';
-import { Graph } from '@antv/x6';
+import { Graph, Node } from '@antv/x6';
 import { Dnd } from '@antv/x6-plugin-dnd';
+import ValidateNodeOptions = Dnd.ValidateNodeOptions;
+import Properties = Node.Properties;
 
 @Component({
   selector: 'app-er-table-panel',
@@ -26,7 +28,9 @@ export class ErTablePanelComponent implements AfterViewInit {
 
   graph: Graph;
 
-  constructor(private graphProvider: GraphProviderService) { }
+
+
+  constructor(private graphProvider: GraphProviderService, private commandService: CommandService) { }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -37,7 +41,17 @@ export class ErTablePanelComponent implements AfterViewInit {
     const graph = await this.graphProvider.getGraphInstance();
     this.graph = graph;
     this.dnd = new Dnd({
-      target: graph
+      target: graph,
+      validateNode: async (droppingNode: Node<Properties>, options: ValidateNodeOptions) => {
+        const droppingNodeKey = droppingNode.getData().ngArguments.entity.entityName;
+        for (const n of graph.getNodes()) {
+          if (n.getData().ngArguments.entity.entityName === droppingNodeKey) {
+            return false;
+          }
+        }
+        return true;
+
+      }
     });
   }
 
@@ -52,8 +66,8 @@ export class ErTablePanelComponent implements AfterViewInit {
         id: node.id
       }
     });
+
     this.dnd.start(node, e)
-    console.log(node.id)
   }
 
   setCollapse() {
