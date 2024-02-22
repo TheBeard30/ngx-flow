@@ -94,15 +94,25 @@ export class EditorPanelComponent {
     };
     await this.app.commandService.executeCommand(XFlowEdgeCommands.UPDATE_EDGE.id, { edgeConfig });
   };
+  getSelectTable = async () => {
+    const node = await MODELS.SELECTED_NODE.useValue(this.app.modelService);
+    if (!node) return {};
+    return {
+      id: node.id,
+      ...node.getData().ngArguments
+    };
+  };
 
   changeSchema = ev => {
     setTimeout(() => {
       const { schema, targetCell } = ev;
+      console.log('ev', ev);
       const name = schema.tabs[0].groups[0].controls[0].name;
       const widget = this.controlMap.get(name);
       const map = {
         'node-service': this.getSelectNode,
         'edge-service': this.getSelectEdge,
+        'er-service': this.getSelectTable,
         'canvas-service': () => Promise.resolve(null)
       };
       map[name]().then(v => {
@@ -129,7 +139,7 @@ export class EditorPanelComponent {
     useJsonFormModal({
       app: this.app,
       formSchemaService: defaultFormSchemaService,
-      targetType: ['node', 'edge', 'canvas', 'group'],
+      targetType: ['node', 'edge', 'canvas', 'group', 'er'],
       callback: this.changeSchema
     });
   }

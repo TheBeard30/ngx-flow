@@ -1,4 +1,5 @@
 import { ISchema } from '@/app/flow-extension/editor-panel/interface';
+import { group } from '@angular/animations';
 
 export const defaultFormSchemaService = async args => {
   const { targetType } = args;
@@ -65,6 +66,26 @@ export const defaultFormSchemaService = async args => {
       }
     ]
   };
+  const erSchema: ISchema = {
+    tabs: [
+      {
+        name: '设置',
+        groups: [
+          {
+            name: 'groupName',
+            controls: [
+              {
+                label: '表名',
+                name: 'er-service',
+                shape: 'er-service',
+                placeholder: '表名称'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 
   if (isGroup) {
     return groupSchema;
@@ -76,6 +97,9 @@ export const defaultFormSchemaService = async args => {
 
   if (targetType === 'edge') {
     return edgeSchema;
+  }
+  if (targetType === 'er') {
+    return erSchema;
   }
   return {
     tabs: [

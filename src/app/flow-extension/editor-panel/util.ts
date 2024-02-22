@@ -59,6 +59,8 @@ export const useJsonFormModal = (props: {
               return 'canvas';
             } else if (targetCell.isNode && targetCell.isNode() && targetCell.getProp('isGroup')) {
               return 'group';
+            } else if (targetCell.isNode && targetCell.isNode() && targetCell.shape === 'er-node') {
+              return 'er';
             } else if (targetCell.isNode && targetCell.isNode()) {
               return 'node';
             } else if (targetCell.isEdge && targetCell.isEdge()) {
