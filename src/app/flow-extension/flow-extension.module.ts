@@ -34,16 +34,14 @@ import {
   TextNode
 } from '@/app/flow-extension/flow-chart/flow-node-panel/nodes';
 import { GroupNodeComponent } from '@/app/flow-extension/flow-chart/flow-node-panel/group/group.node.component';
-import { CanvasWidget, EdgeWidget, NodeWidget } from '@/app/flow-extension/editor-panel/components';
+import { CanvasWidget, EdgeWidget, NodeWidget, ErWidget } from '@/app/flow-extension/editor-panel/components';
 import { FlowCoreModule } from '@/app/flow-core/flow-core.module';
 import { ErCanvasComponent } from './er/er-canvas/er-canvas.component';
 import { ErNodeComponent } from './er/er-node/er-node.component';
 import { ContextMenuComponent } from './context-menu/context-menu.component';
 import { ErFieldComponent } from './er/er-node/er-field/er-field.component';
 import { ErCanvasToolbarComponent } from './er/er-canvas-toolbar/er-canvas-toolbar.component';
-import { NzMessageModule } from 'ng-zorro-antd/message';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzListModule } from 'ng-zorro-antd/list';
+
 import { ErTablePanelComponent } from './er/er-table-panel/er-table-panel.component';
 
 const COMPONENTS = [
@@ -91,11 +89,11 @@ const Nodes = [
   GroupNodeComponent
 ];
 
-const EDITOR_STANDALONE_COMPONENTS = [NodeWidget, EdgeWidget, CanvasWidget];
+const EDITOR_STANDALONE_COMPONENTS = [NodeWidget, EdgeWidget, CanvasWidget, ErWidget];
 
 @NgModule({
   declarations: [...COMPONENTS, ...Nodes],
-  imports: [SharedModule, FlowCoreModule, NzMessageModule, NzFormModule, NzListModule, EDITOR_STANDALONE_COMPONENTS],
+  imports: [SharedModule, FlowCoreModule, EDITOR_STANDALONE_COMPONENTS],
   exports: [...COMPONENTS],
   providers: []
 })

@@ -7,6 +7,10 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzListModule } from 'ng-zorro-antd/list';
 
 export const ZORRO_MODULE = [
   NzIconModule,
@@ -17,5 +21,9 @@ export const ZORRO_MODULE = [
   NzSelectModule,
   NzButtonModule,
   NzDropDownModule,
-  NzMenuModule
+  NzMenuModule,
+  NzCardModule,
+  NzMessageModule,
+  NzFormModule,
+  NzListModule
 ];
