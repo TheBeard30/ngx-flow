@@ -28,25 +28,81 @@ import { Component, Input, OnInit } from '@angular/core';
                     </div>
                 </ng-template>
                 <ng-template #extra>
-                    <button nz-button nzType="link">
+                    <button nz-button nzType="link" (click)="showModal(item)">
                         <span nz-icon nzType="edit" nzTheme="outline"></span>
                     </button>
                 </ng-template>
             </div>
         </div>
     </div>
+    <nz-modal [(nzVisible)]="isChangeField" nzTitle="更新字段" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+      <ng-container *nzModalContent>
+            <div class="flex items-center mb-2">
+                <span class="text-black/45 mr-2 w-8">字段名称</span>
+                <input
+                    class="flex-1"
+                    nz-input
+                    [(ngModel)]="fieldData.propertyName"
+                />
+            </div>
+            <div class="flex items-center mb-2">
+                <span class="text-black/45 mr-2 w-8">字段类型</span>
+                <input
+                    class="flex-1"
+                    nz-input
+                    [(ngModel)]="fieldData.propertyType"
+                />
+            </div>
+            <div class="flex items-center mb-2">
+                <span class="text-black/45 mr-2 w-8">主键</span>
+                <nz-radio-group [(ngModel)]="fieldData.isPK" nzAutoFocus>
+                  <span nz-radio [nzValue]='true'>是</span>
+                  <span nz-radio [nzValue]='false'>否</span>
+                </nz-radio-group>
+            </div>
+            <div class="flex items-center mb-2">
+                <span class="text-black/45 mr-2 w-8">外键</span>
+                <nz-radio-group [(ngModel)]="fieldData.isFK" nzAutoFocus>
+                  <span nz-radio [nzValue]='true'>是</span>
+                  <span nz-radio [nzValue]='false'>否</span>
+                </nz-radio-group>
+            </div>
+      </ng-container>
+    </nz-modal>
   `,
     styles: [``],
     imports: [SharedModule],
     standalone: true
 })
-export class ErWidget implements OnInit {
+export class ErWidget {
     @Input() config;
 
     @Input() plugin;
 
-    ngOnInit(): void {
-        console.log('config', this.config);
-    }
+    //编辑字段弹框 隐藏/现实
+    isChangeField = false;
+    //字段数据 用于编辑字段弹框显示字段信息
+    fieldData: {
+        propertyName: string;
+        propertyType: string;
+        isPK: boolean;
+        isFK: boolean;
+    };
 
+    //控制编辑字段弹窗
+    //显示
+    showModal(data: any) {
+        this.isChangeField = true;
+        this.fieldData = data;
+        console.log(data);
+    }
+    //关闭
+    handleCancel() {
+        this.isChangeField = false;
+    }
+    //提交
+    handleOk() {
+        //TODO 更改er-node节点组件数据
+        this.isChangeField = false;
+    }
 }
