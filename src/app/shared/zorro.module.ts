@@ -11,6 +11,8 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzListModule } from 'ng-zorro-antd/list';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 
 export const ZORRO_MODULE = [
   NzIconModule,
@@ -25,5 +27,7 @@ export const ZORRO_MODULE = [
   NzCardModule,
   NzMessageModule,
   NzFormModule,
-  NzListModule
+  NzListModule,
+  NzModalModule,
+  NzRadioModule
 ];
