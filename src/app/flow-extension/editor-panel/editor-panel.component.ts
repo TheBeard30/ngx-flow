@@ -106,17 +106,17 @@ export class EditorPanelComponent {
   changeSchema = ev => {
     setTimeout(() => {
       const { schema, targetCell } = ev;
-      console.log('ev', ev);
       const name = schema.tabs[0].groups[0].controls[0].name;
       const widget = this.controlMap.get(name);
       const map = {
         'node-service': this.getSelectNode,
         'edge-service': this.getSelectEdge,
         'er-service': this.getSelectTable,
+        'group-service': this.getSelectNode,
         'canvas-service': () => Promise.resolve(null)
       };
       map[name]().then(v => {
-        console.log(v);
+        console.log('v', v);
         this.configRef.clear();
         const componentRef = this.configRef.createComponent(widget, { injector: this.injector });
         // @ts-ignore
@@ -128,7 +128,7 @@ export class EditorPanelComponent {
         };
         this.cdr.markForCheck();
       });
-    });
+    }, 1);
   };
 
   constructor(

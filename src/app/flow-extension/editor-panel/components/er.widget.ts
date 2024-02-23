@@ -1,5 +1,5 @@
 import { SharedModule } from '@/app/shared/shared.module';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'app-canvas-widget',
@@ -94,7 +94,6 @@ export class ErWidget {
     showModal(data: any) {
         this.isChangeField = true;
         this.fieldData = data;
-        console.log(data);
     }
     //关闭
     handleCancel() {
