@@ -10,6 +10,7 @@ export * from './er.widget';
 
 export const defaultControlMap = (controlMap: Map<string, any>) => {
   controlMap.set('node-service', NodeWidget);
+  controlMap.set('group-service', NodeWidget);
   controlMap.set('edge-service', EdgeWidget);
   controlMap.set('canvas-service', CanvasWidget);
   controlMap.set('er-service', ErWidget);
