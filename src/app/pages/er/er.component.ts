@@ -88,6 +88,30 @@ export class ErComponent {
           propertyType: "string",
           isPK: false,
           isFK: false
+        },
+        {
+          propertyName: "年龄",
+          propertyType: "int",
+          isPK: false,
+          isFK: false
+        },
+        {
+          propertyName: "性别",
+          propertyType: "string",
+          isPK: false,
+          isFK: false
+        },
+        {
+          propertyName: "身份",
+          propertyType: "string",
+          isPK: false,
+          isFK: true
+        },
+        {
+          propertyName: "性别",
+          propertyType: "string",
+          isPK: false,
+          isFK: false
         }
       ]
     }]],
@@ -286,14 +310,25 @@ export class ErComponent {
       //删除transfrom插件
       g.disablePlugins('transform');
       //创建er-node节点
-      const node = g.createNode({ shape: "er-node", position: { x: this.cursorLocation.x, y: this.cursorLocation.y - 40 }, ports: getPorts() });
+      const node = g.createNode({
+        shape: "er-node",
+        position: { x: this.cursorLocation.x, y: this.cursorLocation.y - 40 },
+        ports: getPorts()
+      });
       node.setData({
         ngArguments: {
           entity: this.entity,
           id: node.id
         }
       })
-      g.addNode(node)
+      g.addNode({
+        position: { x: this.cursorLocation.x, y: this.cursorLocation.y - 40 },
+        size: { width: 170, height: 200 },
+        markup: [
+          { tagName: 'rect', selector: 'body' },
+          { tagName: 'text', selector: 'lable', textContent: '123' }
+        ]
+      })
     });
   }
   //改变建立节点提示框状态

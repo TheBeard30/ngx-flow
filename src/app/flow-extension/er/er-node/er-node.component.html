@@ -11,8 +11,22 @@
             </div>
         </div>
         <div class="body">
-            <div *ngFor="let item of this.entity.entityProperties">
+            <div *ngFor="let item of expand?this.entity.entityProperties:this.entity.entityProperties.slice(0,5)">
                 <app-er-field [item]="item"></app-er-field>
+            </div>
+            <div class="flex items-center justify-center w-[100%] h-[8px]" *ngIf="!expand">
+                <button nz-button nzType="link" nzSize="small" (click)="expandField()">
+                    <span class="text-[8px] text-[#1890ff]">展示所有字段
+                        <span nz-icon nzType="down" nzTheme="outline"></span>
+                    </span>
+                </button>
+            </div>
+            <div class="flex items-center justify-center w-[100%] h-[8px]" *ngIf="expand">
+                <button nz-button nzType="link" nzSize="small" (click)="hiddenField()">
+                    <span class="text-[8px] text-[#1890ff]">收起字段
+                        <span nz-icon nzType="up" nzTheme="outline"></span>
+                    </span>
+                </button>
             </div>
         </div>
     </div>
