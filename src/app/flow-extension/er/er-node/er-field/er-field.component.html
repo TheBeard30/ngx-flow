@@ -2,11 +2,11 @@
     <div
         class="flex flex-row items-center justify-between w-[100%] h-[28px] text-[#595959] text-[12px] border-solid border-b border-[#ced4de33] bg-white">
         <div class="ml-[6px] truncate">
+            {{item.propertyName}}
             <span *ngIf="item.isPK"
                 class="w-[12px] mr-[6px] text-[#ffd666] font-[HelveticaNeue-CondensedBold]">PK</span>
             <span *ngIf="item.isFK"
                 class="w-[12px] mr-[6px] text-[#ffd666] font-[HelveticaNeue-CondensedBold]">FK</span>
-            {{item.propertyName}}
         </div>
         <div class="mr-[8px] text-[#bfbfbf] text-[8px]">{{item.propertyType}}</div>
     </div>
