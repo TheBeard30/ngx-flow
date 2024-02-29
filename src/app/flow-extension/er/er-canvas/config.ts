@@ -1,7 +1,7 @@
 import { createGraphConfig } from '@/app/flow-core/models';
 import { merge } from 'lodash';
 import { IEvent } from '@/app/flow-core/hooks/interface';
-import { CellView, Shape } from '@antv/x6';
+import { CellView, EdgeView, Shape } from '@antv/x6';
 import { KeybindingConfig } from '@/app/flow-core/models/keybinding-config.model';
 import { XFlowGraphCommands } from '@/app/flow-core/constants';
 import { changePortsVisible } from '../event';
@@ -12,21 +12,25 @@ const defaultEdgeConfig = {
       stroke: '#A2B1C3',
       targetMarker: {
         name: 'block',
-        width: 12,
-        height: 8
+        width: 6,
+        height: 6,
+        open: true
       },
-      strokeDasharray: '5 5',
+      sourceMarker: {
+        name: 'circlePlus',
+        r: 3
+      },
       strokeWidth: 1
     }
   }
 };
 
-const TEMP_EGDE = 'flowchart-connecting-edge';
+const TEMP_EGDE = 'er-connecting-edge';
 
 const XFlowEdge = Shape.Edge.registry.register(
-  'xflow',
+  'er-edge',
   Shape.Edge.define({
-    zIndex: 1,
+    zIndex: 99,
     highlight: true,
     name: TEMP_EGDE,
     label: '',
@@ -39,7 +43,47 @@ const XFlowEdge = Shape.Edge.registry.register(
     attrs: defaultEdgeConfig.attrs,
     data: {
       label: ''
-    }
+    },
+    // tools: [
+    //   {
+    //     name: 'button',
+    //     args: {
+    //       markup: [
+    //         {
+    //           tagName: 'circle',
+    //           selector: 'button',
+    //           attrs: {
+    //             r: 18,
+    //             stroke: '#fe854f',
+    //             strokeWidth: 2,
+    //             fill: 'white',
+    //             cursor: 'pointer',
+    //           },
+    //         },
+    //         {
+    //           tagName: 'text',
+    //           textContent: 'Btn B',
+    //           selector: 'icon',
+    //           attrs: {
+    //             fill: '#fe854f',
+    //             fontSize: 10,
+    //             textAnchor: 'middle',
+    //             pointerEvents: 'none',
+    //             y: '0.3em',
+    //           },
+    //         },
+    //       ],
+    //       distance: -40,
+    //       onClick({ view }: { view: EdgeView }) {
+    //         const edge = view.cell
+    //         const source = edge.getSource()
+    //         const target = edge.getTarget()
+    //         edge.setSource(target)
+    //         edge.setTarget(source)
+    //       },
+    //     },
+    //   },
+    // ],
   }),
   true
 );
@@ -51,15 +95,15 @@ export const useGraphConfig = createGraphConfig((config, proxy) => {
       grid: true,
       history: true,
       connecting: {
-        router: 'manhattan',
+        router: 'er',
         connector: {
           name: 'rounded',
           args: {
-            radius: 8
+            radius: 20
           }
         },
-        anchor: 'center',
-        connectionPoint: 'anchor',
+        anchor: 'left',
+        connectionPoint: 'boundary',
         allowBlank: false,
         snap: {
           radius: 20
@@ -103,17 +147,20 @@ export const useGraphConfig = createGraphConfig((config, proxy) => {
           return true;
         },
         // 显示可用的链接桩
-        validateConnection({ sourceView, targetView, targetMagnet }) {
+        validateConnection({ sourceView, targetView, targetMagnet, sourceMagnet }) {
           // 不允许连接到自己
           if (sourceView === targetView) {
             return false;
           }
-          const node = targetView!.cell as any;
+          const targetNode = targetView!.cell as any;
           // 判断目标链接桩是否可连接
-          if (targetMagnet) {
-            const portId = targetMagnet.getAttribute('port');
-            const port = node.getPort(portId);
-            return !(port && port.connected);
+          if (targetMagnet && sourceMagnet) {
+            const targePortId = targetMagnet.getAttribute('port');
+            const targePort = targetNode.getPort(targePortId);
+            const sourcePortId = sourceMagnet.getAttribute('port');
+            const sourcePort = targetNode.getPort(sourcePortId);
+            //&& targePort.connected 新版X6不具有该属性
+            return !(targePort && sourcePort && targePort.group === sourcePort.group);
           }
           return undefined;
         }
