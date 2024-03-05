@@ -72,7 +72,12 @@ export const useGraphConfig = createGraphConfig((config, proxy) => {
           }
         },
         anchor: 'center',
-        connectionPoint: 'anchor',
+        connectionPoint: {
+          name: 'anchor',
+          args: {
+            offset: -2
+          }
+        },
         allowBlank: false,
         snap: {
           radius: 20
