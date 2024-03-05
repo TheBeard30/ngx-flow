@@ -1,8 +1,9 @@
-<app-base-panel
-  [className]="CONTAINER_CLASS"
-  [position]="position"
->
+<app-base-panel [className]="CONTAINER_CLASS" [position]="position">
   <div class="{{CONTAINER_CLASS}}">
+    <div class="w-[100%]">
+      <input nz-input class="w-[80%] ml-[20px] mt-[10px]" placeholder="搜索组件" [(ngModel)]="searchValue"
+        (ngModelChange)="search()" />
+    </div>
     <div>
       <nz-collapse nzBordered="false">
         <nz-collapse-panel nzHeader="通用节点" nzActive>

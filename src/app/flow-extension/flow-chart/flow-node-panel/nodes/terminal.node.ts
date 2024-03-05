@@ -43,7 +43,7 @@ export class TerminalNode implements OnChanges, OnInit {
 
   viewBox: string;
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(private elementRef: ElementRef) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.data && changes.data.currentValue) {
