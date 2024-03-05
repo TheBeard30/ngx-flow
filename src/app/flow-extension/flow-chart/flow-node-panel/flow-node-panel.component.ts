@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  EventEmitter,
   Injector,
   Input,
   OnInit,
@@ -20,6 +21,7 @@ import ValidateNodeOptions = Dnd.ValidateNodeOptions;
 import { uuidv4 } from '@/app/flow-core/models';
 import { XFlowNodeCommands } from '@/app/flow-core/constants';
 import Properties = Node.Properties;
+import { FlowNodeComponent } from './flow-node.component';
 
 @Component({
   selector: 'app-flow-node-panel',
@@ -50,10 +52,11 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
 
   graph: Graph;
 
+  searchValue: string;
+
   constructor(
     private graphProviderService: GraphProviderService,
     private commandService: CommandService,
-    private injector: Injector
   ) { }
 
   ngAfterViewInit(): void {
@@ -101,20 +104,17 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
 
   initNode() {
     // const className = config.nodeRender.get(GROUP_NODE_RENDER_ID);
-
+    this.viewRef.clear()
     getNodes([]).then(async nodes => {
       const config = await this.graphProviderService.getGraphOptions();
-      this.officialNodeList = nodes.map(n => {
-        const className = config.nodeRender.get(n.name);
-        register({
-          shape: n.name,
-          width: n.width || 180,
-          height: n.height || 40,
-          content: className,
-          injector: this.injector
-        });
-        const componentRef = this.viewRef.createComponent<any>(className);
-        componentRef.instance.data.label = n.label;
+      this.officialNodeList = nodes.filter(
+        //查询节点
+        i => this.searchValue === undefined || i.label?.includes(this.searchValue) || i.name?.includes(this.searchValue)
+      ).map(n => {
+        // 动态创建flow-node，然后给他传递input属性
+        const componentRef = this.viewRef.createComponent(FlowNodeComponent);
+        componentRef.setInput('data', n);
+        componentRef.setInput('config', config);
         // @ts-ignore
         const element = componentRef.instance.elementRef.nativeElement;
         element.onmousedown = async (ev: MouseEvent) => {
@@ -159,5 +159,9 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
     this.collapse = !this.collapse;
     this.collapse ? (this.position.left = -this.width) : (this.position.left = this.left);
     this.position = { ...this.position };
+  }
+
+  search() {
+    this.initNode()
   }
 }

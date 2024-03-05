@@ -9,7 +9,7 @@ import * as NodesComponent from './nodes';
 import { GroupNodeComponent } from './group/group.node.component';
 
 export const createPath = (paths: (string | number)[][], offsetX = 0, offsetY = 0) => {
-  if (!paths.length) {
+  if (!paths?.length) {
     return null;
   }
   let path = '';
