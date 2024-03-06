@@ -7,6 +7,7 @@ import { GROUP_NODE_RENDER_ID, NODE_POOL } from '@/app/flow-extension/flow-chart
 import { GraphConfig, uuidv4 } from '@/app/flow-core/models';
 import * as NodesComponent from './nodes';
 import { GroupNodeComponent } from './group/group.node.component';
+import { IRegisterNode } from './interface';
 
 export const createPath = (paths: (string | number)[][], offsetX = 0, offsetY = 0) => {
   if (!paths?.length) {
@@ -76,6 +77,25 @@ export const getNodes = async nodes => {
     })
   ];
 };
+export const setCustomNodeRender = (graphConfig: GraphConfig, registerNodes: IRegisterNode[]) => {
+
+  let nodes = []
+  registerNodes.forEach(item => {
+    nodes = nodes.concat(
+      item.nodes.map(node => ({
+        ...node,
+        parentKey: item.key,
+      })),
+    )
+  })
+  if (!graphConfig || !nodes?.length) {
+    return
+  }
+  nodes.forEach(item => {
+    const { name, component } = item
+    graphConfig.setNodeRender(name, component)
+  })
+}
 
 export const setNodeRender = (config: GraphConfig) => {
   if (!config.nodeRender.get('Terminal')) {

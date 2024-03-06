@@ -2,9 +2,11 @@
   <app-x-flow [graphData]='graphData' [onload]="onload" [graphConfig]="graphConfig">
     <app-flow-chart-canvas #canvas [position]="{top: 40, left: 0, right: 0, bottom: 0}">
     </app-flow-chart-canvas>
-    <app-flow-canvas-scale-toolbar [position]="{right: 0,top: 0}" [style]="{'z-index': 1}"></app-flow-canvas-scale-toolbar>
+    <app-flow-canvas-scale-toolbar [position]="{right: 0,top: 0}"
+      [style]="{'z-index': 1}"></app-flow-canvas-scale-toolbar>
     <app-flow-canvas-toolbar [position]="{left: 0,top: 0}" [style]="{width: '100%'}"></app-flow-canvas-toolbar>
-    <app-flow-node-panel></app-flow-node-panel>
+    <app-flow-node-panel [registerNode]="registerNode">
+    </app-flow-node-panel>
     <app-editor-panel [position]="{ width: 240, top: 40, bottom: 0, right: 0 }"></app-editor-panel>
     <app-context-menu [config]="menuConfig"></app-context-menu>
   </app-x-flow>
