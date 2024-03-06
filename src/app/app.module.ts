@@ -15,11 +15,12 @@ import { FlowExtensionModule } from '@/app/flow-extension/flow-extension.module'
 import { FlowCoreModule } from '@/app/flow-core/flow-core.module';
 import { MenuToken, ModelToken } from '@/app/flow-core/providers/injection';
 import { ContextMenuService } from '@/app/flow-extension/context-menu/context-menu.service';
+import { CustomNodeComponent } from './pages/flow/custom-node/custom-node.component';
 
 const PAGES = [FlowPage, HomeComponent, ErComponent];
 
 @NgModule({
-  declarations: [AppComponent, ...PAGES],
+  declarations: [AppComponent, ...PAGES, CustomNodeComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -32,4 +33,4 @@ const PAGES = [FlowPage, HomeComponent, ErComponent];
   providers: [{ provide: ModelToken, useClass: ContextMenuService, multi: true }],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

@@ -11,17 +11,20 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import { getPositionStyle, IPosition, NsGraph } from '@/app/flow-core/interfaces';
-import { getNodes } from '@/app/flow-extension/flow-chart/flow-node-panel/utils';
+import { getNodes, setCustomNodeRender } from '@/app/flow-extension/flow-chart/flow-node-panel/utils';
 import { Dnd } from '@antv/x6-plugin-dnd';
 import { CommandService, GraphProviderService } from '@/app/flow-core/services';
 import { register } from '@antv/x6-angular-shape';
 import { Graph, Node } from '@antv/x6';
 import { DefaultNodeConfig } from '@/app/flow-extension/flow-chart/flow-node-panel/constant';
 import ValidateNodeOptions = Dnd.ValidateNodeOptions;
-import { uuidv4 } from '@/app/flow-core/models';
+import { GraphConfig, uuidv4 } from '@/app/flow-core/models';
 import { XFlowNodeCommands } from '@/app/flow-core/constants';
 import Properties = Node.Properties;
 import { FlowNodeComponent } from './flow-node.component';
+import { IRegisterNode } from './interface';
+import { config } from 'rxjs';
+import { FlowCustomNodePanelComponent } from './custom/flow-custom-node-panel.component';
 
 @Component({
   selector: 'app-flow-node-panel',
@@ -31,8 +34,12 @@ import { FlowNodeComponent } from './flow-node.component';
 })
 export class FlowNodePanelComponent implements OnInit, AfterViewInit {
   @Input() position: IPosition = { width: 240, top: 40, bottom: 0, left: 0 };
+  //自定义节点面板
+  @Input() registerNode: IRegisterNode[] = [];
 
   @ViewChild('templateRef', { read: ViewContainerRef }) viewRef: ViewContainerRef;
+
+  @ViewChild('customPanelTemplateRef', { read: ViewContainerRef }) customPanelViewRef: ViewContainerRef;
 
   @ViewChild('dndContainer') dndContainer: ElementRef;
 
@@ -59,10 +66,18 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
     private commandService: CommandService,
   ) { }
 
+  ngOnInit(): void {
+    this.style = getPositionStyle(this.position);
+  }
+
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.createDnd();
+    setTimeout(async () => {
+      await this.graphProviderService.getGraphOptions().then(
+        config => setCustomNodeRender(config as unknown as GraphConfig, this.registerNode)
+      );
+      await this.createDnd();
       this.initNode();
+      this.initCustomNode()
     });
   }
 
@@ -150,10 +165,17 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
       });
     });
   }
-
-  ngOnInit(): void {
-    this.style = getPositionStyle(this.position);
+  initCustomNode() {
+    this.customPanelViewRef.clear()
+    this.registerNode.forEach(customPanel => {
+      const componentRef = this.customPanelViewRef.createComponent(FlowCustomNodePanelComponent);
+      componentRef.setInput('customPanel', customPanel);
+      componentRef.setInput('dnd', this.dnd);
+      componentRef.setInput('searchValue', this.searchValue);
+    });
   }
+
+
 
   setCollapse() {
     this.collapse = !this.collapse;
@@ -162,6 +184,8 @@ export class FlowNodePanelComponent implements OnInit, AfterViewInit {
   }
 
   search() {
-    this.initNode()
+    this.initNode();
+    this.initCustomNode();
   }
 }
+

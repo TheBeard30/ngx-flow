@@ -43,12 +43,14 @@ import { ErFieldComponent } from './er/er-node/er-field/er-field.component';
 import { ErCanvasToolbarComponent } from './er/er-canvas-toolbar/er-canvas-toolbar.component';
 
 import { ErTablePanelComponent } from './er/er-table-panel/er-table-panel.component';
+import { FlowCustomNodePanelComponent } from './flow-chart/flow-node-panel/custom/flow-custom-node-panel.component';
 
 const COMPONENTS = [
   FlowChartCanvasComponent,
   FlowNodePanelComponent,
   BasePanelComponent,
   FlowNodeComponent,
+  FlowCustomNodePanelComponent,
   BasePanelComponent,
   FlowCanvasToolbarComponent,
   FlowCanvasScaleToolbarComponent,

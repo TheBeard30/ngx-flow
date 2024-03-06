@@ -4,14 +4,15 @@
       <input nz-input class="w-[80%] ml-[20px] mt-[10px]" placeholder="搜索组件" [(ngModel)]="searchValue"
         (ngModelChange)="search()" />
     </div>
-    <div>
+    <div #dndContainer>
       <nz-collapse nzBordered="false">
         <nz-collapse-panel nzHeader="通用节点" nzActive>
-          <div class="xflow-node-panel-official" #dndContainer>
+          <div class="xflow-node-panel-official">
             <ng-template #templateRef></ng-template>
           </div>
         </nz-collapse-panel>
       </nz-collapse>
+      <ng-template #customPanelTemplateRef></ng-template>
     </div>
 
     <div class="{{CONTAINER_CLASS}}-icon" [ngStyle]="{
