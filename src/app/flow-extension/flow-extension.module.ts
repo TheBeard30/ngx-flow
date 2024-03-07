@@ -44,6 +44,7 @@ import { ErCanvasToolbarComponent } from './er/er-canvas-toolbar/er-canvas-toolb
 
 import { ErTablePanelComponent } from './er/er-table-panel/er-table-panel.component';
 import { FlowCustomNodePanelComponent } from './flow-chart/flow-node-panel/custom/flow-custom-node-panel.component';
+import { MinimapComponent } from './minimap/minimap.component';
 
 const COMPONENTS = [
   FlowChartCanvasComponent,
@@ -60,7 +61,8 @@ const COMPONENTS = [
   ContextMenuComponent,
   ErCanvasToolbarComponent,
   ErFieldComponent,
-  ErTablePanelComponent
+  ErTablePanelComponent,
+  MinimapComponent
 ];
 
 const Nodes = [
