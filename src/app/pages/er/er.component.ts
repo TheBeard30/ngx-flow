@@ -1,13 +1,17 @@
 import { GraphProviderService } from '@/app/flow-core/services';
 import { getPorts } from '@/app/flow-extension/flow-chart/flow-node-panel/utils';
-import { Component, ElementRef, EventEmitter, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, ViewChild } from '@angular/core';
+import { MiniMap } from '@antv/x6-plugin-minimap';
+import { Scroller } from '@antv/x6-plugin-scroller';
+import { Snapline } from '@antv/x6-plugin-snapline';
+import { SimpleNodeView } from '../../flow-extension/minimap/simple-node-view/simple-node-view.component';
 
 @Component({
   selector: 'app-er',
   templateUrl: './er.component.html',
-  styleUrls: ['./er.component.less']
+  styleUrls: ['./er.component.less'],
 })
-export class ErComponent {
+export class ErComponent implements AfterViewInit {
   graphData;
   graphStatus = 'NORMAL';
   /** 鼠标的引用 */
@@ -300,6 +304,13 @@ export class ErComponent {
   dataSourceMenu = Array.from(this.dataSource.keys());
 
   constructor(private graphProvider: GraphProviderService) { }
+
+  ngAfterViewInit(): void {
+    setTimeout(async () => {
+      const graph = await this.graphProvider.getGraphInstance();
+      graph.disposePlugins('transform');
+    });
+  }
 
   onload = app => {
     console.log('flow app>>>', app);

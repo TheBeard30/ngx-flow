@@ -20,7 +20,7 @@ export interface IGraphManger {
 }
 
 export class GraphManager implements IGraphManger {
-  constructor() {}
+  constructor() { }
   /** 储存画布实例 */
   private graphMap = new Map<string, Graph>();
 

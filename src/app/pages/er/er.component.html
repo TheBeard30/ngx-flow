@@ -6,6 +6,7 @@
         <app-er-canvas #canvas [position]="{top: 40, left: 0, right: 0, bottom: 0}"></app-er-canvas>
         <app-er-table-panel [table]="dataSource.get(dataSourceType)"></app-er-table-panel>
         <app-editor-panel [position]="{ width: 240, top: 40, bottom: 0, right: 0 }"></app-editor-panel>
+        <app-minimap></app-minimap>
     </app-x-flow>
     <!-- 建立节点提示 -->
     <div class="cursor-tip-container" #cursorTipRef>
