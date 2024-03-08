@@ -10,9 +10,12 @@
                 <span nz-icon nzType="delete" nzTheme="outline"></span>
             </div>
         </div>
-        <div class="body">
-            <div *ngFor="let item of expand?this.entity.entityProperties:this.entity.entityProperties.slice(0,5)">
-                <app-er-field [item]="item"></app-er-field>
+        <div class="body" cdkDropList (cdkDropListDropped)="drop($event)">
+            <div *ngFor="let item of expand?this.entity.entityProperties:this.entity.entityProperties.slice(0,5)"
+                cdkDrag (cdkDragEnded)="endDrag()">
+                <div (mousedown)="startDrag()" (mouseup)="endDrag()">
+                    <app-er-field [item]="item"></app-er-field>
+                </div>
             </div>
             <div class="flex items-center justify-center w-[100%] h-[8px]" *ngIf="!expand">
                 <button nz-button nzType="link" nzSize="small" (click)="expandField()">

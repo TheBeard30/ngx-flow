@@ -19,7 +19,8 @@ export class MinimapComponent implements AfterViewInit {
       const graph = await this.graphProvider.getGraphInstance();
       graph.use(
         new Scroller({
-          enabled: true
+          enabled: false,
+          pannable: true,
         })
       );
       graph.use(new MiniMap({

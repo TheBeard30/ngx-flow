@@ -94,6 +94,7 @@ export const useGraphConfig = createGraphConfig((config, proxy) => {
     merge({
       grid: true,
       history: true,
+      panning: false,
       connecting: {
         router: 'er',
         connector: {
