@@ -1,16 +1,20 @@
 import { XFlowNodeCommands } from '@/app/flow-core/constants';
 import { CommandService, GraphProviderService } from '@/app/flow-core/services';
-import { Component, Input } from '@angular/core';
+import { AfterViewInit, Component, Input } from '@angular/core';
 import { getNodePorts } from '../utils';
+import { CdkDragDrop, CdkDragEnd, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Graph } from '@antv/x6';
 
 @Component({
   selector: 'app-er-node',
   templateUrl: './er-node.component.html',
   styleUrls: ['./er-node.component.less']
 })
-export class ErNodeComponent {
+export class ErNodeComponent implements AfterViewInit {
   @Input() entity: any;
   @Input() id: string;
+
+  graph: Graph;
   //是否展示所有字段
   expand = false;
   //隐藏掉的连线
@@ -18,6 +22,9 @@ export class ErNodeComponent {
 
 
   constructor(private graphProvider: GraphProviderService, private commandService: CommandService) { }
+  ngAfterViewInit(): void {
+    this.graphProvider.getGraphInstance().then(g => { this.graph = g; });
+  }
 
   getCls() {
 
@@ -105,5 +112,19 @@ export class ErNodeComponent {
       }
     });
     this.expand = false;
+  }
+  startDrag() {
+    const self = this.graph.getCellById(this.id);
+    self.setProp('unMovable', true);
+    this.graph.disablePanning();
+  }
+  endDrag() {
+    const self = this.graph.getCellById(this.id);
+    self.setProp('unMovable', false);
+    this.graph.enablePanning()
+  }
+
+  drop(event: CdkDragDrop<string>) {
+    moveItemInArray(this.entity.entityProperties, event.previousIndex, event.currentIndex);
   }
 }

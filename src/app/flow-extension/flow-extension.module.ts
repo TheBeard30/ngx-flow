@@ -45,7 +45,7 @@ import { ErCanvasToolbarComponent } from './er/er-canvas-toolbar/er-canvas-toolb
 import { ErTablePanelComponent } from './er/er-table-panel/er-table-panel.component';
 import { FlowCustomNodePanelComponent } from './flow-chart/flow-node-panel/custom/flow-custom-node-panel.component';
 import { MinimapComponent } from './minimap/minimap.component';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
 const COMPONENTS = [
   FlowChartCanvasComponent,
   FlowNodePanelComponent,
@@ -97,7 +97,7 @@ const EDITOR_STANDALONE_COMPONENTS = [NodeWidget, EdgeWidget, CanvasWidget, ErWi
 
 @NgModule({
   declarations: [...COMPONENTS, ...Nodes],
-  imports: [SharedModule, FlowCoreModule, EDITOR_STANDALONE_COMPONENTS],
+  imports: [SharedModule, FlowCoreModule, DragDropModule, EDITOR_STANDALONE_COMPONENTS],
   exports: [...COMPONENTS],
   providers: []
 })
