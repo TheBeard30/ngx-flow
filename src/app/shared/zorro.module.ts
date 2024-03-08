@@ -13,6 +13,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 
 export const ZORRO_MODULE = [
   NzIconModule,
@@ -29,5 +30,6 @@ export const ZORRO_MODULE = [
   NzFormModule,
   NzListModule,
   NzModalModule,
-  NzRadioModule
+  NzRadioModule,
+  NzTabsModule
 ];
