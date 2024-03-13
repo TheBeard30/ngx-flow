@@ -5,6 +5,8 @@ import { Component, Injector, Input } from '@angular/core';
 import { register } from '@antv/x6-angular-shape';
 import { ErNodeComponent } from '../er-node/er-node.component';
 import { useGraphConfig, useKeybindingConfig } from './config';
+import { Graph } from '@antv/x6';
+import { PopoverToolComponent } from '../custom-tool/popover-tool/popover-tool.component';
 
 @Component({
   selector: 'app-er-canvas',
@@ -17,7 +19,7 @@ export class ErCanvasComponent {
   readonly isXFlowCanvas = true;
 
   //暂时使用流程图的config
-  config = useGraphConfig({});
+  config = useGraphConfig({ injector: this.injector });
   keybindingConfig = useKeybindingConfig(new KeybindingConfig());
 
   constructor(public app: Application, private injector: Injector) {
@@ -28,5 +30,6 @@ export class ErCanvasComponent {
       content: ErNodeComponent,
       injector: injector
     });
+    Graph.registerEdgeTool('popover', PopoverToolComponent, true)
   }
 }
