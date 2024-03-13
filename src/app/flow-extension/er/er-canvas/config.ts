@@ -44,52 +44,12 @@ const XFlowEdge = Shape.Edge.registry.register(
     data: {
       label: ''
     },
-    // tools: [
-    //   {
-    //     name: 'button',
-    //     args: {
-    //       markup: [
-    //         {
-    //           tagName: 'circle',
-    //           selector: 'button',
-    //           attrs: {
-    //             r: 18,
-    //             stroke: '#fe854f',
-    //             strokeWidth: 2,
-    //             fill: 'white',
-    //             cursor: 'pointer',
-    //           },
-    //         },
-    //         {
-    //           tagName: 'text',
-    //           textContent: 'Btn B',
-    //           selector: 'icon',
-    //           attrs: {
-    //             fill: '#fe854f',
-    //             fontSize: 10,
-    //             textAnchor: 'middle',
-    //             pointerEvents: 'none',
-    //             y: '0.3em',
-    //           },
-    //         },
-    //       ],
-    //       distance: -40,
-    //       onClick({ view }: { view: EdgeView }) {
-    //         const edge = view.cell
-    //         const source = edge.getSource()
-    //         const target = edge.getTarget()
-    //         edge.setSource(target)
-    //         edge.setTarget(source)
-    //       },
-    //     },
-    //   },
-    // ],
   }),
   true
 );
 
 export const useGraphConfig = createGraphConfig((config, proxy) => {
-  const { mode = 'edit', showPortsOnNodeSelected = false, edgeConfig = {} } = proxy.getValue();
+  const { mode = 'edit', showPortsOnNodeSelected = false, edgeConfig = {}, injector } = proxy.getValue();
   config.setX6Config(
     merge({
       grid: true,
@@ -112,6 +72,9 @@ export const useGraphConfig = createGraphConfig((config, proxy) => {
         createEdge() {
           const tempEdge = new XFlowEdge({});
           console.log('tempEdge>>>', tempEdge);
+          tempEdge.addTools([{
+            name: 'popover',
+          }])
           this.once('edge:connected', args => {
             console.log('tempEdge>>>', tempEdge);
             const { edge, isNew } = args;
