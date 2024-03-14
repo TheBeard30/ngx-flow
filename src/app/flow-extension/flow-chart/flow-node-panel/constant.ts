@@ -39,7 +39,7 @@ export const NODE_POOL = [
   },
   {
     name: 'Connector',
-    width: NODE_WIDTH,
+    width: NODE_HEIGHT,
     height: NODE_HEIGHT
   },
   {

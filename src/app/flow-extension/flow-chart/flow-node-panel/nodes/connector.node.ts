@@ -5,7 +5,6 @@ import {
   NODE_PADDING,
   NODE_WIDTH
 } from '@/app/flow-extension/flow-chart/flow-node-panel/constant';
-import { createPath } from '@/app/flow-extension/flow-chart/flow-node-panel/utils';
 
 @Component({
   selector: 'app-connector',
@@ -43,7 +42,7 @@ export class ConnectorNode implements OnChanges, OnInit {
 
   viewBox: string;
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(private elementRef: ElementRef) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.data && changes.data.currentValue) {
@@ -60,9 +59,8 @@ export class ConnectorNode implements OnChanges, OnInit {
 
   create() {
     this.rx = Math.min(this.size.height, this.size.width) / 2;
-    this.path = `M ${NODE_PADDING},${this.size.height / 2} a ${(this.size.height - 2 * NODE_PADDING) / 2} ${
-      (this.size.height - 2 * NODE_PADDING) / 2
-    } 0 1 1 0 1 z`;
+    this.path = `M ${NODE_PADDING},${this.size.height / 2} a ${(this.size.height - 2 * NODE_PADDING) / 2} ${(this.size.height - 2 * NODE_PADDING) / 2
+      } 0 1 1 0 1 z`;
     this.viewBox = `0 0  ${this.size.width} ${this.size.height}`;
   }
 
