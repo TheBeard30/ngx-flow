@@ -1,10 +1,10 @@
 import { Application } from '@/app/flow-core/models';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Node } from '@antv/x6';
+import { Edge, Node } from '@antv/x6';
 import * as MODELS from '@/app/flow-core/constants/model-constant';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { CommandService } from '@/app/flow-core/services';
-import { XFlowNodeCommands } from '@/app/flow-core/constants';
+import { XFlowEdgeCommands, XFlowNodeCommands } from '@/app/flow-core/constants';
 
 @Component({
   selector: 'app-er-canvas-toolbar',
@@ -13,6 +13,7 @@ import { XFlowNodeCommands } from '@/app/flow-core/constants';
 })
 export class ErCanvasToolbarComponent implements OnInit {
   selectedNode: Node[] = [];
+  selectedEdge: Edge[] = [];
   //画布状态监听
   @Output() changeGraphStatus = new EventEmitter<string>;
 
@@ -32,26 +33,40 @@ export class ErCanvasToolbarComponent implements OnInit {
           this.selectedNode = nodes;
         })
       });
+      MODELS.SELECTED_CELLS.getModel(modelService).then(model => {
+        model.watch(async () => {
+          const cells = await MODELS.SELECTED_CELLS.useValue(modelService);
+          this.selectedEdge = cells.filter(cell => cell.isEdge()) as Edge[];
+        })
+      });
     }
   }
-  //添加节点按钮事件
-  addNode() {
-    this.message.info('鼠标移动到画布空白位置, 再次点击鼠标完成创建', { nzDuration: 2000 })
-    this.changeGraphStatus.emit('CREATE')
-  }
   //删除节点按钮样式交互
-  isDisable(): string {
-    return this.selectedNode.length > 0 ? 'text-[rgba(0,0,0,.65)] hover:text-[#000] cursor-pointer' : 'cursor-not-allowed text-[rgba(0,0,0,0.3)]';
+  isDisable(type: string): string {
+    if (type === 'node') {
+      return this.selectedNode.length > 0 ? 'text-[rgba(0,0,0,.65)] hover:text-[#000] cursor-pointer' : 'cursor-not-allowed text-[rgba(0,0,0,0.3)]';
+    } else if (type === 'edge') {
+      return this.selectedEdge.length > 0 ? 'text-[rgba(0,0,0,.65)] hover:text-[#000] cursor-pointer' : 'cursor-not-allowed text-[rgba(0,0,0,0.3)]';
+    }
+    return null;
+
   }
   //删除节点
   delNode() {
     this.selectedNode.forEach(node => {
       const data = node.getData()
-      console.log(data)
       this.commandService.executeCommand(XFlowNodeCommands.DEL_NODE.id, {
         nodeConfig: {
           id: data.ngArguments.id
         }
+      });
+    });
+  }
+  //删除关系
+  delEdge() {
+    this.selectedEdge.forEach(edge => {
+      this.commandService.executeCommand(XFlowEdgeCommands.DEL_EDGE.id, {
+        x6Edge: edge
       });
     });
   }
