@@ -46,7 +46,6 @@ import { ErTablePanelComponent } from './er/er-table-panel/er-table-panel.compon
 import { FlowCustomNodePanelComponent } from './flow-chart/flow-node-panel/custom/flow-custom-node-panel.component';
 import { MinimapComponent } from './minimap/minimap.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { PopoverToolComponent } from './er/custom-tool/popover-tool/popover-tool.component';
 const COMPONENTS = [
   FlowChartCanvasComponent,
   FlowNodePanelComponent,
@@ -63,8 +62,7 @@ const COMPONENTS = [
   ErCanvasToolbarComponent,
   ErFieldComponent,
   ErTablePanelComponent,
-  MinimapComponent,
-  PopoverToolComponent
+  MinimapComponent
 ];
 
 const Nodes = [

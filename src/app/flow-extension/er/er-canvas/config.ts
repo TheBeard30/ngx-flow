@@ -71,12 +71,10 @@ export const useGraphConfig = createGraphConfig((config, proxy) => {
         },
         createEdge() {
           const tempEdge = new XFlowEdge({});
-          console.log('tempEdge>>>', tempEdge);
           tempEdge.addTools([{
             name: 'popover',
           }])
           this.once('edge:connected', args => {
-            console.log('tempEdge>>>', tempEdge);
             const { edge, isNew } = args;
             /** 没有edge:connected时，会导致graph.once的事件没有执行 */
             if (isNew && edge && edge.isEdge() && tempEdge === edge) {

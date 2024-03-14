@@ -1,27 +1,30 @@
-import { Component } from '@angular/core';
 import { EdgeView, ToolsView } from '@antv/x6';
 
-@Component({
-  selector: 'app-popover-tool',
-  template: `
 
-  `,
-  styles: ['']
-})
 export class PopoverToolComponent extends ToolsView.ToolItem<EdgeView, PopoverToolOptions>{
   private knob: HTMLDivElement;
   private popover: HTMLDivElement;
+  private popoverVisible = false;
 
   override onRender() {
     if (!this.knob) {
-      console.log(this.container)
       this.knob = ToolsView.createElement('div', false) as HTMLDivElement;
       this.popover = ToolsView.createElement('div', false) as HTMLDivElement;
-      const arrow = ToolsView.createElement('div', false) as HTMLDivElement
-      const body = ToolsView.createElement('div', false) as HTMLDivElement
+      const arrow = ToolsView.createElement('div', false) as HTMLDivElement;
+      const body = ToolsView.createElement('div', false) as HTMLDivElement;
+      const btn = ToolsView.createElement('button', false) as HTMLElement
       this.initKnob();
-      this.initPopover(body, arrow);
+      this.initPopover(body, arrow, btn);
       this.container.appendChild(this.knob);
+      document.addEventListener('mouseover', (e) => {
+        if (this.popoverVisible &&
+          e.target !== this.popover &&
+          e.target !== body &&
+          e.target !== arrow &&
+          e.target !== btn) {
+          this.hidePopover();
+        }
+      })
     }
     return this
   }
@@ -52,20 +55,20 @@ export class PopoverToolComponent extends ToolsView.ToolItem<EdgeView, PopoverTo
     this.knob.style.width = '16px';
     this.knob.style.height = '16px';
     this.knob.textContent = 'n';
-    this.knob.onmouseover = () => {
+    this.knob.onmouseover = (e) => {
+      e.stopPropagation();
       this.knob.style.background = '#188ffd';
       this.knob.style.color = '#ffffff';
-      this.container.appendChild(this.popover);
+      this.showPopover();
     };
-    this.knob.onmouseout = (e) => {
+    this.knob.onmouseout = () => {
       this.knob.style.background = '#d8d8d8';
       this.knob.style.color = '#868c91';
-      this.container.removeChild(this.popover);
 
     };
   }
 
-  private initPopover(body: HTMLDivElement, arrow: HTMLDivElement) {
+  private initPopover(body: HTMLDivElement, arrow: HTMLDivElement, btn: HTMLElement) {
     this.popover.appendChild(body);
     this.popover.appendChild(arrow);
     this.popover.style.position = 'absolute';
@@ -84,6 +87,15 @@ export class PopoverToolComponent extends ToolsView.ToolItem<EdgeView, PopoverTo
     arrow.style.borderTop = '10px solid #ffffff';
     arrow.style.borderRight = '6px solid transparent';
     arrow.style.marginLeft = '69px';
+    btn.textContent = '删除'
+    btn.style.textAlign = 'center'
+    btn.style.paddingLeft = '10px'
+    btn.style.marginLeft = '50px'
+    btn.style.borderLeft = '1px solid #d8d8d8'
+    btn.onclick = () => { this.cell.remove() }
+    btn.onmouseover = () => { btn.style.color = 'red' }
+    btn.onmouseout = () => { btn.style.color = '#000000' }
+    body.appendChild(btn);
   }
 
   private getPosition() {
@@ -92,6 +104,17 @@ export class PopoverToolComponent extends ToolsView.ToolItem<EdgeView, PopoverTo
     this.knob.style.left = bbox.x + bbox.width / 2 - 8 + 'px'
     this.popover.style.top = bbox.y + (bbox.height / 2) - 8 - 60 + 'px'
     this.popover.style.left = bbox.x + (bbox.width / 2) - 8 - 67 + 'px'
+  }
+
+  private hidePopover() {
+    this.popoverVisible = false;
+    this.container.removeChild(this.popover);
+
+  }
+
+  private showPopover() {
+    this.popoverVisible = true;
+    this.container.appendChild(this.popover);
   }
 }
 PopoverToolComponent.config({
