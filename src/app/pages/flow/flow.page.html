@@ -1,13 +1,15 @@
-<div class='h-full overflow-hidden'>
-  <app-x-flow [graphData]='graphData' [onload]="onload" [graphConfig]="graphConfig">
+<div class='w-full h-full overflow-clip flex'>
+  <app-flow-canvas-scale-toolbar [position]="{right: 0,top: 0}" [style]="{'z-index': 1}"
+    class="absolute w-full z-50"></app-flow-canvas-scale-toolbar>
+  <app-flow-canvas-toolbar [position]="{left: 0,top: 0}" [style]="{width: '100%'}"
+    class="absolute w-full z-50"></app-flow-canvas-toolbar>
+  <app-flow-node-panel [registerNode]="registerNode" class="h-full"></app-flow-node-panel>
+  <div class="bg-white border border-r-[#d9d9d9] h-full w-2 relative top-[40px]"></div>
+  <app-x-flow [graphData]='graphData' [onload]="onload" [graphConfig]="graphConfig" class="flex-grow h-full">
     <app-flow-chart-canvas #canvas [position]="{top: 40, left: 0, right: 0, bottom: 0}">
     </app-flow-chart-canvas>
-    <app-flow-canvas-scale-toolbar [position]="{right: 0,top: 0}"
-      [style]="{'z-index': 1}"></app-flow-canvas-scale-toolbar>
-    <app-flow-canvas-toolbar [position]="{left: 0,top: 0}" [style]="{width: '100%'}"></app-flow-canvas-toolbar>
-    <app-flow-node-panel [registerNode]="registerNode">
-    </app-flow-node-panel>
-    <app-editor-panel [position]="{ width: 240, top: 40, bottom: 0, right: 0 }"></app-editor-panel>
-    <app-context-menu [config]="menuConfig"></app-context-menu>
   </app-x-flow>
+  <div class="bg-white border border-r-[#d9d9d9] h-full w-2 relative top-[40px]"></div>
+  <app-editor-panel [position]="{ width: 240, top: 40, bottom: 0, right: 0 }"></app-editor-panel>
+  <app-context-menu [config]="menuConfig"></app-context-menu>
 </div>
