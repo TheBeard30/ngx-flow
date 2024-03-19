@@ -15,6 +15,7 @@ export class PopoverToolComponent extends ToolsView.ToolItem<EdgeView, PopoverTo
       const btn = ToolsView.createElement('button', false) as HTMLElement
       this.initKnob();
       this.initPopover(body, arrow, btn);
+      this.getPosition();
       this.container.appendChild(this.knob);
       document.addEventListener('mouseover', (e) => {
         if (this.popoverVisible &&

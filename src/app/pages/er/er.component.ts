@@ -78,31 +78,31 @@ export class ErComponent implements AfterViewInit {
           isFK: true
         },
         {
-          propertyName: "性别",
+          propertyName: "性别1",
           propertyType: "string",
           isPK: false,
           isFK: false
         },
         {
-          propertyName: "年龄",
+          propertyName: "年龄1",
           propertyType: "int",
           isPK: false,
           isFK: false
         },
         {
-          propertyName: "性别",
+          propertyName: "性别11",
           propertyType: "string",
           isPK: false,
           isFK: false
         },
         {
-          propertyName: "身份",
+          propertyName: "身份11",
           propertyType: "string",
           isPK: false,
           isFK: true
         },
         {
-          propertyName: "性别",
+          propertyName: "性别111",
           propertyType: "string",
           isPK: false,
           isFK: false
@@ -138,7 +138,7 @@ export class ErComponent implements AfterViewInit {
           isFK: true
         },
         {
-          propertyName: "性别",
+          propertyName: "性别1",
           propertyType: "string",
           isPK: false,
           isFK: false
@@ -174,7 +174,7 @@ export class ErComponent implements AfterViewInit {
           isFK: true
         },
         {
-          propertyName: "性别",
+          propertyName: "性别1",
           propertyType: "string",
           isPK: false,
           isFK: false
@@ -210,7 +210,7 @@ export class ErComponent implements AfterViewInit {
           isFK: true
         },
         {
-          propertyName: "性别",
+          propertyName: "性别1",
           propertyType: "string",
           isPK: false,
           isFK: false
@@ -246,7 +246,7 @@ export class ErComponent implements AfterViewInit {
           isFK: true
         },
         {
-          propertyName: "性别",
+          propertyName: "性别1",
           propertyType: "string",
           isPK: false,
           isFK: false
@@ -282,7 +282,7 @@ export class ErComponent implements AfterViewInit {
           isFK: true
         },
         {
-          propertyName: "性别",
+          propertyName: "性别1",
           propertyType: "string",
           isPK: false,
           isFK: false

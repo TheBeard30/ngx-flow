@@ -68,12 +68,12 @@ export const getNodePorts = (field: any[]): any => {
     const items = [];
     field.forEach((f, i) => {
         const item_left = {
-            id: `port-left-${f.propertyName}-${i + 1}`,
+            id: `port-left-${f.propertyName}`,
             group: `group-left`
         };
         items.push(item_left);
         const item_right = {
-            id: `port-right-${f.propertyName}-${i + 1}`,
+            id: `port-right-${f.propertyName}`,
             group: `group-right`
         };
         items.push(item_right);
