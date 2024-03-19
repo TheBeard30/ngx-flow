@@ -12,6 +12,8 @@ import { Scroller } from '@antv/x6-plugin-scroller';
 export class MinimapComponent implements AfterViewInit {
   @ViewChild('MiniMap') miniMapRef: ElementRef;
 
+  @ViewChild('box') box: ElementRef;
+
   constructor(private graphProvider: GraphProviderService) { }
 
   ngAfterViewInit(): void {
@@ -25,9 +27,8 @@ export class MinimapComponent implements AfterViewInit {
       );
       graph.use(new MiniMap({
         container: this.miniMapRef.nativeElement,
-        width: 200,
-        height: 160,
-        padding: 10,
+        width: 180,
+        height: 100,
         graphOptions: {
           createCellView(cell) {
             if (cell.isEdge()) {
