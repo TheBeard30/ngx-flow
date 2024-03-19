@@ -1,10 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   Input,
   OnChanges,
   OnInit,
   SimpleChanges,
+  ViewChild,
   ViewEncapsulation
 } from '@angular/core';
 import { getPositionStyle, IPosition } from '@/app/flow-core/interfaces';
@@ -23,6 +25,10 @@ export class BasePanelComponent implements OnInit, OnChanges {
 
   @Input() className: string;
 
+  @Input() collapse: boolean
+
+  @ViewChild('container') container: ElementRef;
+
   containerStyle: { [p: string]: any } = {};
 
   containerClass: { [p: string]: any } = {
@@ -33,6 +39,14 @@ export class BasePanelComponent implements OnInit, OnChanges {
     if (changes.position && changes.position.currentValue) {
       this.setContainerStyle();
     }
+    if (changes.collapse && this.container !== undefined) {
+      this.setContainerStyle();
+    }
+  }
+  setClass() {
+    console.log(this.container.nativeElement.style);
+    this.container.nativeElement.style.position = 'absolute';
+
   }
 
   ngOnInit(): void {
@@ -41,6 +55,11 @@ export class BasePanelComponent implements OnInit, OnChanges {
 
   setContainerStyle() {
     const positionStyle = getPositionStyle(this.position);
+    if (!this.collapse) {
+      positionStyle.position = 'relative';
+    } else {
+      positionStyle.position = 'absolute'
+    }
     this.containerStyle = {
       ...positionStyle,
       ...this.style

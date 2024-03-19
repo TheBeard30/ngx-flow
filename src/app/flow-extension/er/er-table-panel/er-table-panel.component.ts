@@ -1,6 +1,6 @@
 import { IPosition } from '@/app/flow-core/interfaces';
 import { CommandService, GraphProviderService } from '@/app/flow-core/services';
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Graph, Node } from '@antv/x6';
 import { Dnd } from '@antv/x6-plugin-dnd';
 import ValidateNodeOptions = Dnd.ValidateNodeOptions;
@@ -15,6 +15,7 @@ import { getNodePorts, registerPortLayout } from '../utils';
 export class ErTablePanelComponent implements OnInit, AfterViewInit {
   @Input() position: IPosition = { width: 240, top: 40, bottom: 0, left: 0 };
   @Input() table: any[];
+  @Output() collapseChange = new EventEmitter<boolean>();
 
   collapse = false;
 
@@ -83,5 +84,6 @@ export class ErTablePanelComponent implements OnInit, AfterViewInit {
     this.collapse = !this.collapse;
     this.collapse ? (this.position.left = -this.width) : (this.position.left = this.left);
     this.position = { ...this.position };
+    this.collapseChange.emit(this.collapse);
   }
 }
