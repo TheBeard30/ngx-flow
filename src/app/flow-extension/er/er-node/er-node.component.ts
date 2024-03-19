@@ -2,8 +2,8 @@ import { XFlowNodeCommands } from '@/app/flow-core/constants';
 import { CommandService, GraphProviderService } from '@/app/flow-core/services';
 import { AfterViewInit, Component, Input } from '@angular/core';
 import { getNodePorts } from '../utils';
-import { CdkDragDrop, CdkDragEnd, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Graph } from '@antv/x6';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Edge, Graph } from '@antv/x6';
 
 @Component({
   selector: 'app-er-node',
@@ -18,7 +18,9 @@ export class ErNodeComponent implements AfterViewInit {
   //是否展示所有字段
   expand = false;
   //隐藏掉的连线
-  hiddenEdges = []
+  hiddenEdges = [];
+  //字段拖动连线暂存
+  dragEdges: Edge[] = [];
 
 
   constructor(private graphProvider: GraphProviderService, private commandService: CommandService) { }
@@ -115,16 +117,47 @@ export class ErNodeComponent implements AfterViewInit {
   }
   startDrag() {
     const self = this.graph.getCellById(this.id);
+    //设置画布与节点无法移动
     self.setProp('unMovable', true);
     this.graph.disablePanning();
+    //获取当前节点所有连线
+    this.dragEdges = this.graph.getConnectedEdges(self);
+    //删除节点上的连线
+    this.dragEdges.forEach(e => {
+      this.graph.removeEdge(e);
+    });
+    //删除节点连接桩
+    if (self.isNode()) {
+      self.removePorts();
+    }
   }
   endDrag() {
     const self = this.graph.getCellById(this.id);
+    //接触节点和画布无法移动状态
     self.setProp('unMovable', false);
     this.graph.enablePanning()
+
   }
 
   drop(event: CdkDragDrop<string>) {
+    const self = this.graph.getCellById(this.id);
+    //交换数组中数据位置
     moveItemInArray(this.entity.entityProperties, event.previousIndex, event.currentIndex);
+    if (self.isNode()) {
+      //重新计算连接桩
+      if (this.expand) {
+        self.addPorts(getNodePorts(this.entity.entityProperties).items);
+      } else {
+        self.addPorts(getNodePorts(this.entity.entityProperties.slice(0, 5)).items);
+      }
+
+    }
+    //还原连线
+    this.dragEdges.forEach(e => {
+
+    });
+    this.graph.addEdges(this.dragEdges);
+
+
   }
 }
