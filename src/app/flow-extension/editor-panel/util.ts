@@ -63,6 +63,8 @@ export const useJsonFormModal = (props: {
               return 'er';
             } else if (targetCell.isNode && targetCell.isNode()) {
               return 'node';
+            } else if (targetCell.isEdge && targetCell.isEdge() && targetCell.shape === 'er-edge') {
+              return 'er-edge';
             } else if (targetCell.isEdge && targetCell.isEdge()) {
               return 'edge';
             } else {

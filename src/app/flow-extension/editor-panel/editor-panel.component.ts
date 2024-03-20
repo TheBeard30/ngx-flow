@@ -102,6 +102,20 @@ export class EditorPanelComponent {
       ...node.getData().ngArguments
     };
   };
+  getSelectRelation = async () => {
+    const cell = await MODELS.SELECTED_CELL.useValue(this.app.modelService);
+    if (cell.isEdge()) {
+      const source = cell.getSourceNode().getData().ngArguments.entity.entityName;
+      const target = cell.getTargetNode().getData().ngArguments.entity.entityName;
+      return {
+        cell: cell,
+        source: source,
+        target: target,
+      };
+    }
+    return null;
+
+  }
 
   changeSchema = ev => {
     setTimeout(() => {
@@ -112,11 +126,11 @@ export class EditorPanelComponent {
         'node-service': this.getSelectNode,
         'edge-service': this.getSelectEdge,
         'er-service': this.getSelectTable,
+        'er-edge-service': this.getSelectRelation,
         'group-service': this.getSelectNode,
         'canvas-service': () => Promise.resolve(null)
       };
       map[name]().then(v => {
-        console.log('v', v);
         this.configRef.clear();
         const componentRef = this.configRef.createComponent(widget, { injector: this.injector });
         // @ts-ignore
@@ -139,7 +153,7 @@ export class EditorPanelComponent {
     useJsonFormModal({
       app: this.app,
       formSchemaService: defaultFormSchemaService,
-      targetType: ['node', 'edge', 'canvas', 'group', 'er'],
+      targetType: ['node', 'edge', 'canvas', 'group', 'er', 'er-edge'],
       callback: this.changeSchema
     });
   }
