@@ -1,7 +1,7 @@
 import { NsGraph } from '@/app/flow-core/interfaces';
 
 /** 画布选中会触发Form更新的画布元素类型 */
-export type TargetType = 'node' | 'edge' | 'group' | 'canvas' | 'er';
+export type TargetType = 'node' | 'edge' | 'group' | 'canvas' | 'er' | 'er-edge';
 /** 画布元素的数据 */
 export type TargetData = NsGraph.INodeConfig | NsGraph.IEdgeConfig | NsGraph.IGroupConfig | null;
 

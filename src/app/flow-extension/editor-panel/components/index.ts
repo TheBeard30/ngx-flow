@@ -2,6 +2,7 @@ import { NodeWidget } from '@/app/flow-extension/editor-panel/components/node.wi
 import { EdgeWidget } from '@/app/flow-extension/editor-panel/components/edge.widget';
 import { CanvasWidget } from '@/app/flow-extension/editor-panel/components/canvas.widget';
 import { ErWidget } from './er.widget';
+import { ErEdgeWidget } from './er-edge.widget';
 
 export * from './node.widget';
 export * from './edge.widget';
@@ -14,5 +15,6 @@ export const defaultControlMap = (controlMap: Map<string, any>) => {
   controlMap.set('edge-service', EdgeWidget);
   controlMap.set('canvas-service', CanvasWidget);
   controlMap.set('er-service', ErWidget);
+  controlMap.set('er-edge-service', ErEdgeWidget);
   return controlMap;
 };

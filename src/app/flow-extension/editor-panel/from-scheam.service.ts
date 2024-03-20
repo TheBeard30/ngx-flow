@@ -66,6 +66,26 @@ export const defaultFormSchemaService = async args => {
       }
     ]
   };
+  const erEdgeSchema: ISchema = {
+    tabs: [
+      {
+        name: '设置',
+        groups: [
+          {
+            name: 'groupName',
+            controls: [
+              {
+                label: '边',
+                name: 'er-edge-service',
+                shape: 'er-edge-service',
+                placeholder: '表关系名称'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  };
   const erSchema: ISchema = {
     tabs: [
       {
@@ -100,6 +120,9 @@ export const defaultFormSchemaService = async args => {
   }
   if (targetType === 'er') {
     return erSchema;
+  }
+  if (targetType === 'er-edge') {
+    return erEdgeSchema;
   }
   return {
     tabs: [
