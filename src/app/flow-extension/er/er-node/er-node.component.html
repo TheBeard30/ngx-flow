@@ -1,4 +1,4 @@
-<div class="entity-container {{getCls()}}">
+<div class="entity-container {{getCls()}}" (click)="selectField(null)">
     <div class="content {{getCls()}}">
         <div class="flex flex-row items-center justify-between w-[calc(100%-12px)] h-[38px] ml-[6px] text-[12px]">
             <div>
@@ -13,8 +13,10 @@
         <div class="body" cdkDropList (cdkDropListDropped)="drop($event)">
             <div *ngFor="let item of expand?this.entity.entityProperties:this.entity.entityProperties.slice(0,5)"
                 cdkDrag (cdkDragEnded)="endDrag()">
-                <div (mousedown)="startDrag()" (mouseup)="endDrag()">
-                    <app-er-field [item]="item"></app-er-field>
+                <div (mousedown)="startDrag()" (mouseup)="endDrag()"
+                    (click)="selectField(item);$event.stopPropagation()"
+                    class="{{isSelected(item)?'border border-solid border-[#1890ff]':'hover:border hover:border-solid hover:border-[#1890ff]'}}">
+                    <app-er-field [item]=" item"></app-er-field>
                 </div>
             </div>
             <div class="flex items-center justify-center w-[100%] h-[8px]" *ngIf="!expand">

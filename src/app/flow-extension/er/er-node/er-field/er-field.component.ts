@@ -6,7 +6,6 @@ import { AfterViewInit, Component, Input } from '@angular/core';
   styleUrls: ['./er-field.component.less']
 })
 export class ErFieldComponent {
-  @Input() item: any
-
+  @Input() item: any;
 
 }

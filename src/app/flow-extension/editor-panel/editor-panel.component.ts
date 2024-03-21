@@ -97,9 +97,14 @@ export class EditorPanelComponent {
   getSelectTable = async () => {
     const node = await MODELS.SELECTED_NODE.useValue(this.app.modelService);
     if (!node) return {};
+    console.log('node>>>', node);
     return {
       id: node.id,
-      ...node.getData().ngArguments
+      ...node.getData().ngArguments,
+      //后续选中字段数据监听
+      selectedField: node.getProp('selectedField'),
+      //首次被选中的字段
+      field: node.getProp('field'),
     };
   };
   getSelectRelation = async () => {
