@@ -4,6 +4,7 @@ import { AfterViewInit, Component, Input } from '@angular/core';
 import { getNodePorts } from '../utils';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Edge, Graph } from '@antv/x6';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-er-node',
@@ -21,6 +22,9 @@ export class ErNodeComponent implements AfterViewInit {
   hiddenEdges = [];
   //字段拖动连线暂存
   dragEdges: Edge[] = [];
+  //选中的节点
+  selectedFieldSub = new Subject<any>();
+  selectedField = {};
 
 
   constructor(private graphProvider: GraphProviderService, private commandService: CommandService) { }
@@ -136,13 +140,6 @@ export class ErNodeComponent implements AfterViewInit {
     //接触节点和画布无法移动状态
     self.setProp('unMovable', false);
     this.graph.enablePanning()
-
-  }
-
-  drop(event: CdkDragDrop<string>) {
-    const self = this.graph.getCellById(this.id);
-    //交换数组中数据位置
-    moveItemInArray(this.entity.entityProperties, event.previousIndex, event.currentIndex);
     if (self.isNode()) {
       //重新计算连接桩
       if (this.expand) {
@@ -153,11 +150,30 @@ export class ErNodeComponent implements AfterViewInit {
 
     }
     //还原连线
-    this.dragEdges.forEach(e => {
-
-    });
     this.graph.addEdges(this.dragEdges);
 
+  }
+
+  drop(event: CdkDragDrop<string>) {
+    //交换数组中数据位置
+    moveItemInArray(this.entity.entityProperties, event.previousIndex, event.currentIndex);
+  }
+
+  //选中字段
+  selectField(field: any) {
+    const self = this.graph?.getCellById(this.id);
+    this.selectedFieldSub.next(field);
+    //用于判断是否被选中
+    this.selectedField = field;
+    //传递给editorpanel首次被选中的字段
+    self.setProp({ field: field });
+    //传递给editorpanel后续对于选中字段的监听
+    self.setProp({ selectedField: this.selectedFieldSub.asObservable() });
+  }
+  //判断字段当前是否是被选中状态
+  isSelected(item: any) {
+    const self = this.graph?.getCellById(this.id);
+    return this.selectedField === item && this.graph.isSelected(self);
 
   }
 }

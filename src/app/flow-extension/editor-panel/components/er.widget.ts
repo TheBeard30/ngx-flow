@@ -1,11 +1,11 @@
 import { SharedModule } from '@/app/shared/shared.module';
-import { Component, Input } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-canvas-widget',
     template: `
     <div class="w-full h-full p-4 relative">
-        <nz-tabset>
+        <nz-tabset [nzSelectedIndex]="selectedField?1:0">
             <nz-tab nzTitle="数据表">
                 <div class="flex items-center mb-2">
                     <span class="text-black/45 mr-2 w-8">表名</span>
@@ -18,7 +18,7 @@ import { Component, Input } from '@angular/core';
             </nz-tab>
             <nz-tab nzTitle="字段">
                 <div class=" h-[calc(100%-2px)] overflow-auto">
-                    <div class="flex items-center mb-2" *ngFor="let item of config.entity.entityProperties">
+                    <div class="flex items-center mb-2" *ngFor="let item of selectedField?[selectedField]:config.entity.entityProperties">
                         <nz-card style="width: 100%;" [nzTitle]="title" [nzExtra]="extra" nzHoverable > 
                         No Description     
                         </nz-card>
@@ -74,12 +74,15 @@ import { Component, Input } from '@angular/core';
   `,
     styles: [``],
     imports: [SharedModule],
-    standalone: true
+    standalone: true,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ErWidget {
+export class ErWidget implements OnInit {
     @Input() config;
 
     @Input() plugin;
+
+    selectedField = null;
 
     //编辑字段弹框 隐藏/现实
     isChangeField = false;
@@ -90,6 +93,8 @@ export class ErWidget {
         isPK: boolean;
         isFK: boolean;
     };
+
+    constructor(private cdr: ChangeDetectorRef) { }
 
     //控制编辑字段弹窗
     //显示
@@ -105,5 +110,14 @@ export class ErWidget {
     handleOk() {
         //TODO 更改er-node节点组件数据
         this.isChangeField = false;
+    }
+    ngOnInit(): void {
+        //为this.selectedField赋予首次选中字段值
+        this.selectedField = this.config.field;
+        //对后续选中字段数据变更进行监听
+        this.config.selectedField.subscribe(field => {
+            this.selectedField = field;
+            this.cdr.detectChanges();
+        });
     }
 }

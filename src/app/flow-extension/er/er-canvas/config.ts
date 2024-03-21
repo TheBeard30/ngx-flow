@@ -135,26 +135,6 @@ export const useGraphConfig = createGraphConfig((config, proxy) => {
       }
     })
   );
-  config.setEvents([
-    {
-      eventName: 'node:selected',
-      callback: () => {
-        mode === 'edit' && changePortsVisible(false);
-      }
-    },
-    {
-      eventName: 'node:mouseenter',
-      callback: e => {
-        mode === 'edit' && changePortsVisible(true, e, true);
-      }
-    } as IEvent<'node:mouseenter'>,
-    {
-      eventName: 'node:mouseleave',
-      callback: e => {
-        changePortsVisible(false, e);
-      }
-    } as IEvent<'node:mouseleave'>,
-  ]);
 });
 
 export const useKeybindingConfig = (config: KeybindingConfig) => {
