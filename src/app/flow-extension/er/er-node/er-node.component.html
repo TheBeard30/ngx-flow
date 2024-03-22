@@ -12,8 +12,8 @@
         </div>
         <div class="body" cdkDropList (cdkDropListDropped)="drop($event)">
             <div *ngFor="let item of expand?this.entity.entityProperties:this.entity.entityProperties.slice(0,5)"
-                cdkDrag (cdkDragEnded)="endDrag($event)">
-                <div (mousedown)="startDrag()" (mouseup)="endDrag($event)"
+                cdkDrag (cdkDragStarted)="startDrag()" (cdkDragEnded)="unlockGraphAndNode()">
+                <div (mousedown)="lockGraphAndNode()" (mouseup)="unlockGraphAndNode()"
                     (click)="selectField(item);$event.stopPropagation()"
                     class="{{isSelected(item)?'border border-solid border-[#1890ff]':'hover:border hover:border-solid hover:border-[#1890ff]'}}">
                     <app-er-field [item]=" item"></app-er-field>

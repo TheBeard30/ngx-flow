@@ -119,11 +119,21 @@ export class ErNodeComponent implements AfterViewInit {
     });
     this.expand = false;
   }
-  startDrag() {
+  lockGraphAndNode() {
     const self = this.graph.getCellById(this.id);
     //设置画布与节点无法移动
     self.setProp('unMovable', true);
     this.graph.disablePanning();
+
+  }
+  unlockGraphAndNode() {
+    const self = this.graph.getCellById(this.id);
+    //接触节点和画布无法移动状态
+    self.setProp('unMovable', false);
+    this.graph.enablePanning()
+  }
+  startDrag() {
+    const self = this.graph.getCellById(this.id);
     //获取当前节点所有连线
     this.dragEdges = this.graph.getConnectedEdges(self);
     //删除节点上的连线
@@ -134,28 +144,6 @@ export class ErNodeComponent implements AfterViewInit {
     if (self.isNode()) {
       self.removePorts();
     }
-  }
-  endDrag(e) {
-
-    const self = this.graph.getCellById(this.id);
-    //接触节点和画布无法移动状态
-    self.setProp('unMovable', false);
-    this.graph.enablePanning()
-    //点击事件也会触发endDrag，但是不触发drop事件导致无法恢复连接桩和连线
-    if (e instanceof MouseEvent) {
-      if (self.isNode()) {
-        //重新计算连接桩
-        if (this.expand) {
-          self.addPorts(getNodePorts(this.entity.entityProperties).items);
-        } else {
-          self.addPorts(getNodePorts(this.entity.entityProperties.slice(0, 5)).items);
-        }
-
-      }
-      //还原连线
-      this.graph.addEdges(this.dragEdges);
-    }
-
   }
 
   drop(event: CdkDragDrop<string>) {
