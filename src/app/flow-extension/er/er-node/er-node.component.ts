@@ -135,11 +135,34 @@ export class ErNodeComponent implements AfterViewInit {
       self.removePorts();
     }
   }
-  endDrag() {
+  endDrag(e) {
+
     const self = this.graph.getCellById(this.id);
     //接触节点和画布无法移动状态
     self.setProp('unMovable', false);
     this.graph.enablePanning()
+    //点击事件也会触发endDrag，但是不触发drop事件导致无法恢复连接桩和连线
+    if (e instanceof MouseEvent) {
+      if (self.isNode()) {
+        //重新计算连接桩
+        if (this.expand) {
+          self.addPorts(getNodePorts(this.entity.entityProperties).items);
+        } else {
+          self.addPorts(getNodePorts(this.entity.entityProperties.slice(0, 5)).items);
+        }
+
+      }
+      //还原连线
+      this.graph.addEdges(this.dragEdges);
+    }
+
+  }
+
+  drop(event: CdkDragDrop<string>) {
+    const self = this.graph.getCellById(this.id);
+    //交换数组中数据位置
+    moveItemInArray(this.entity.entityProperties, event.previousIndex, event.currentIndex);
+
     if (self.isNode()) {
       //重新计算连接桩
       if (this.expand) {
@@ -151,12 +174,6 @@ export class ErNodeComponent implements AfterViewInit {
     }
     //还原连线
     this.graph.addEdges(this.dragEdges);
-
-  }
-
-  drop(event: CdkDragDrop<string>) {
-    //交换数组中数据位置
-    moveItemInArray(this.entity.entityProperties, event.previousIndex, event.currentIndex);
   }
 
   //选中字段
